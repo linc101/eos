@@ -2,3 +2,7 @@ eclipse
 .classpath
 .project
 .settings
+.idea
+eos.iml
+eos.ipr
+tmp

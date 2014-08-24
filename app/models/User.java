@@ -18,10 +18,10 @@ public class User extends Model implements PolicySQLGenerator{
 	
 	public static final String TABLE_NAME = "user";
 	
-	@Column(name="userName", unique=true, length=512)
+	@Column(name="userName", unique=true)
 	private String userName;
 	
-	@Column(name="email", unique=true, length=512)
+	@Column(name="email", unique=true)
 	private String email;
 	
 	@Column(name="password")
