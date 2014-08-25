@@ -9,6 +9,12 @@
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         #{get 'moreScripts' /}
         <style>
+            body{
+                font:12px/1.5 tahoma,arial,sans-serif;
+                margin:0px;
+                padding:0px;
+
+            }
             .toolbar-wrap{
                 background-color: #323232;
                 border-bottom:1px solid #666;
@@ -25,39 +31,49 @@
                 margin:0 auto;
                 z-index:2;
             }
-            .toolbar .l-items{
-                padding-top:4px;
-                padding-bottom:4px;
-                float:left;
-                margin-left:20px;
-            }
-            .clearfix{
-                display:block;
-            }
+
             li{
                 list-style:none;
             }
-            .toolbar .item{
+            .toolbar .l-item{
                 float:left;
             }
-            .toolbar .l-items a.tb-original{
-                width:58px;
 
+            .toolbar .r-item{
+                float:right;
             }
-
-            .toolbar .l-items .item-link{
-                height:38px;
-                line-height: 38px;
+            .toolbar ul{
+                padding:0px;
+                margin:0px;
+            }
+            .toolbar li{
+                color:#ffffff;
+                font-size:20px;
+                background-color: #323232;
+                margin-right:20px;
+                cursor:pointer;
+            }
+            .toolbar div span a{
+                color:#ffffff;
+                font-size:20px;
+                background-color: #323232;
+                margin-right:20px;
+                cursor:pointer;
             }
         </style>
     </head>
     <body>
     <div class="toolbar-wrap">
         <div class="toolbar">
-            <ul class="l-items clearfix">
-                <li class="item"><a class="item-link tb-original">首页</a></li>
-                <li class="item">经验</li>
+            <ul>
+                <li class="l-item"><a>首页</a></li>
+                <li class="l-item"><a>经验</a></li>
             </ul>
+            <ul>
+                <li class="r-item"><a>注册</a></li>
+                <li class="r-item"><a>登陆</a></li>
+            </ul>
+            </div>
         </div>
     </div>
         #{doLayout /}
