@@ -8,8 +8,58 @@
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         #{get 'moreScripts' /}
+        <style>
+            .toolbar-wrap{
+                background-color: #323232;
+                border-bottom:1px solid #666;
+                position:relative;
+                box-shadow:1px 1px 3px #bbb;
+            }
+            .toolbar{
+                height:49px;
+                line-height:49px;
+                background-color: #323232;
+                position: relative;
+                width:1050px;
+                padding-left:130px;
+                margin:0 auto;
+                z-index:2;
+            }
+            .toolbar .l-items{
+                padding-top:4px;
+                padding-bottom:4px;
+                float:left;
+                margin-left:20px;
+            }
+            .clearfix{
+                display:block;
+            }
+            li{
+                list-style:none;
+            }
+            .toolbar .item{
+                float:left;
+            }
+            .toolbar .l-items a.tb-original{
+                width:58px;
+
+            }
+
+            .toolbar .l-items .item-link{
+                height:38px;
+                line-height: 38px;
+            }
+        </style>
     </head>
     <body>
+    <div class="toolbar-wrap">
+        <div class="toolbar">
+            <ul class="l-items clearfix">
+                <li class="item"><a class="item-link tb-original">首页</a></li>
+                <li class="item">经验</li>
+            </ul>
+        </div>
+    </div>
         #{doLayout /}
     </body>
     <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
@@ -20,6 +70,6 @@
             document.body.appendChild(script);
         }
 
-        
+
     </script>
 </html>
