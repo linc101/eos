@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>#{get 'title' /}</title>
+    <meta charset="${_response_encoding}">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+    #{get 'moreStyles' /}
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+    #{get 'moreScripts' /}
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            font:12px/1.5 tahoma,arial,sans-serif;
+            margin:0px;
+            padding:0px;
+            background-color: #f6f6f1;
+
+        }
+    </style>
+</head>
+<body>
+#{doLayout /}
+</body>
+
+<script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    if(!window.jQuery){
+        var script = document.createElement('script');
+        script.src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js";
+        document.body.appendChild(script);
+    }
+
+    var gcs = function(url, callback){
+        $.ajax({
+            type:'post',
+            url:url,
+            dataType:'script',
+            success:callback
+        })
+    }
+
+    var EOS = EOS || {};
+    EOS.gsc = gcs;
+
+</script>
+</html>

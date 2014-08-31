@@ -1,0 +1,128 @@
+#{extends 'fontpage.html'/}
+#{set title:"注册" /}
+<style>
+    .register-content table{
+        width:100%;
+        margin:0 auto;
+        font-size:14px;
+    }
+
+    .register-content table tbody tr td:first-child{
+        width:30%;
+        text-align: right;
+    }
+
+    .register-content table tbody tr td:last-child{
+        width:60%;
+        text-align: left;
+    }
+
+    .register-content table input{
+        height:22px;
+        width:180px;
+        line-height:22px;
+        border:1px solid #cdcdcd;
+        font-size:14px;
+        color:#cdcdcd;
+        cursor:pointer;
+        padding-left:5px;
+    }
+
+    .tip{
+        font-size:12px;
+        color:#cdcdcd;
+    }
+
+    .register-content{
+        margin:40px 400px 0 400px;
+        border:1px solid #cdcdcd;
+        padding:40px 0px 20px 0px;
+        background-color: #f9fcfd;
+
+    }
+
+    .register-title{
+        font-size:18px;
+        width:700px;
+        color:#999;
+        margin:10px auto;
+        border-bottom: 3px solid #019875;
+    }
+</style>
+<div class="register">
+    <div class="register-title">
+        <span style="">请填写注册信息</span>
+        <span style="float:right;margin-right:10px;color:#7fcaff;cursor:pointer;"><a href="" style="color:#7fcaff;display: block;text-decoration: none;">登陆</a></span>
+        <span style="float:right;">已有账号，</span>
+    </div>
+    <div class="register-content">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <span>注册邮箱:</span>
+                </td>
+                <td>
+                    <input class="email" type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <span class="tip" style="cursor:pointer;color:#7fcaff">验证是否已被注册</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>用户名:</span>
+                </td>
+                <td>
+                    <input class="username" type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <span class="tip">2-16字符的汉子、字母、数字</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>密码:</span>
+                </td>
+                <td>
+                    <input class="password" type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <span class="tip">不少于6个字符</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>确认密码:</span>
+                </td>
+                <td>
+                    <input class="confirmpassword" type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <span class="tip">再一次输入密码</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
