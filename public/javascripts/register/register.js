@@ -10,14 +10,22 @@ var EOS = EOS || {};
 
     register.init = register.init || {};
     register.init = $.extend(register.init,{
-        doInit:function(content){
-            register.init.content = content;
+        doInit:function(container){
+            register.init.container = container;
         }
     })
 
     register.submit = register.submit || {};
     register.submit = $.extend(register.submit, {
-        
+        initSubmit:function(){
+
+        },
+        emailRegister:function(){
+            var container = register.init.container;
+            container.find('.email-register').unbind().click(function(){
+                
+            })
+        }
     })
 
 })(jQuery, window));
