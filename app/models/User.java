@@ -147,5 +147,11 @@ public class User extends Model implements PolicySQLGenerator{
     	code += this.password.hashCode();
     	return code;
     }
-	
+
+    public static boolean isEmailExisted(String email){
+        String query = "select id from user where email = ?";
+        long res = dp.singleLongQuery(query, email);
+        if(res <= 0L)return false;
+        return true;
+    }
 }
