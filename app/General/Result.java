@@ -21,6 +21,10 @@ public class Result<T> {
         this.message = message;
         this.success = false;
     }
+
+    public Result(){
+        this.success = true;
+    }
     
     public boolean getSuccess(){
     	return success;

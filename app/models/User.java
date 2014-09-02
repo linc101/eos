@@ -154,4 +154,11 @@ public class User extends Model implements PolicySQLGenerator{
         if(res <= 0L)return false;
         return true;
     }
+
+    public static boolean isUserNameExisted(String userName){
+        String query = "select id from user where userName = ?";
+        long res = dp.singleLongQuery(query, userName);
+        if(res <= 0) return false;
+        return true;
+    }
 }

@@ -1,0 +1,15 @@
+.submit_btn{
+    width:80px;
+    height:34px;
+    color:white;
+    font-size:15px;
+    letter-spacing: 1px;
+    background: #2e82ff;
+    outline: medium;
+    cursor:pointer;
+    display:block;
+    text-align: center;
+    line-height: 34px;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+}
