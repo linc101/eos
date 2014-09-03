@@ -79,7 +79,8 @@ public class User extends Model implements PolicySQLGenerator{
 			return update();
 		}
 	}
-	
+
+
 	public boolean insert(){
 		String query = "insert into " + TABLE_NAME + "(`userName`,`email`, `password`,`createTs`) values (?,?,?,?)";
 		long res = dp.insert(query, this.userName, this.email, this.password, this.createTs);
@@ -148,17 +149,19 @@ public class User extends Model implements PolicySQLGenerator{
     	return code;
     }
 
-    public static boolean isEmailExisted(String email){
-        String query = "select id from user where email = ?";
+    public static long findEmailExisted(String email){
+        String query = "select id from " + TABLE_NAME + " where email = ?";
+        log.info("email query:" + query + " email:" + email);
         long res = dp.singleLongQuery(query, email);
-        if(res <= 0L)return false;
-        return true;
+        log.info("res:" + res);
+        return res;
     }
 
-    public static boolean isUserNameExisted(String userName){
-        String query = "select id from user where userName = ?";
+    public static long findUserNameExisted(String userName){
+        String query = "select id from " + TABLE_NAME + " where userName = ?";
+        log.info("userName query : " +query + " userName:" + userName);
         long res = dp.singleLongQuery(query, userName);
-        if(res <= 0) return false;
-        return true;
+        log.info("res:" + res);
+        return res;
     }
 }

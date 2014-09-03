@@ -17,6 +17,15 @@ function isEmail(email){
         doInit:function(container){
             register.init.container = container;
             register.submit.initSubmit();
+            register.init.defaultSubmit();
+        },
+        defaultSubmit:function(){
+            var container = register.init.container;
+            container.find(".confirmpassword").keydown(function (event){
+                if(event.keyCode == 13){
+                    container.find(".submit_btn").click();
+                }
+            })
         }
     })
 
@@ -24,6 +33,7 @@ function isEmail(email){
     register.submit = $.extend(register.submit, {
         initSubmit:function(){
             register.submit.emailRegister();
+            register.submit.submitRegister();
         },
         emailRegister:function(){
             var container = register.init.container;
@@ -51,19 +61,31 @@ function isEmail(email){
             })
         },
         submitRegister:function(){
-            var data = register.util.submitParams();
-            if(data == null)return;
-            $.ajax({
-                type:"get",
-                url:"/"
+            var container = register.init.container;
+            container.find(".submit_btn").click(function(){
+                var data = register.util.submitParams();
+                if(data == null)return;
+                $.ajax({
+                    type:"get",
+                    url:"/Register/doRegister",
+                    data:data,
+                    success:function(dataJson){
+                        if(dataJson.success){
+                            alert("恭喜，注册成功！");
+                            window.location.href = "/Application/index";
+                        }
+                        alert(dataJson.message);
+                    }
+                })
             })
+
         }
     })
 
     register.util = register.util || {};
     register.util = $.extend(register.util, {
         submitParams:function(){
-            var container = register.util.container;
+            var container = register.init.container;
             var email           = container.find(".email").val(),
                 username        = container.find(".username").val(),
                 password        = container.find(".password").val(),
@@ -75,7 +97,7 @@ function isEmail(email){
                 return null;
             }
 
-            if(!usernamereg.text(username)){
+            if(!usernamereg.test(username)){
                 alert("输入的用户名不满足要求！");
                 return null;
             }
@@ -92,7 +114,7 @@ function isEmail(email){
 
             var data = {};
             data.email = email;
-            data.username = username;
+            data.userName = username;
             data.password = password;
             return data;
 
