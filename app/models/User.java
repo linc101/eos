@@ -1,4 +1,5 @@
 package models;
+import General.Result;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
@@ -11,6 +12,10 @@ import codegen.CodeGenerator.PolicySQLGenerator;
 import codegen.CodeGenerator.DBDispatcher;
 
 import transaction.DBBuilder.DataSrc;
+import transaction.JDBCBuilder;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Entity(name = User.TABLE_NAME)
 public class User extends Model implements PolicySQLGenerator{
@@ -33,11 +38,19 @@ public class User extends Model implements PolicySQLGenerator{
 	public String getUserName(){
 		return this.userName;
 	}
+
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
 	
 	public String getEmail(){
 		return this.email;
 	}
-	
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
 	public String getPassword(){
 		return this.password;
 	}
@@ -49,6 +62,10 @@ public class User extends Model implements PolicySQLGenerator{
 	public long getCreateTs(){
 		return this.createTs;
 	}
+
+    public void setCreateTs(long createTs){
+        this.createTs = createTs;
+    }
 
 	@Override
 	public String getTableName() {
@@ -163,5 +180,33 @@ public class User extends Model implements PolicySQLGenerator{
         long res = dp.singleLongQuery(query, userName);
         log.info("res:" + res);
         return res;
+    }
+    private static User doWithResult(ResultSet rs) throws SQLException{
+        if(rs.next()){
+            long id = rs.getLong(1);
+            String userName = rs.getString(2);
+            String email = rs.getString(3);
+            String password = rs.getString(4);
+            Long createTs = rs.getLong(5);
+            User user = new User();
+            user.setId(id);
+            user.setUserName(userName);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setCreateTs(createTs);
+            return user;
+        }
+        return null;
+    }
+    private static final String AllProperty = " id, userName, email, password, createTs ";
+    public static User finUserByName(String userName){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where userName = ?";
+
+        return new JDBCBuilder.JDBCExecutor<User>(query, userName){
+            @Override
+            public User doWithResultSet(ResultSet rs) throws SQLException{
+                return doWithResult(rs);
+            }
+        }.call();
     }
 }
