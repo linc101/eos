@@ -17,6 +17,41 @@
             background-color: #f6f6f1;
 
         }
+
+        table{
+            width:100%;
+            margin:0 auto;
+            font-size:14px;
+        }
+
+        table tbody tr td:first-child{
+            width:30%;
+            text-align: right;
+        }
+
+        table tbody tr td:last-child{
+            width:60%;
+            text-align: left;
+        }
+
+        table input{
+            height:22px;
+            width:180px;
+            line-height:22px;
+            border:1px solid #cdcdcd;
+            font-size:14px;
+            color:#000000;
+            padding-left:5px;
+        }
+
+        .tip{
+            font-size:12px;
+            color:#cdcdcd;
+        }
+
+        .border-style{
+            border:1px solid #cdcdcd;
+        }
     </style>
     <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -38,6 +73,10 @@
         var EOS = EOS || {};
         EOS.gcs = gcs;
 
+        function isEmail(email){
+            var emailReg = new RegExp("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
+            return emailReg.test(email);
+        }
     </script>
 </head>
 <body>

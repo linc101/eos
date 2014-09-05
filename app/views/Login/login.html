@@ -1,0 +1,44 @@
+#{extends 'fontpage.html' /}
+#{set title:'登陆' /}
+
+<style>
+    .user-login{
+        padding:20px;
+        width:600px;
+        margin: 20px auto;
+    }
+</style>
+
+<div class="user-login border-style">
+    <div class="login-region">
+        <table>
+            <tbody>
+            <tr>
+                <td><span>账号：</span></td>
+                <td><input type="text" class="email"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="tip">输入邮箱</td>
+            </tr>
+            <tr>
+                <td><span>密码：</span></td>
+                <td><input type="password" class="password"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="tip">请输入您的密码！</td>
+            </tr>
+            </tbody>
+        </table>
+        <span class="submit_btn" style="margin-left:205px;">登陆</span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    EOS.gcs('/js/login/login.js', function(){
+        $(document).ready(function(){
+            EOS.Login.init.doInit($('.user-login'));
+        })
+    })
+</script>

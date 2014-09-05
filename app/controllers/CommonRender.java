@@ -34,6 +34,11 @@ public class CommonRender extends Controller {
         response.setCookie(USER_NAME, userName, "1d");
     }
 
+    protected static void successLogin(final String userName){
+        session.put(USER_NAME, userName);
+        response.setCookie(USER_NAME, userName, "1d");
+    }
+
     protected static void removeSession(final String userName){
         session.remove(USER_NAME);
         response.removeCookie(USER_NAME);

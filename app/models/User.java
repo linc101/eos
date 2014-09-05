@@ -209,4 +209,9 @@ public class User extends Model implements PolicySQLGenerator{
             }
         }.call();
     }
+
+    public static String userLogin(final String email, final String password){
+        String query = "select userName from " + TABLE_NAME + " where email = ? and password= ?";
+        return dp.singleStringQuery(query, email, password);
+    }
 }

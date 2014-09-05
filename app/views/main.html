@@ -8,7 +8,7 @@
                 box-shadow:1px 1px 3px #bbb;
             }
             .toolbar{
-                height:30px;
+                height:33px;
                 line-height:30px;
                 background-color: #323232;
                 position: relative;
@@ -23,10 +23,12 @@
             }
             .toolbar .l-item{
                 float:left;
+                padding: 0px 3px;
             }
 
             .toolbar .r-item{
                 float:right;
+                list-style:none;
             }
             .toolbar ul{
                 padding:0px;
@@ -40,7 +42,7 @@
                 cursor: pointer;
             }
             .toolbar div span a{
-                color:#ffffff;
+                color:#bbc8c3;
                 font-size:16px;
                 background-color: #323232;
                 margin-right:20px;
@@ -48,14 +50,25 @@
             }
             .toolbar-wrap .toolbar a{
                 text-decoration: none;
+                color:#bbc8c3;
+            }
+            .toolbar .current{
+                border-bottom: 3px solid #008151;
+            }
+            .toolbar .current a{
                 color:#ffffff;
             }
+
+            .toolbar .mouseon a{
+                color:#ffffff;
+            }
+
         </style>
     <body>
     <div class="toolbar-wrap">
         <div class="toolbar">
             <ul>
-                <li class="l-item"><a>首页</a></li>
+                <li class="l-item current"><a>首页</a></li>
                 <li class="l-item"><a>经验</a></li>
             </ul>
             <ul>
@@ -63,12 +76,12 @@
                     user = session.get("_user");
                 }%
                 #{if user}
-                    <li class="r-item"><a>退出</a></li>
+                    <li class="r-item logout">退出</li>
                     <li class="r-item"><span style="cursor: ">欢迎,&nbsp;&nbsp;</span>${user}</li>
                 #{/if}
                 #{else}
                     <li class="r-item"><a href="/Register/registerPage">注册</a></li>
-                    <li class="r-item"><a>登陆</a></li>
+                    <li class="r-item"><a href="/Login/login">登陆</a></li>
                 #{/else}
 
             </ul>
@@ -77,3 +90,62 @@
     </div>
 
     </body>
+    <script type="text/javascript">
+        EOS = EOS || {};
+        ((function($, window){
+            EOS.Logout = EOS.Logout || {};
+            var logout = EOS.Logout;
+
+            logout.init = logout.init || {};
+            logout.init = $.extend(logout.init,{
+                doInit:function(container){
+                    logout.init.container = container;
+                    logout.submit.submitInit();
+                }
+            })
+
+            logout.submit = logout.submit || {};
+            logout.submit = $.extend(logout.submit, {
+                submitInit:function(){
+                    logout.submit.logoutAction();
+                    logout.submit.tabChange();
+                    logout.submit.tabFocus();
+                },
+                logoutAction:function(){
+                    var container = logout.init.container;
+                    container.find(".logout").click(function(){
+                        $.ajax({
+                            type:'get',
+                            url:'/Login/userLogout',
+                            success:function(dataJson){
+                                if(dataJson.success){
+                                    window.location.href = "/Application/index";
+                                }
+                                alert(dataJson.message);
+                            }
+                        })
+                    })
+                },
+                tabChange:function(){
+                    var container = logout.init.container;
+                    container.find('.l-item').click(function(){
+                        container.find('.l-item').removeClass('current');
+                        $(this).addClass('current');
+                    })
+                },
+                tabFocus:function(){
+                    var container = logout.init.container;
+                    container.find('.l-item, .r-item').hover(function(){
+                        $(this).addClass('mouseon');
+                    },function(){
+                        $(this).removeClass('mouseon');
+                    })
+                }
+            })
+
+        })(jQuery, window));
+
+        $(document).ready(function(){
+            EOS.Logout.init.doInit($('.toolbar'));
+        })
+    </script>
