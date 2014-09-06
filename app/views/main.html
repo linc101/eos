@@ -63,21 +63,31 @@
                 color:#ffffff;
             }
 
+            
+
         </style>
     <body>
     <div class="toolbar-wrap">
         <div class="toolbar">
             <ul>
-                <li class="l-item current"><a>首页</a></li>
-                <li class="l-item"><a>经验</a></li>
+                <li class="l-item current"><a href="javascript:void(0)">首页</a></li>
+                <li class="l-item"><a href="javascript:void(0)">经验</a></li>
             </ul>
             <ul>
                 %{
                     user = session.get("_user");
                 }%
                 #{if user}
-                    <li class="r-item logout">退出</li>
-                    <li class="r-item"><span style="cursor: ">欢迎,&nbsp;&nbsp;</span>${user}</li>
+                    <li class="r-item logout"><a href="javascript:void(0)">退出</a></li>
+                    <li class="r-item">
+                        <a href="javascript:void(0)">
+                            <span id="login-username">${user}</span>
+                        </a>
+                    </li>
+                    <li class="r-item" style="margin-right:5px;">
+                        <span style="cursor: auto;color:#bbc8c3;">欢迎,</span>
+                    </li>
+
                 #{/if}
                 #{else}
                     <li class="r-item"><a href="/Register/registerPage">注册</a></li>
@@ -110,6 +120,7 @@
                     logout.submit.logoutAction();
                     logout.submit.tabChange();
                     logout.submit.tabFocus();
+                    logout.submit.userConfig();
                 },
                 logoutAction:function(){
                     var container = logout.init.container;
@@ -140,6 +151,21 @@
                     },function(){
                         $(this).removeClass('mouseon');
                     })
+                },
+                userConfig:function(){
+                    var container = logout.init.container;
+                    container.find('#login-username').poshytip({
+                        className : 'tip-yellowsimple',
+                        content : '<a href="">退出<br/>修改密码',
+//                        showOn : 'none',
+                        alignTo : 'target',
+                        alignX : 'inner-right',
+                        alignY : 'bottom',
+                        offsetX : -40,
+                        offsetY : 5,
+                        fade : false,
+                        slide : false
+                    });
                 }
             })
 

@@ -3,7 +3,8 @@
 <head lang="en">
     <title>#{get 'title' /}</title>
     <meta charset="${_response_encoding}">
-    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/main.css'}">
+    <link rel="stylesheet" type="text/css" href="/css/tip-yellowsimple.css">
     #{get 'moreStyles' /}
     <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
     #{get 'moreScripts' /}
@@ -54,6 +55,7 @@
         }
     </style>
     <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.poshytip.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         if(!window.jQuery){
             var script = document.createElement('script');

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import codegen.CodeGenerator.PolicySQLGenerator;
 import codegen.CodeGenerator.DBDispatcher;
 
+import play.libs.Codec;
 import transaction.DBBuilder.DataSrc;
 import transaction.JDBCBuilder;
 
@@ -56,7 +57,7 @@ public class User extends Model implements PolicySQLGenerator{
 	}
 	
 	public void setPassword(String password){
-		this.password = password;
+		encryptPassword(password);
 	}
 	
 	public long getCreateTs(){
@@ -136,10 +137,14 @@ public class User extends Model implements PolicySQLGenerator{
 	public User(String userName, String email, String password){
 		this.userName = userName;
 		this.email = email;
-		this.password = password;
+		encryptPassword(password);
 		this.createTs = System.currentTimeMillis();
 	}
-	
+
+    private  void encryptPassword(String password){
+        this.password = Codec.hexMD5(password);
+    }
+
 	private static final User _instance = new User();
 	
 	public static DBDispatcher dp = new  DBDispatcher(DataSrc.BASIC, _instance);
@@ -210,7 +215,8 @@ public class User extends Model implements PolicySQLGenerator{
         }.call();
     }
 
-    public static String userLogin(final String email, final String password){
+    public static String userLogin(String email, String password){
+        password = Codec.hexMD5(password);
         String query = "select userName from " + TABLE_NAME + " where email = ? and password= ?";
         return dp.singleStringQuery(query, email, password);
     }
