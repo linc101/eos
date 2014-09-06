@@ -59,27 +59,33 @@
                 color:#ffffff;
             }
 
-            .toolbar .mouseon a{
+            .toolbar-wrap .mouseon a{
                 color:#ffffff;
             }
 
-            
+            .downlist_a{
+                text-decoration:  none;
+                color: #bcc8c7;
+                font-size:13px;
+                padding-right:10px;
+            }
+
 
         </style>
     <body>
     <div class="toolbar-wrap">
         <div class="toolbar">
             <ul>
-                <li class="l-item current"><a href="javascript:void(0)">首页</a></li>
-                <li class="l-item"><a href="javascript:void(0)">经验</a></li>
+                <li class="l-item current hover-on"><a href="javascript:void(0)">首页</a></li>
+                <li class="l-item hover-on"><a href="javascript:void(0)">经验</a></li>
             </ul>
             <ul>
                 %{
                     user = session.get("_user");
                 }%
                 #{if user}
-                    <li class="r-item logout"><a href="javascript:void(0)">退出</a></li>
-                    <li class="r-item">
+                    *{<li class="r-item logout hover-on"><a href="javascript:void(0)">退出</a></li>}*
+                    <li class="r-item hover-on">
                         <a href="javascript:void(0)">
                             <span id="login-username">${user}</span>
                         </a>
@@ -90,8 +96,8 @@
 
                 #{/if}
                 #{else}
-                    <li class="r-item"><a href="/Register/registerPage">注册</a></li>
-                    <li class="r-item"><a href="/Login/login">登陆</a></li>
+                    <li class="r-item hover-on"><a href="/Register/registerPage">注册</a></li>
+                    <li class="r-item hover-on"><a href="/Login/login">登陆</a></li>
                 #{/else}
 
             </ul>
@@ -124,17 +130,20 @@
                 },
                 logoutAction:function(){
                     var container = logout.init.container;
-                    container.find(".logout").click(function(){
-                        $.ajax({
-                            type:'get',
-                            url:'/Login/userLogout',
-                            success:function(dataJson){
-                                if(dataJson.success){
-                                    window.location.href = "/Application/index";
+                    $('body').find(".logout").livequery(function(){
+                        $(this).click(function(){
+                            $.ajax({
+                                type:'get',
+                                url:'/Login/userLogout',
+                                success:function(dataJson){
+                                    if(dataJson.success){
+                                        window.location.href = "/Application/index";
+                                    }
+                                    alert(dataJson.message);
                                 }
-                                alert(dataJson.message);
-                            }
+                            })
                         })
+
                     })
                 },
                 tabChange:function(){
@@ -146,22 +155,34 @@
                 },
                 tabFocus:function(){
                     var container = logout.init.container;
-                    container.find('.l-item, .r-item').hover(function(){
-                        $(this).addClass('mouseon');
-                    },function(){
-                        $(this).removeClass('mouseon');
+                    $('body').find('.hover-on').livequery(function(){
+                        $(this).hover(function(){
+                            $(this).addClass('mouseon');
+                        },function(){
+                            $(this).removeClass('mouseon');
+                        });
                     })
+
+//                    container.find('.hover-on').live('mouseenter',function(){
+//                        $(this).addClass('mouseon');
+//                    }).live('mouseleave', function(){
+//                        $(this).removeClass('mouseon');
+//                    })
                 },
                 userConfig:function(){
                     var container = logout.init.container;
                     container.find('#login-username').poshytip({
                         className : 'tip-yellowsimple',
-                        content : '<a href="">退出<br/>修改密码',
-//                        showOn : 'none',
+                        content : '<div style="height:3px;"></div>' +
+                                '<a href="javascript:void(0)" class="downlist_a logout hover-on">退出</a>' +
+                                '<br/>' +
+                                '<div style="height:10px;"></div>' +
+                                '<a href="" class="downlist_a">修改密码</a>',
                         alignTo : 'target',
+                        showTimeout:0,
                         alignX : 'inner-right',
                         alignY : 'bottom',
-                        offsetX : -40,
+                        offsetX : -50,
                         offsetY : 5,
                         fade : false,
                         slide : false
