@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import play.mvc.Controller;
+import play.mvc.Before;
 
 import static config.Config.*;
 
@@ -22,6 +23,15 @@ public class CommonRender extends Controller {
     protected static void RenderFailed(String message){
         Result res = new Result(message);
         renderJSON(JSONObject.fromObject(res));
+    }
+
+    @Before(only = {"UserCenter.userCenter"})
+    public static void checkAccess(){
+        String userName = session.get(USER_NAME);
+        logger.info("checkAccess------userName:" + userName );
+        if(StringUtils.isEmpty(userName)){
+            render("/Login/login.html");
+        }
     }
 
     protected static void RenderSuccess(){
