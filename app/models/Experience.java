@@ -14,9 +14,13 @@ import codegen.CodeGenerator.DBDispatcher;
 
 import transaction.DBBuilder.DataSrc;
 import transaction.JDBCBuilder;
+import util.PageOffset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Created by yehuizhang on 14-9-7.
  */
@@ -119,7 +123,7 @@ public class Experience extends Model implements PolicySQLGenerator{
 
     @Override
     public void setId(Long id) {
-
+        this.id = id;
     }
 
     @Override
@@ -167,7 +171,42 @@ public class Experience extends Model implements PolicySQLGenerator{
         return dp.singleLongQuery(query, id);
     }
 
-    public
+    private static final String AllProperty = " `id`, `userName`, `title`, `article`, `scanTimes`, `domain` ";
+
+    private static List<Experience> parseExperience(ResultSet res) throws SQLException{
+        List<Experience> exps = new ArrayList<Experience>();
+        while(res.next()){
+            Experience exp = new Experience();
+            exp.setId(res.getLong(1));
+            exp.setUserName(res.getString(2));
+            exp.setTitle(res.getString(3));
+            exp.setArticle(res.getString(4));
+            exp.setScanTimes(res.getLong(5));
+            exp.setDomain(res.getInt(6));
+            exps.add(exp);
+        }
+        return exps;
+    }
+
+    public static List<Experience> findAllExperience(PageOffset offset){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " limit ?,?";
+        return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, offset.getOffset(),offset.getPs()){
+            @Override
+            public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
+                return parseExperience(res);
+            }
+        }.call();
+    }
+
+    public static List<Experience> findExperienceByUsername(String userName, PageOffset offset){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where userName = ? limit ?,?";
+        return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, userName, offset.getOffset(),offset.getPs()){
+            @Override
+            public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
+                return parseExperience(res);
+            }
+        }.call();
+    }
 
 
 }
