@@ -13,3 +13,13 @@
     -webkit-appearance: none;
     -webkit-border-radius: 0;
 }
+
+.head-region{
+    padding-top:0px;
+    height:60px;
+    background-color: #f3f6f5;
+}
+.container{
+    width:1000px;
+    margin: 0 auto;
+}

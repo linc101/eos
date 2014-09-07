@@ -1,0 +1,29 @@
+/*.user-center-display{*/
+    /*display:block;*/
+    /*float:left;*/
+    /*font-size:16px;*/
+    /*padding-right:10px;*/
+/*}*/
+.usercenter-head{
+    width:1000px;
+    margin:0 auto;
+    height:inherit;
+}
+.head-region a{
+    text-decoration: none;
+    color: #009a61;
+}
+
+.head-region li{
+    float:left;
+    height:inherit;
+    padding-right:10px;
+    font-size:16px;
+    line-height: 60px;
+}
+
+.head-region ul{
+    font-weight:bold;
+    float:left;
+    height:inherit;
+}
