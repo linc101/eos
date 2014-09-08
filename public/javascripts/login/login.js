@@ -41,7 +41,28 @@ EOS = EOS || {};
                         if(dataJson.success){
                             window.location.href = "/Application/index";
                         }
-                        alert(dataJson.message);
+//                        alert(dataJson.messag
+                        var html =
+                            '<div class="dialog" id="dialog-message">' +
+                            '  <p>' +
+                            '    <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 0 0;"></span>' + "test" +
+                            '  </p>' +
+                            '</div>';
+                        $(html).dialog({
+                            //autoOpen: false,
+                            resizable: false,
+                            modal: true,
+                            show: {
+                                effect: 'fade',
+                                duration: 300
+                            },
+                            title: "test" || "提示信息",
+                            buttons: {
+                                "确定": function() {
+                                    var dlg = $(this).dialog("close");
+                                }
+                            }
+                        });
                     }
                 })
             })
