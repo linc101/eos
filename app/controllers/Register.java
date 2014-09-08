@@ -68,7 +68,7 @@ public class Register extends CommonRender {
     }
 
     private static void existedUserName(final String userName){
-        long id = User.findUserNameExisted(userName);
+        long id = User.findIfExistedByUserName(userName);
         if(id > 0){
             RenderFailed("用户名已存在，请输入其它用户名！");
         }

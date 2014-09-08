@@ -25,10 +25,10 @@ public class User extends Model implements PolicySQLGenerator{
 	
 	public static final String TABLE_NAME = "user";
 	
-	@Column(name="userName", unique=true)
+	@Column(name="userName")
 	private String userName;
 	
-	@Column(name="email", unique=true)
+	@Column(name="email")
 	private String email;
 	
 	@Column(name="password")
@@ -123,7 +123,7 @@ public class User extends Model implements PolicySQLGenerator{
 	}
 	
 	public static long findIfExistedByUserName(String userName){
-		String query = "select id from " + TABLE_NAME + " where userName = " + userName;
+		String query = "select id from " + TABLE_NAME + " where userName =? ";
 		return dp.singleLongQuery(query, userName);
 	}
 	
@@ -180,13 +180,6 @@ public class User extends Model implements PolicySQLGenerator{
         return res;
     }
 
-    public static long findUserNameExisted(String userName){
-        String query = "select id from " + TABLE_NAME + " where userName = ?";
-        log.info("userName query : " +query + " userName:" + userName);
-        long res = dp.singleLongQuery(query, userName);
-        log.info("res:" + res);
-        return res;
-    }
     private static User doWithResult(ResultSet rs) throws SQLException{
         if(rs.next()){
             long id = rs.getLong(1);
