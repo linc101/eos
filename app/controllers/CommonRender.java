@@ -25,12 +25,12 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
-    @Before(only = {"UserCenter.userCenter"})
+    @Before(only = {"UserCenter.userCenter","UserCenter.addExperience"})
     public static void checkAccess(){
         String userName = session.get(USER_NAME);
         logger.info("checkAccess------userName:" + userName );
         if(StringUtils.isEmpty(userName)){
-            render("/Login/login.html");
+            redirect("/Login/login");
         }
     }
 

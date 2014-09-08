@@ -1,5 +1,8 @@
 package controllers;
 
+import models.User;
+import models.Experience;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,12 +25,25 @@ public class UserCenter extends CommonRender {
         title = trimString(title);
         article = trimString(article);
 
+        User user = getUser();
         if(StringUtils.isEmpty(title)){
             RenderFailed("请输入经验标题");
         }
 
         if(StringUtils.length(title) < 6){
             RenderFailed("请最少输入6个");
+        }
+
+        if(StringUtils.isEmpty(article)){
+            RenderFailed("请输入经历内容");
+        }
+
+        boolean isSuccess = new Experience(user.getUserName(), title, article).jdbcSave();
+
+        if(isSuccess = false){
+            RenderFailed("数据库异常");
+        }else{
+            RenderSuccess();
         }
     }
 
