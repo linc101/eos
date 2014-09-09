@@ -40,6 +40,7 @@ EOS = EOS || {};
                     success:function(dataJson){
                         if(dataJson.success){
                             window.location.href = "/Application/index";
+                            return;
                         }
                         EOS.util.UIAssert(dataJson.message);
 //                        alert(dataJson.messag
