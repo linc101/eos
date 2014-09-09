@@ -23,4 +23,25 @@ var EOS = EOS || {};
             ]
         })
     }
+
+    util.UIConfirm = function(text, callback){
+        var html = "<div style='text-align:center;line-height: 120px;'>" + text +"</div>";
+        $(html).dialog({
+            title:'确认',
+            modal:true,
+            closeText: "hide",
+            width: 300,
+            height:250,
+            buttons:[
+                {text:'确定',click:function(){
+//                    $(this).dialog('close');
+                    callback;
+                }},{
+                    text:'取消',click:function(){
+                        $(this).dialog('close');
+                    }
+                }
+            ]
+        })
+    }
 })(jQuery, window));

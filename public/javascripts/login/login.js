@@ -79,12 +79,12 @@ EOS = EOS || {};
                 password    = container.find(".password").val();
 
             if(email == null){
-                alert('请输入邮箱！');
+                EOS.util.UIAssert('请输入邮箱！');
                 return null;
             }
 
             if(password == null){
-                alert('请输入密码！')
+                EOS.util.UIAssert('请输入密码！')
                 return null;
             }
 

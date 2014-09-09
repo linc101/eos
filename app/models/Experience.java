@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class Experience extends Model implements PolicySQLGenerator{
     private static final Logger logger = LoggerFactory.getLogger(Experience.class);
 
-    public static final String TABLE_NAME = "EXP";
+    public static final String TABLE_NAME = "exp";
 
     @Lob
     @Column(name="article")
@@ -95,7 +95,7 @@ public class Experience extends Model implements PolicySQLGenerator{
     }
 
     public Experience(){
-
+        super();
     }
 
     public Experience(String userName, String title, String article){
@@ -141,13 +141,17 @@ public class Experience extends Model implements PolicySQLGenerator{
         }
     }
 
+    public boolean firstSave(){
+        return insert();
+    }
+
     private static final Experience _instance = new Experience();
 
     public static DBDispatcher dp = new DBDispatcher(DataSrc.BASIC, _instance);
 
     public boolean insert(){
         String query = "insert into " + TABLE_NAME + " (`userName`, `title`, `article`, `domain`, `scanTimes`) values (?,?,?,?,?)";
-        long res = dp.singleLongQuery(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
+        long res = dp.insert(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
         if(res <= 0 ){
             return false;
         }else{
@@ -157,7 +161,7 @@ public class Experience extends Model implements PolicySQLGenerator{
 
     public boolean update(){
         String query = "update " + TABLE_NAME + " set `userName` = ?, `title` = ?, `article` = ?, `domain` = ?, `scanTimes` = ?";
-        long res = dp.singleLongQuery(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
+        long res = dp.update(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
         if(res <= 0){
             return false;
         }else{
@@ -188,7 +192,7 @@ public class Experience extends Model implements PolicySQLGenerator{
         return exps;
     }
 
-    public static List<Experience> findAllExperience(PageOffset offset){
+    public static List<Experience> findAllExp(PageOffset offset){
         String query = "select " + AllProperty + " from " + TABLE_NAME + " limit ?,?";
         return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, offset.getOffset(),offset.getPs()){
             @Override
@@ -198,7 +202,7 @@ public class Experience extends Model implements PolicySQLGenerator{
         }.call();
     }
 
-    public static List<Experience> findExperienceByUsername(String userName, PageOffset offset){
+    public static List<Experience> findExpByUsername(String userName, PageOffset offset){
         String query = "select " + AllProperty + " from " + TABLE_NAME + " where userName = ? limit ?,?";
         return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, userName, offset.getOffset(),offset.getPs()){
             @Override
@@ -206,6 +210,12 @@ public class Experience extends Model implements PolicySQLGenerator{
                 return parseExperience(res);
             }
         }.call();
+    }
+
+    public static Experience findExpById(long id){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where id = ?";
+
+        return null;
     }
 
 }

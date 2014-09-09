@@ -138,8 +138,9 @@
                                 success:function(dataJson){
                                     if(dataJson.success){
                                         window.location.href = "/Application/index";
+                                        return;
                                     }
-                                    alert(dataJson.message);
+                                    EOS.util.UIAssert(dataJson.message);
                                 }
                             })
                         })

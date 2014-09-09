@@ -38,7 +38,7 @@ public class UserCenter extends CommonRender {
             RenderFailed("请输入经历内容");
         }
 
-        boolean isSuccess = new Experience(user.getUserName(), title, article).jdbcSave();
+        boolean isSuccess = new Experience(user.getUserName(), title, article).firstSave();
 
         if(isSuccess = false){
             RenderFailed("数据库异常");
