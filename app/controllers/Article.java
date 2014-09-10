@@ -13,9 +13,9 @@ public class Article extends CommonRender{
         Experience exp = Experience.findExpById(articleId);
         log.info("------------exp:" + exp);
         if(exp == null){
-            RenderFailed("访问的文章不存在");
+            render("404page.html");
         }
-        RenderSuccess(exp);
+        render("/article/article.html");
     }
 
 }

@@ -31,7 +31,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 @JsonAutoDetect
 @Entity(name = Experience.TABLE_NAME)
-@JsonIgnoreProperties(value={"entityId", "idColumn", "idName","persistent" ,"tableHashKey"})
+@JsonIgnoreProperties(value = {"entityId", "idColumn", "idName","persistent" ,"tableHashKey"})
 public class Experience extends Model implements PolicySQLGenerator{
     private static final Logger logger = LoggerFactory.getLogger(Experience.class);
 
