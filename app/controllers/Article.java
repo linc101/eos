@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Experience;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -8,7 +9,13 @@ import org.slf4j.LoggerFactory;
 public class Article extends CommonRender{
     private static final Logger log = LoggerFactory.getLogger(Article.class);
 
-    public static void article(long articleId){
-
+    public static void article(final long articleId){
+        Experience exp = Experience.findExpById(articleId);
+        log.info("------------exp:" + exp);
+        if(exp == null){
+            RenderFailed("访问的文章不存在");
+        }
+        RenderSuccess(exp);
     }
+
 }

@@ -41,6 +41,11 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
+    protected static void RenderSuccess(Object obj){
+        Result<Object> res = new Result<Object>(obj);
+        renderJSON(JSONObject.fromObject(res));
+    }
+
     protected static void successRegister(final String userName){
         session.put(USER_NAME, userName);
         response.setCookie(USER_NAME, userName, "1d");

@@ -44,8 +44,8 @@ var EOS = EOS || {};
                     },
                     success:function(dataJson){
                         if(dataJson.success){
-//                        window.location.href = "/"
-                            EOS.util.UIAssert("ok!");
+                            window.location.href = "/article/" + dataJson.res;
+//                            EOS.util.UIAssert("ok!");
                             return;
                         }
                         EOS.util.UIAssert("失败！");

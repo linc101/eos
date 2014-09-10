@@ -21,17 +21,26 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 /**
  * Created by yehuizhang on 14-9-7.
  */
+@JsonAutoDetect
 @Entity(name = Experience.TABLE_NAME)
+@JsonIgnoreProperties(value={"entityId", "idColumn", "idName","persistent" ,"tableHashKey"})
 public class Experience extends Model implements PolicySQLGenerator{
     private static final Logger logger = LoggerFactory.getLogger(Experience.class);
 
+    @JsonIgnore
     public static final String TABLE_NAME = "exp";
 
     @Lob
     @Column(name="article")
+    @JsonProperty("test")
     private String article;
 
     @Column(name="title")
@@ -141,8 +150,10 @@ public class Experience extends Model implements PolicySQLGenerator{
         }
     }
 
-    public boolean firstSave(){
-        return insert();
+    public long firstSave(){
+        String query = "insert into " + TABLE_NAME + " (`userName`, `title`, `article`, `domain`, `scanTimes`) values (?,?,?,?,?)";
+        long res = dp.insert(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
+        return res;
     }
 
     private static final Experience _instance = new Experience();
@@ -152,6 +163,7 @@ public class Experience extends Model implements PolicySQLGenerator{
     public boolean insert(){
         String query = "insert into " + TABLE_NAME + " (`userName`, `title`, `article`, `domain`, `scanTimes`) values (?,?,?,?,?)";
         long res = dp.insert(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
+        logger.info("insert res is:" + res);
         if(res <= 0 ){
             return false;
         }else{
@@ -175,21 +187,24 @@ public class Experience extends Model implements PolicySQLGenerator{
         return dp.singleLongQuery(query, id);
     }
 
-    private static final String AllProperty = " `id`, `userName`, `title`, `article`, `scanTimes`, `domain` ";
+    private static final String AllProperty = " id, userName, title, article, scanTimes, domain ";
 
-    private static List<Experience> parseExperience(ResultSet res) throws SQLException{
-        List<Experience> exps = new ArrayList<Experience>();
-        while(res.next()){
-            Experience exp = new Experience();
+    private static Experience parseExperience(ResultSet res){
+        Experience exp = new Experience();
+        try {
+            long id = res.getLong(1);
+            logger.info("---------------exp id:" + id);
             exp.setId(res.getLong(1));
             exp.setUserName(res.getString(2));
             exp.setTitle(res.getString(3));
             exp.setArticle(res.getString(4));
             exp.setScanTimes(res.getLong(5));
             exp.setDomain(res.getInt(6));
-            exps.add(exp);
+            return exp;
+        }catch(SQLException e){
+            logger.error(e.getMessage(), e);
+            return null;
         }
-        return exps;
     }
 
     public static List<Experience> findAllExp(PageOffset offset){
@@ -197,7 +212,13 @@ public class Experience extends Model implements PolicySQLGenerator{
         return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, offset.getOffset(),offset.getPs()){
             @Override
             public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
-                return parseExperience(res);
+                List<Experience> exps = new ArrayList<Experience>();
+                while(res.next()){
+                    Experience exp = parseExperience(res);
+                    if(exp != null)
+                        exps.add(exp);
+                }
+                return exps;
             }
         }.call();
     }
@@ -207,15 +228,34 @@ public class Experience extends Model implements PolicySQLGenerator{
         return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, userName, offset.getOffset(),offset.getPs()){
             @Override
             public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
-                return parseExperience(res);
+                List<Experience> exps = new ArrayList<Experience>();
+                while(res.next()){
+                    Experience exp = parseExperience(res);
+                    if(exp != null)
+                        exps.add(exp);
+                }
+                return exps;
             }
         }.call();
     }
 
     public static Experience findExpById(long id){
         String query = "select " + AllProperty + " from " + TABLE_NAME + " where id = ?";
+        return new JDBCBuilder.JDBCExecutor<Experience>(query, id){
+            @Override
+            public Experience doWithResultSet(ResultSet res) throws SQLException{
+                if(res.next())
+                    return parseExperience(res);
+                else{
+                    return null;
+                }
+            }
+        }.call();
+    }
 
-        return null;
+    @Override
+    public String toString(){
+        return "[userName:"+ this.getUserName() +  " title:"+ this.getTitle() + " article: "+ this.getArticle() +"]";
     }
 
 }
