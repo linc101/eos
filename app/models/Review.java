@@ -126,11 +126,40 @@ public class Review extends Model implements PolicySQLGenerator {
         this.id = id;
     }
 
-    @Override
-    public boolean jdbcSave() {
-        return false;
+    public long findIfExistedById(long id){
+        String query = "select id form " + TABLE_NAME + " where id=?";
+        return dp.singleLongQuery(query, id);
     }
 
+    @Override
+    public boolean jdbcSave() {
+        long id = findIfExistedById(this.id);
+        if(id <= 0){
+            return insert();
+        }else{
+            return update();
+        }
+    }
+
+    public boolean insert(){
+        String query = "insert into " + TABLE_NAME + " (expId, reviewed, reviewer, content, createTs, childReviewId) values (?,?,?,?,?,?)";
+        long res = dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId);
+        if(res <= 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean update(){
+        String query = "update " + TABLE_NAME + " set expId=?, reviewed=?, reviewer=?, content=?, createTs=?, childReviewId=? where id = ?";
+        long res = dp.update(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId, this.id);
+        if(res <= 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
     @Override
     public String getIdName() {
         return null;
