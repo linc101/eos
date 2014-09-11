@@ -12,10 +12,11 @@ public class Article extends CommonRender{
     public static void article(final long articleId){
         Experience exp = Experience.findExpById(articleId);
         log.info("------------exp:" + exp);
+        flash.put("articleId", articleId);
         if(exp == null){
             render("404page.html");
         }
-        render("/article/article.html");
+        render("/article/article.html", exp);
     }
 
 }

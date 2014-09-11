@@ -1,12 +1,32 @@
 #{extends 'main.html'/}
 
 <div class="article">
-    <div class="content-width article-title">
-        test!
+    <div class="head-region">
+        <div class="validwidth">
+            <ul style="margin:0px;">
+                <li class="user-articheight-60 "><a href="" style="font-size:50px;">${exp?.userName}</a></li>
+            </ul>
+            <span style="line-height: 90px;">经验分享之----${exp?.title}</span>
+        </div>
     </div>
 
-    <div class="article-content">
 
+    <div class="article-wrap content-width">
+        <span style="display:none;" class="articleId">${flash.articleId}</span>
+        <div class="article-title">
+        ${flash.articleId}
+        </div>
+
+        <div class="article-content">
+
+        </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    EOS.gcs('/js/article/article.js', function(){
+        $(document).ready(function(){
+            var articleId = $(".article .articleId").html();
+            EOS.article.init.doInit($(".article"), articleId);
+        });
+    })
+</script>

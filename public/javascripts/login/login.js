@@ -2,7 +2,7 @@
  * Created by yehuizhang on 14-9-5.
  */
 
-EOS = EOS || {};
+var EOS = EOS || {};
 
 ((function($, window){
     EOS.Login = EOS.Login || {};

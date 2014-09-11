@@ -37,7 +37,7 @@ var EOS = EOS || {};
                 var email = container.find(".email").val();
                 var flag = isEmail(email);
                 if(flag == false){
-                    alert("请输入邮箱的正确格式!");
+                    EOS.util.UIAssert("请输入邮箱的正确格式!");
                     return;
                 }
                 $.ajax({
@@ -46,7 +46,7 @@ var EOS = EOS || {};
                     data:{email:email},
                     success:function(dataJson){
                         if(dataJson.success){
-                            alert("恭喜，邮箱可用！");
+                            EOS.util.UIAssert("恭喜，邮箱可用！");
                             return;
                         }
 
@@ -67,8 +67,9 @@ var EOS = EOS || {};
                     data:data,
                     success:function(dataJson){
                         if(dataJson.success){
-                            alert("恭喜，注册成功！");
+                            EOS.util.UIAssert("恭喜，注册成功！");
                             window.location.href = "/Application/index";
+                            return;
                         }
                         alert(dataJson.message);
                     }
