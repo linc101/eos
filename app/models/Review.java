@@ -141,6 +141,12 @@ public class Review extends Model implements PolicySQLGenerator {
         }
     }
 
+    public static String getMapTableName(long expId){
+        StringBuilder sb = new StringBuilder("review");
+        sb.append(expId%32);
+        return sb.toString();
+    }
+
     public boolean insert(){
         String query = "insert into " + TABLE_NAME + " (expId, reviewed, reviewer, content, createTs, childReviewId) values (?,?,?,?,?,?)";
         long res = dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId);
