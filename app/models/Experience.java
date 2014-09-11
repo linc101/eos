@@ -172,8 +172,8 @@ public class Experience extends Model implements PolicySQLGenerator{
     }
 
     public boolean update(){
-        String query = "update " + TABLE_NAME + " set `userName` = ?, `title` = ?, `article` = ?, `domain` = ?, `scanTimes` = ?";
-        long res = dp.update(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
+        String query = "update " + TABLE_NAME + " set `userName` = ?, `title` = ?, `article` = ?, `domain` = ?, `scanTimes` = ? where id = ?";
+        long res = dp.update(query, this.userName, this.title, this.article, this.domain, this.scanTimes, this.id);
         if(res <= 0){
             return false;
         }else{
@@ -258,4 +258,12 @@ public class Experience extends Model implements PolicySQLGenerator{
         return "[userName:"+ this.getUserName() +  " title:"+ this.getTitle() + " article: "+ this.getArticle() +"]";
     }
 
+    public static boolean incTime(long id){
+        Experience exp = findExpById(id);
+        if(exp == null){
+            return false;
+        }
+        exp.setScanTimes(exp.getScanTimes() + 1);
+        return exp.jdbcSave();
+    }
 }

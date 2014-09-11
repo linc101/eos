@@ -1,31 +1,37 @@
 #{extends 'main.html'/}
-
+<style>
+    .article .article-wrap .article-title-h1{
+        margin: 20px 0;
+        font-size: 22px;
+        color:#017e66;
+    }
+</style>
 <div class="article">
     <div class="head-region">
         <div class="validwidth">
             <ul style="margin:0px;">
-                <li class="user-articheight-60 "><a href="" style="font-size:50px;">${exp?.userName}</a></li>
+                <li class="user-articheight-60 "><a href="" style="font-size:40px;color:#333;" class="article-username"></a></li>
             </ul>
-            <span style="line-height: 90px;">经验分享之----${exp?.title}</span>
+            <span style="line-height:90px;color:#999;" class="big-title"></span>
         </div>
     </div>
 
 
-    <div class="article-wrap content-width">
-        <span style="display:none;" class="articleId">${flash.articleId}</span>
+    <div class="article-wrap content-width" style="padding-left:90px;">
+        *{<span style="display:none;" class="articleId">${flash.articleId}</span>}*
         <div class="article-title">
-        ${flash.articleId}
+            <h1 class="article-title-h1"></h1>
         </div>
 
-        <div class="article-content">
-
-        </div>
+        <div class="article-content"></div>
     </div>
+
+
 </div>
 <script type="text/javascript">
     EOS.gcs('/js/article/article.js', function(){
         $(document).ready(function(){
-            var articleId = $(".article .articleId").html();
+            var articleId = ${articleId}
             EOS.article.init.doInit($(".article"), articleId);
         });
     })
