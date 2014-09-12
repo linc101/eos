@@ -52,6 +52,7 @@ public class Experience extends Model implements PolicySQLGenerator{
     @Column(name="domain")
     int domain;
 
+    long createTs;
     private static class Domain{
         public static final int LIVE = 1;      //生活
 
@@ -103,6 +104,14 @@ public class Experience extends Model implements PolicySQLGenerator{
         this.userName = userName;
     }
 
+    public long getCreateTs(){
+        return this.createTs;
+    }
+
+    public void setCreateTs(long createTs){
+        this.createTs = createTs;
+    }
+
     public Experience(){
         super();
     }
@@ -113,6 +122,7 @@ public class Experience extends Model implements PolicySQLGenerator{
         this.article = article;
         this.scanTimes = 0;
         this.domain = Domain.LIVE;
+        this.createTs = System.currentTimeMillis();
     }
 
     @Override
@@ -151,8 +161,8 @@ public class Experience extends Model implements PolicySQLGenerator{
     }
 
     public long firstSave(){
-        String query = "insert into " + TABLE_NAME + " (`userName`, `title`, `article`, `domain`, `scanTimes`) values (?,?,?,?,?)";
-        long res = dp.insert(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
+        String query = "insert into " + TABLE_NAME + " (`userName`, `title`, `article`, `domain`, `scanTimes`, createTs) values (?,?,?,?,?,?)";
+        long res = dp.insert(query, this.userName, this.title, this.article, this.domain, this.scanTimes, this.createTs);
         return res;
     }
 
@@ -161,8 +171,8 @@ public class Experience extends Model implements PolicySQLGenerator{
     public static DBDispatcher dp = new DBDispatcher(DataSrc.BASIC, _instance);
 
     public boolean insert(){
-        String query = "insert into " + TABLE_NAME + " (`userName`, `title`, `article`, `domain`, `scanTimes`) values (?,?,?,?,?)";
-        long res = dp.insert(query, this.userName, this.title, this.article, this.domain, this.scanTimes);
+        String query = "insert into " + TABLE_NAME + " (`userName`, `title`, `article`, `domain`, `scanTimes`, createTs) values (?,?,?,?,?,?)";
+        long res = dp.insert(query, this.userName, this.title, this.article, this.domain, this.scanTimes, this.createTs);
         logger.info("insert res is:" + res);
         if(res <= 0 ){
             return false;
@@ -172,8 +182,8 @@ public class Experience extends Model implements PolicySQLGenerator{
     }
 
     public boolean update(){
-        String query = "update " + TABLE_NAME + " set `userName` = ?, `title` = ?, `article` = ?, `domain` = ?, `scanTimes` = ? where id = ?";
-        long res = dp.update(query, this.userName, this.title, this.article, this.domain, this.scanTimes, this.id);
+        String query = "update " + TABLE_NAME + " set `userName` = ?, `title` = ?, `article` = ?, `domain` = ?, `scanTimes` = ?, createTs = ? where id = ?";
+        long res = dp.update(query, this.userName, this.title, this.article, this.domain, this.scanTimes,this.createTs, this.id);
         if(res <= 0){
             return false;
         }else{
@@ -187,7 +197,7 @@ public class Experience extends Model implements PolicySQLGenerator{
         return dp.singleLongQuery(query, id);
     }
 
-    private static final String AllProperty = " id, userName, title, article, scanTimes, domain ";
+    private static final String AllProperty = " id, userName, title, article, scanTimes, domain, createTs ";
 
     private static Experience parseExperience(ResultSet res){
         Experience exp = new Experience();
@@ -200,6 +210,7 @@ public class Experience extends Model implements PolicySQLGenerator{
             exp.setArticle(res.getString(4));
             exp.setScanTimes(res.getLong(5));
             exp.setDomain(res.getInt(6));
+            exp.setCreateTs(res.getLong(7));
             return exp;
         }catch(SQLException e){
             logger.error(e.getMessage(), e);

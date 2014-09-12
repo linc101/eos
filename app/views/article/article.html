@@ -5,6 +5,30 @@
         font-size: 22px;
         color:#017e66;
     }
+    .article .article-wrap .article-meta{
+        margin-top:30px;
+        /*float:right;*/
+        color:#999;
+        padding-bottom:10px;
+        border-bottom:2px solid #e7edec;
+    }
+
+    .review-textarea{
+        width:97.5%;
+        display:block;
+        padding:6px 12px;
+        font-size:14px;
+        color:#555;
+        line-height: 1.6;
+        background-color: white;
+        border:1px solid #ccc;
+        border-radius: 2px;
+    }
+
+    .add-review:before{
+        content:" ";
+        display:table;
+    }
 </style>
 <div class="article">
     <div class="head-region">
@@ -24,6 +48,25 @@
         </div>
 
         <div class="article-content"></div>
+
+        <div class="article-meta">
+            <span class="datetime" style="margin-right:20px;"></span>
+            <span class="review-count"></span>
+            <span class="scan-times"></span>
+        </div>
+
+        <div class="review">
+
+        </div>
+
+        <div class="add-review">
+            <h4>你的评论</h4>
+            <textarea rows="5" class="review-textarea"></textarea>
+            <span class="submit_btn" style="float:right;margin-top:10px;">提交评论</span>
+        </div>
+        <div class="not-login">
+
+        </div>
     </div>
 
 

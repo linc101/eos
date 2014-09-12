@@ -27,6 +27,8 @@ var EOS = EOS ||  {};
             var content = container.find(".article-content");
             var articleUsername = container.find(".article-username");
             var bigTitle = container.find(".big-title");
+            var dateTime = container.find(".article-wrap .article-meta .datetime");
+            var scanTime = container.find(".article-wrap .scan-times");
             $.ajax({
                 type:"GET",
                 url:'/Article/getArticleById',
@@ -39,10 +41,26 @@ var EOS = EOS ||  {};
                     title.html(dataJson.res.title);
                     articleUsername.html(dataJson.res.userName);
                     bigTitle.html("经验分享之----" + dataJson.res.title);
+                    var nowDate = new Date();
+                    var nowYear = nowDate.getFullYear();
+                    var thatDate = new Date(dataJson.res.createTs);
+                    var thatYear = thatDate.getFullYear();
+                    if(nowYear == thatYear)
+                        dateTime.html(thatDate.Format("MM-dd"));
+                    else{
+                        dateTime.html(thatDate.Format("yyyy-MM-dd"));
+                    }
+                    scanTime.html(dataJson.res.scanTimes + "&nbsp;浏览");
                 }
             })
 //            title.html();
 //            content.html(article.init.articleId);
+        },
+        showArticleMeta:function(){
+            $.ajax({
+                type:'GET',
+                url:'/Review/'
+            })
         }
     });
 })(jQuery, window));
