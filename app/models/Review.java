@@ -14,6 +14,12 @@ import codegen.CodeGenerator.DBDispatcher;
 
 import transaction.DBBuilder.DataSrc;
 import transaction.JDBCBuilder;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yehuizhang on 14-9-8.
  */
@@ -44,6 +50,8 @@ public class Review extends Model implements PolicySQLGenerator {
 
     private Long childReviewId;
 
+    private int floor;
+
     public Review(){
 
     }
@@ -55,6 +63,7 @@ public class Review extends Model implements PolicySQLGenerator {
         this.content = content;
         this.createTs = System.currentTimeMillis();
         this.childReviewId = 0L;
+        this.floor = findMaxFloor(expId);
     }
 
     public long getExpId(){
@@ -106,6 +115,14 @@ public class Review extends Model implements PolicySQLGenerator {
         this.childReviewId = childReviewId;
     }
 
+    public int getFloor(){
+        return this.floor;
+    }
+
+    public void setFloor(int floor){
+        this.floor = floor;
+    }
+
     @Override
     public String getTableName() {
         return null;
@@ -127,8 +144,14 @@ public class Review extends Model implements PolicySQLGenerator {
     }
 
     public long findIfExistedById(long id){
-        String query = "select id form " + TABLE_NAME + " where id=?";
+        String query = "select id form " + getMapTableName(this.expId) + " where id=?";
         return dp.singleLongQuery(query, id);
+    }
+
+    public static int findMaxFloor(long expId){
+        String query = "select floor from " + getMapTableName(expId) + " where expId = ? order by floor desc limit 1";
+        int res =  (int)dp.singleLongQuery(query, expId) + 1;
+        return res;
     }
 
     @Override
@@ -148,8 +171,8 @@ public class Review extends Model implements PolicySQLGenerator {
     }
 
     public boolean insert(){
-        String query = "insert into " + TABLE_NAME + " (expId, reviewed, reviewer, content, createTs, childReviewId) values (?,?,?,?,?,?)";
-        long res = dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId);
+        String query = "insert into " + getMapTableName(this.expId) + " (expId, reviewed, reviewer, content, createTs, childReviewId, floor) values (?,?,?,?,?,?,?)";
+        long res = dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId, this.floor);
         if(res <= 0){
             return false;
         }else{
@@ -157,17 +180,65 @@ public class Review extends Model implements PolicySQLGenerator {
         }
     }
 
+    public long firstInsert(){
+        String query = "insert into " + getMapTableName(this.expId) + " (expId, reviewed, reviewer, content, createTs, childReviewId, floor) values (?,?,?,?,?,?,?)";
+        return dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId,this.floor);
+    }
+
     public boolean update(){
-        String query = "update " + TABLE_NAME + " set expId=?, reviewed=?, reviewer=?, content=?, createTs=?, childReviewId=? where id = ?";
-        long res = dp.update(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId, this.id);
+        String query = "update " + getMapTableName(this.expId) + " set expId=?, reviewed=?, reviewer=?, content=?, createTs=?, childReviewId=?, floor=? where id = ?";
+        long res = dp.update(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId, this.floor,this.id);
         if(res <= 0){
             return false;
         }else{
             return true;
         }
     }
+
     @Override
     public String getIdName() {
         return null;
     }
+
+    @Override
+    public String toString(){
+        return String.format("[expId = %d, reviewed = %s, reviewer = %s,content = %s, createTs = %d, childReviewId = %d, floor = %d ]",this.expId, this.reviewed, this.reviewer, this,content, this.createTs, this.childReviewId, this.floor);
+    }
+
+    public static Review parseReview(ResultSet res){
+        try{
+            Review review = new Review();
+            review.setExpId(res.getLong(1));
+            review.setReviewed(res.getString(2));
+            review.setReviewer(res.getString(3));
+            review.setContent(res.getString(4));
+            review.setCreateTs(res.getLong(5));
+            review.setChildReviewId(res.getLong(6));
+            review.setFloor(res.getInt(7));
+            return review;
+        }catch(SQLException e) {
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public static final String AllProperty = " expId, reviewed, reviewer, content, createTs, childReviewId, floor ";
+
+    public static List<Review> findAllReviewByExp1(long expId){
+        String query = "select " + AllProperty + " from " + getMapTableName(expId) + " where expId = ? order by floor asc";
+
+        return new JDBCBuilder.JDBCExecutor<List<Review>>(query, expId){
+            @Override
+            public List<Review> doWithResultSet(ResultSet res) throws SQLException{
+                List<Review> reviews = new ArrayList<Review>();
+                while(res.next()){
+                    Review review = parseReview(res);
+                    if(review != null)
+                        reviews.add(review);
+                }
+                return reviews;
+            }
+        }.call();
+    }
+
 }
