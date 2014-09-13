@@ -36,10 +36,10 @@ public class Register extends CommonRender {
 
         User user = new User(userName, email, password);
 
-        boolean insertSuccess = user.jdbcSave();
+        Long userId = user.firstSave();
 
-        if(insertSuccess) {
-            successRegister(userName);
+        if(userId > 0L) {
+            successEnter(userId.toString(), userName);
             RenderSuccess();
         }else{
             RenderFailed("用户数据插入出错，数据库异常！");

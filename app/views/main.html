@@ -70,6 +70,9 @@
                 padding-right:10px;
             }
 
+            .hidden{
+                display:none;
+            }
 
         </style>
     <body>
@@ -79,26 +82,22 @@
                 <li class="l-item  current hover-on"><a href="javascript:void(0)">首页</a></li>
                 <li class="l-item hover-on"><a href="javascript:void(0)">经验</a></li>
             </ul>
-            <ul>
-                %{
-                    user = session.get("_user");
-                }%
-                #{if user}
-                    *{<li class="r-item logout hover-on"><a href="javascript:void(0)">退出</a></li>}*
+            <ul class="user-login-head" style="display:none;">
+
                     <li class="r-item hover-on">
                         <a href="javascript:void(0)">
-                            <span id="login-username">${user}</span>
+                            <span id="login-username"></span>
                         </a>
                     </li>
                     <li class="r-item" style="margin-right:5px;">
                         <span style="cursor: auto;color:#bbc8c3;">欢迎,</span>
                     </li>
+            </ul>
+            <ul class="user-nologin-head">
 
-                #{/if}
-                #{else}
                     <li class="r-item hover-on"><a href="/Register/registerPage">注册</a></li>
                     <li class="r-item hover-on"><a href="/Login/login">登陆</a></li>
-                #{/else}
+
 
             </ul>
             </div>
@@ -107,7 +106,7 @@
     #{doLayout /}
     </body>
     <script type="text/javascript">
-        EOS = EOS || {};
+        var EOS = EOS || {};
         ((function($, window){
             EOS.Logout = EOS.Logout || {};
             var logout = EOS.Logout;
@@ -117,6 +116,16 @@
                 doInit:function(container){
                     logout.init.container = container;
                     logout.submit.submitInit();
+                    logout.init.initHead();
+                    logout.init.initHead();
+                },
+                initHead:function(){
+                    var container = logout.init.container;
+                    if(EOS.userId != null) {
+                        container.find(".user-login-head").show();
+                        container.find(".user-nologin-head").addClass("hidden");
+                        container.find(".user-login-head #login-username").html(EOS.userName);
+                    }
                 }
             })
 

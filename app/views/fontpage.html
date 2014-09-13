@@ -78,8 +78,8 @@
 
         var EOS = EOS || {};
         EOS.gcs = gcs;
-        var userName = $.cookie("_user");
-        $.cookie("test", "test");
+        EOS.userId = $.cookie("_user_id");
+        EOS.userName = $.cookie("_user_name");
         // example：
         // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S")
         // (new Date()).Format("yyyy-M-d h:m:s.S")

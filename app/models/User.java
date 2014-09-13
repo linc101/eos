@@ -89,6 +89,12 @@ public class User extends Model implements PolicySQLGenerator{
 		this.id = id;
 	}
 
+    public long firstSave(){
+        String query = "insert into " + TABLE_NAME + "(`userName`,`email`, `password`,`createTs`) values (?,?,?,?)";
+        long res = dp.insert(query, this.userName, this.email, this.password, this.createTs);
+        return res;
+    }
+
 	@Override
 	public boolean jdbcSave() {
 		Long id = findIfExistedByUserName(this.userName);
@@ -180,20 +186,26 @@ public class User extends Model implements PolicySQLGenerator{
         return res;
     }
 
-    private static User doWithResult(ResultSet rs) throws SQLException{
-        if(rs.next()){
-            long id = rs.getLong(1);
-            String userName = rs.getString(2);
-            String email = rs.getString(3);
-            String password = rs.getString(4);
-            Long createTs = rs.getLong(5);
-            User user = new User();
-            user.setId(id);
-            user.setUserName(userName);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setCreateTs(createTs);
-            return user;
+    private static User doWithResult(ResultSet rs){
+        try {
+            if (rs.next()) {
+                long id = rs.getLong(1);
+                String userName = rs.getString(2);
+                String email = rs.getString(3);
+                String password = rs.getString(4);
+                Long createTs = rs.getLong(5);
+                User user = new User();
+                user.setId(id);
+                user.setUserName(userName);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setCreateTs(createTs);
+                return user;
+            }else{
+                return null;
+            }
+        }catch(SQLException e){
+            log.warn(e.getMessage(), e);
         }
         return null;
     }
@@ -209,9 +221,31 @@ public class User extends Model implements PolicySQLGenerator{
         }.call();
     }
 
-    public static String userLogin(String email, String password){
+    public static User userLogin(String email, String password){
         password = Codec.hexMD5(password);
-        String query = "select userName from " + TABLE_NAME + " where email = ? and password= ?";
-        return dp.singleStringQuery(query, email, password);
+        String query = "select "+ AllProperty +" from " + TABLE_NAME + " where email = ? and password= ?";
+        return new JDBCBuilder.JDBCExecutor<User>(query, email, password){
+            @Override
+            public User doWithResultSet(ResultSet rs) throws SQLException{
+                return doWithResult(rs);
+            }
+        }.call();
+
+    }
+
+    public static User finUserById(String userId){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where id = ?";
+        Long userIdL  = Long.valueOf(userId);
+        return new JDBCBuilder.JDBCExecutor<User>(query, userIdL){
+            @Override
+            public User doWithResultSet(ResultSet rs) throws SQLException{
+                return doWithResult(rs);
+            }
+        }.call();
+    }
+
+    @Override
+    public String toString(){
+        return "[username: " + this.userName+" useremail:" +this.email + "]";
     }
 }

@@ -2,6 +2,7 @@ package controllers;
 
 import General.Result;
 
+import config.Config;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -28,15 +29,22 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
-    @Before(only = {"UserCenter.userCenter","UserCenter.addExperience"})
+    @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout"})
     public static void checkAccess(){
-        String userName = session.get(USER_NAME);
+        User user = (User)request.args.get(USER);
 
-        logger.info("checkAccess------userName:" + userName + "  request cookie:" +
-                (request.cookies.get(USER_NAME) == null ?null:request.cookies.get("test").value) +"   response cookie:");
-        if (StringUtils.isEmpty(userName)){
+        if(user!= null){
+            return;
+        }
+
+        String userId = getUserIdFromCookie();
+        if(userId == null){
             redirect("/Login/login");
         }
+
+        user = User.finUserById(userId);
+
+        request.args.put(USER, user);
     }
 
     @Before
@@ -44,6 +52,17 @@ public class CommonRender extends Controller {
         logger.info("-----------------------------------------------------request info:user_name " + request.args.get("test"));
 
     }
+
+    private static String getUserIdFromCookie(){
+        String userId = session.get(USER_ID);
+        if(userId != null){
+            return userId;
+        }
+        userId = response.cookies.get(USER_ID).value;
+
+        return userId;
+    }
+
     protected static void RenderSuccess(){
         Result res = new Result();
         renderJSON(JSONObject.fromObject(res));
@@ -54,38 +73,25 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
-    protected static void successRegister(final String userName){
-        session.put(USER_NAME, userName);
-        response.setCookie(USER_NAME, userName, "1d");
+    protected static void successEnter(final String userId, final String userName){
+        session.put(USER_ID, userId);
+        response.setCookie(USER_ID, userId, "1d");
+        response.setCookie(USER_NAME, userName, "14d");
     }
 
-    protected static void successLogin(final String userName) {
-        logger.info("-----------------after login:" + request.cookies.get("test"));
-//        try {
-            session.put(USER_NAME, userName);
-            response.setCookie(USER_NAME, userName, "1d");
-
-//        }catch (Exception e){
-//            logger.warn(e.getMessage(), e);
-//        }
-    }
-
-    protected static void removeSession(final String userName){
-        session.remove(USER_NAME);
-        response.removeCookie(USER_NAME);
+    protected static void removeSession(){
+        session.remove(USER_ID);
+        response.removeCookie(USER_ID);
     }
 
     protected static User getUser(){
-        String userName = session.get(USER_NAME);
-        logger.info("-----------session userName:" + userName);
-        if(StringUtils.isEmpty(userName)){
-            RenderFailed("");
-        }
-        User user = User.finUserByName(userName);
 
+        User user = (User)request.args.get(USER);
+        logger.info("------------------------------------------user:" + user);
         if(user == null){
             RenderFailed("数据库异常，请检查数据库");
         }
+
         return user;
     }
 }
