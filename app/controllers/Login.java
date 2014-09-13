@@ -22,22 +22,22 @@ public class Login extends CommonRender {
             RenderFailed("请输入用户密码");
         }
 
-        String res = User.userLogin(email, password);
+        User user = User.userLogin(email, password);
 
-        log.info("email :" + email + "  password:" + password + "    res:" + res);
+        log.info("email :" + email + "  password:" + password);
 
-        if(StringUtils.isEmpty(res)){
+        if(user == null){
             RenderFailed("邮箱不存在或者密码错误！");
         }
 
-        successLogin(email, password);
+        successEnter(user.getId().toString(), user.getUserName());
 
         RenderSuccess();
     }
 
     public static void userLogout(){
         User user = getUser();
-        removeSession(user.getUserName());
+        removeSession();
         RenderSuccess();
     }
 

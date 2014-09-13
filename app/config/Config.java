@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 public class Config {
     private static final Logger log = LoggerFactory.getLogger(Config.class);
 
-    public static final String USER_NAME =  "_user";
+    public static final String USER_NAME =  "_user_name";
 
-    public static final String USER_ID = "_id";
+    public static final String USER_ID = "_user_id";
+
+    public static final String USER = "_user";
 
     public static final String USER_PASSWORD = "_pw";
 
