@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import models.User;
 
 import java.util.Date;
+import java.net.URLEncoder;
 /**
  * Created by yehuizhang on 14-9-3.
  */
@@ -51,9 +52,15 @@ public class CommonRender extends Controller {
         response.setCookie(USER_NAME, userName, "1d");
     }
 
-    protected static void successLogin(final String userName){
-        session.put(USER_NAME, userName);
-        response.setCookie(USER_NAME, userName, "1d");
+    protected static void successLogin(final String userName) {
+        logger.info("-----------------after login:" + request.cookies.get("test"));
+//        try {
+            session.put(USER_NAME, userName);
+            response.setCookie(USER_NAME, userName, "1d");
+
+//        }catch (Exception e){
+//            logger.warn(e.getMessage(), e);
+//        }
     }
 
     protected static void removeSession(final String userName){

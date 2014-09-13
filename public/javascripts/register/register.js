@@ -67,7 +67,7 @@ var EOS = EOS || {};
                     data:data,
                     success:function(dataJson){
                         if(dataJson.success){
-                            EOS.util.UIAssert("恭喜，注册成功！");
+//                            EOS.util.UIAssert("恭喜，注册成功！");
                             window.location.href = "/Application/index";
                             return;
                         }
