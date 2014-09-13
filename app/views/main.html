@@ -124,7 +124,7 @@
                     if(EOS.userId != null) {
                         container.find(".user-login-head").show();
                         container.find(".user-nologin-head").addClass("hidden");
-                        container.find(".user-login-head #login-username").html(EOS.userName);
+                        container.find(".user-login-head #login-username").html(decodeURI(EOS.userName));
                     }
                 }
             })
