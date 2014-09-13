@@ -31,12 +31,19 @@ public class CommonRender extends Controller {
     @Before(only = {"UserCenter.userCenter","UserCenter.addExperience"})
     public static void checkAccess(){
         String userName = session.get(USER_NAME);
-        logger.info("checkAccess------userName:" + userName );
-        if(StringUtils.isEmpty(userName)){
+
+        logger.info("checkAccess------userName:" + userName + "  request cookie:" +
+                (request.cookies.get(USER_NAME) == null ?null:request.cookies.get("test").value) +"   response cookie:");
+        if (StringUtils.isEmpty(userName)){
             redirect("/Login/login");
         }
     }
 
+    @Before
+    public static void showRequestInfo(){
+        logger.info("-----------------------------------------------------request info:user_name " + request.args.get("test"));
+
+    }
     protected static void RenderSuccess(){
         Result res = new Result();
         renderJSON(JSONObject.fromObject(res));
