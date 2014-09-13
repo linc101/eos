@@ -52,15 +52,10 @@ public class CommonRender extends Controller {
         response.setCookie(USER_NAME, userName, "1d");
     }
 
-    protected static void successLogin(final String userName) {
+    protected static void successLogin(final String userName, final String password) {
         logger.info("-----------------after login:" + request.cookies.get("test"));
-//        try {
-            session.put(USER_NAME, userName);
-            response.setCookie(USER_NAME, userName, "1d");
-
-//        }catch (Exception e){
-//            logger.warn(e.getMessage(), e);
-//        }
+        session.put(USER_NAME, userName);
+        response.setCookie(USER_NAME, userName, "1d");
     }
 
     protected static void removeSession(final String userName){

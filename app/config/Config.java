@@ -13,5 +13,7 @@ public class Config {
 
     public static final String USER_ID = "_id";
 
+    public static final String USER_PASSWORD = "_pw";
+
 
 }

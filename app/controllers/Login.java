@@ -30,7 +30,7 @@ public class Login extends CommonRender {
             RenderFailed("邮箱不存在或者密码错误！");
         }
 
-        successLogin(res);
+        successLogin(email, password);
 
         RenderSuccess();
     }
