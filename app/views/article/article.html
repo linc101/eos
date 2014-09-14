@@ -50,6 +50,12 @@
 
     .article .item-view{
         background: #f0f3f2;
+        margin-bottom:20px;
+        padding:15px 18px;
+        color:#333;
+    }
+    .article .item-view .reviewer-meta{
+        margin-top:15px;
     }
 </style>
 <div class="article">
@@ -88,7 +94,7 @@
         <div class="add-review hidden">
             <h4>你的评论</h4>
             <textarea rows="5" class="review-textarea"></textarea>
-            <span class="submit_btn" style="float:right;margin-top:10px;">提交评论</span>
+            <span class="submit_btn" style="margin-top:10px;">提交评论</span>
         </div>
         <div class="not-login hidden">
             只有先登录了，才能评论，
@@ -99,19 +105,6 @@
 
 </div>
 
-<script id="reviewTmp" type="text/x-jquery-tmpl">
-    <div class="item-view">
-        {{if isChildReview}}
-        回复&nbsp;
-        <span >${reviewed}</span>
-        {{/if}}
-        <span>${content}</span>
-        <div>
-        <span>${reviewer}</span>
-        <span>${createTs}</span>
-        </div>
-    </div>
-</script>
 <script type="text/javascript">
     EOS.gcs('/js/article/article.js', function(){
         $(document).ready(function(){

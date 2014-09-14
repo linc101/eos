@@ -54,20 +54,10 @@ var EOS = EOS ||  {};
                     title.html(dataJson.res.title);
                     articleUsername.html(dataJson.res.userName);
                     bigTitle.html("经验分享之----" + dataJson.res.title);
-                    var nowDate = new Date();
-                    var nowYear = nowDate.getFullYear();
-                    var thatDate = new Date(dataJson.res.createTs);
-                    var thatYear = thatDate.getFullYear();
-                    if(nowYear == thatYear)
-                        dateTime.html(thatDate.Format("MM月dd日"));
-                    else{
-                        dateTime.html(thatDate.Format("yyyy年MM月dd日"));
-                    }
+                    dateTime.html(EOS.util.dealDate(dataJson.res.createTs));
                     scanTime.html(dataJson.res.scanTimes + "&nbsp;浏览");
                 }
             })
-//            title.html();
-//            content.html(article.init.articleId);
         },
         submitReview:function(){
             var container = article.init.container.find(".add-review");
@@ -90,10 +80,9 @@ var EOS = EOS ||  {};
                     success:function(dataJson){
                         if(!dataJson.success){
                             EOS.util.UIAssert(dataJson.message);
-//                            window.location.reload();
                             return;
                         }
-                        window.location.reload;
+                        article.show.showAllReviews();
                     }
                 })
             })
@@ -110,25 +99,41 @@ var EOS = EOS ||  {};
                     }
                     var container = article.init.container;
                     container.find(".all-reviews .count-reviews").html("共有"+dataJson.res.length + "条评论");
-                    console.log(dataJson.res);
+                    $.each(dataJson.res,function(index, value){
+                        dataJson.res[index].createTs = EOS.util.dealDate(dataJson.res[index].createTs);
+                    })
                     var markup = '<div class="item-view">'+
                     '{{if isChildReview}}'+
-                        '回复&nbsp;'+
-                        '<span >${reviewed}</span>' +
-                        '{{/if}}' +
-                            '<span>${content}</span>'+
-                            '<div>'+
-                            '<span>${reviewer}</span>'+
-                            '<span>${createTs}</span>'+
-                            '</div>'+
-                            '</div>';
+                    '回复&nbsp;'+
+                    '<span >${reviewed}</span>' +
+                    '{{/if}}' +
+                    '<span>${content}</span>'+
+                    '<div class="reviewer-meta">'+
+                    '<span style="color:#017e66;">${reviewer}</span>'+ "&nbsp;&nbsp;"+
+                    '<span>${createTs}</span><div style="float:right;">'+
+                    '<span class="replay-review" style="color:#017e66;cursor:pointer;">回复</span>' + "&nbsp;&nbsp;"+
+                    '<span style="color:#999;" >#${floor}</span></div>' +
+                    '</div>'+
+                    '</div>';
                     $.template('reviewTmp', markup);
                     $.tmpl('reviewTmp', dataJson.res).appendTo(".all-reviews");
-//                    var html = $("#reviewTmp").tmpl(dataJson.res);
-//                    console.log(html);
-//                    container.find(".all-reviews").append(html);
+                    article.show.showReplayReview();
                 }
             })
+        },
+        showReplayReview:function(){
+            var container = article.init.container;
+            console.log("why!");
+            container.find(".article-wrap .all-reviews .replay-review").toggle(function(){
+
+            }, function (){
+//                var thisObj = $(this);
+//                thisObj.html("回复");
+//                thisObj.parent().parent().parent().remove(".add-review-reply");
+//                container.find(".article-wrap .add-review").removeClass("hidden");
+            });
+
+
         }
     });
 })(jQuery, window));

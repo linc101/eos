@@ -98,13 +98,19 @@
             for (var k in o)
                 if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
+        };
+
+        Date.prototype.FormatMD = function(){
+            return this.Format("MM月dd");
         }
 
-        Date.prototype.FormatMD = Date.prototype.Format("MM月dd");
+        Date.prototype.FormatYMD = function(){
+            return this.Format("yyyy-MM-dd");
+        }
 
-        Date.prototype.FormatYMD = Date.prototype.Format("yyyy-MM-dd");
-
-        Date.prototype.FormatYMDMS = Date.prototype.Format("yyyy-MM-dd hh:mm:ss");
+        Date.prototype.FormatYMDMS = function() {
+            return this.Format("yyyy-MM-dd hh:mm:ss");
+        }
         function isEmail(email){
             var emailReg = new RegExp("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
             return emailReg.test(email);

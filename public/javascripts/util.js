@@ -44,4 +44,22 @@ var EOS = EOS || {};
             ]
         })
     }
+
+    util.dealDate = function(createTs){
+        if(createTs == null){
+            return null;
+        }
+
+        var nowDate = new Date();
+        var nowYear = nowDate.getFullYear();
+
+        var thatDate = new Date(createTs);
+        var thatYear = thatDate.getFullYear();
+
+        if(nowYear == thatYear)
+            return thatDate.FormatMD();
+        else{
+            return thatDate.FormatYMD();
+        }
+    }
 })(jQuery, window));
