@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import models.User;
+import play.mvc.Http;
 
 import java.util.Date;
 import java.net.URLEncoder;
@@ -47,20 +48,17 @@ public class CommonRender extends Controller {
         request.args.put(USER, user);
     }
 
-    @Before
-    public static void showRequestInfo(){
-        logger.info("-----------------------------------------------------request info:user_name " + request.args.get("test"));
-
-    }
-
     private static String getUserIdFromCookie(){
         String userId = session.get(USER_ID);
         if(userId != null){
             return userId;
         }
-        userId = response.cookies.get(USER_ID).value;
-
-        return userId;
+        Http.Cookie cookie = response.cookies.get(USER_ID);
+        if(cookie != null){
+            return cookie.value;
+        }else{
+            return null;
+        }
     }
 
     protected static void RenderSuccess(){
@@ -91,7 +89,6 @@ public class CommonRender extends Controller {
         if(user == null){
             RenderFailed("数据库异常，请检查数据库");
         }
-
         return user;
     }
 }
