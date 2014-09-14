@@ -64,6 +64,32 @@ public class Article extends CommonRender{
         RenderSuccess();
     }
 
+    public static void saveReviewReply(final String reviewed, final String reviewer, final long expId, final String content){
+        if(StringUtils.isEmpty(reviewed)){
+            RenderFailed("回复被评论人的信息不存在！");
+        }
+
+        if(StringUtils.isEmpty(reviewer)){
+            RenderFailed("评论人信息不存在！");
+        }
+
+        if(StringUtils.isEmpty(content)){
+            RenderFailed("评论为空，请填写评论内容！");
+        }
+
+        if(expId <= 0L){
+            RenderFailed("id异常！");
+        }
+
+        long reviewId = new Review(expId, reviewed, reviewer, content).firstInsert();
+
+        if(reviewId <= 0L){
+            RenderFailed("数据库异常！");
+        }
+
+        RenderSuccess();
+    }
+
     public static void showAllReviewByExpId(final long expId){
         if(expId <= 0L){
             RenderFailed("id异常！");

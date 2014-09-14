@@ -82,7 +82,9 @@ var EOS = EOS ||  {};
                             EOS.util.UIAssert(dataJson.message);
                             return;
                         }
+                        article.init.container.find(".article-wrap .all-reviews").empty();
                         article.show.showAllReviews();
+                        container.find(".review-textarea").val("");
                     }
                 })
             })
@@ -105,11 +107,11 @@ var EOS = EOS ||  {};
                     var markup = '<div class="item-view">'+
                     '{{if isChildReview}}'+
                     '回复&nbsp;'+
-                    '<span >${reviewed}</span>' +
+                    '<span >${reviewed}</span>:</br>' +
                     '{{/if}}' +
                     '<span>${content}</span>'+
                     '<div class="reviewer-meta">'+
-                    '<span style="color:#017e66;">${reviewer}</span>'+ "&nbsp;&nbsp;"+
+                    '<span style="color:#017e66;" class="reviewed">${reviewer}</span>'+ "&nbsp;&nbsp;"+
                     '<span>${createTs}</span><div style="float:right;">'+
                     '<span class="replay-review" style="color:#017e66;cursor:pointer;">回复</span>' + "&nbsp;&nbsp;"+
                     '<span style="color:#999;" >#${floor}</span></div>' +
@@ -123,17 +125,53 @@ var EOS = EOS ||  {};
         },
         showReplayReview:function(){
             var container = article.init.container;
-            console.log("why!");
             container.find(".article-wrap .all-reviews .replay-review").toggle(function(){
-
+                var thisObj = $(this);
+                thisObj.html("取消回复");
+                thisObj.parent().parent().parent().append('<div class="add-review-reply">' +
+                    '<h4>你的评论</h4>'+
+                    '<textarea rows="5" class="review-textarea"></textarea>'+
+                    '<span class="submit_btn" style="margin-top:10px;">提交评论</span>' +
+                    '</div>');
+                container.find(".article-wrap .add-review").addClass("hidden");
+                article.show.initReviewReplay(thisObj.parent().parent().parent());
             }, function (){
-//                var thisObj = $(this);
-//                thisObj.html("回复");
-//                thisObj.parent().parent().parent().remove(".add-review-reply");
-//                container.find(".article-wrap .add-review").removeClass("hidden");
+                var thisObj = $(this);
+                thisObj.html("回复");
+                thisObj.parent().parent().parent().find(".add-review-reply").remove();
+                container.find(".article-wrap .add-review").removeClass("hidden");
             });
+        },
+        initReviewReplay:function(container){
 
-
+            $(container).find(".submit_btn").unbind().click(function(){
+                var reviewed = $(container).find(".reviewed").text();
+                var content = $(container).find(".review-textarea").val();
+                console.log("enter submit");
+                console.log(reviewed);
+                console.log(EOS.userName);
+                console.log(article.init.articleId);
+                console.log(content);
+                $.ajax({
+                    type:'GET',
+                    url:'/Article/saveReviewReply',
+                    data:{
+                        reviewed:reviewed,
+                        reviewer:EOS.userName,
+                        expId:article.init.articleId,
+                        content:content
+                    },
+                    success:function(dataJson){
+                        if(!dataJson.success){
+                            EOS.util.UIAssert(dataJson.message);
+                            return;
+                        }
+                        article.init.container.find(".article-wrap .all-reviews").empty();
+                        article.show.showAllReviews();
+                        article.init.container.find(".article-wrap .add-review").removeClass("hidden");
+                    }
+                })
+            });
         }
     });
 })(jQuery, window));
