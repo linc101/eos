@@ -211,7 +211,7 @@ public class Review extends Model implements PolicySQLGenerator {
 
     @Override
     public String toString(){
-        return String.format("[expId = %d, reviewed = %s, reviewer = %s,content = %s, createTs = %d, isChildReview = %d, floor = %d ]",this.expId, this.reviewed, this.reviewer, this,content, this.createTs, this.isChildReview, this.floor);
+        return String.format("[id = %d,expId = %d, reviewer = %s,content = %s, createTs = %d, isChildReview = %b, floor = %d ]",this.id,this.expId,this.reviewer, this.content, this.createTs, this.isChildReview, this.floor);
     }
 
     public static Review parseReview(ResultSet res){
@@ -224,6 +224,7 @@ public class Review extends Model implements PolicySQLGenerator {
             review.setCreateTs(res.getLong(5));
             review.setIsChildReview(res.getBoolean(6));
             review.setFloor(res.getInt(7));
+            review.setId(res.getLong(8));
             return review;
         }catch(SQLException e) {
             logger.error(e.getMessage());
@@ -231,7 +232,7 @@ public class Review extends Model implements PolicySQLGenerator {
         }
     }
 
-    public static final String AllProperty = " expId, reviewed, reviewer, content, createTs, isChildReview, floor ";
+    public static final String AllProperty = "expId, reviewed, reviewer, content, createTs, isChildReview, floor ,id";
 
     public static List<Review> findAllReviewByExp(long expId){
         String query = "select " + AllProperty + " from " + getMapTableName(expId) + " where expId = ? order by floor asc";
@@ -248,6 +249,13 @@ public class Review extends Model implements PolicySQLGenerator {
                 return reviews;
             }
         }.call();
+    }
+
+    public static boolean deleteReview(long reviewId, long expId){
+        String query = "delete from " + getMapTableName(expId) + " where id=?";
+        long res = dp.update(query, reviewId);
+        if(res <= 0)return false;
+        else return true;
     }
 
 }

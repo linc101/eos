@@ -90,13 +90,29 @@ public class Article extends CommonRender{
         RenderSuccess();
     }
 
+    public static void deleteReview(final long reviewId, final long expId){
+        if(reviewId <= 0L){
+            RenderFailed("评论id异常");
+        }
+
+        if(expId <= 0L){
+            RenderFailed("文章id异常");
+        }
+
+        boolean isSuccess = Review.deleteReview(reviewId, expId);
+        if(isSuccess){
+            RenderSuccess();
+        }else{
+            RenderFailed("数据库异常！");
+        }
+    }
+
     public static void showAllReviewByExpId(final long expId){
         if(expId <= 0L){
             RenderFailed("id异常！");
         }
 
         List<Review> reviews = Review.findAllReviewByExp(expId);
-
         RenderSuccess(reviews);
 
     }

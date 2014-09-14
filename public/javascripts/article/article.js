@@ -103,8 +103,20 @@ var EOS = EOS ||  {};
                     container.find(".all-reviews .count-reviews").html("共有"+dataJson.res.length + "条评论");
                     $.each(dataJson.res,function(index, value){
                         dataJson.res[index].createTs = EOS.util.dealDate(dataJson.res[index].createTs);
+                        if(EOS.userId != null){
+                            dataJson.res[index].isLogin = true;
+                            if(dataJson.res[index].reviewer == EOS.userName){
+                                dataJson.res[index].isOwn = true;
+                            }else{
+                                dataJson.res[index].isOwn = false;
+                            }
+                        }else{
+                            dataJson.res[index].isLogin = false;
+                            dataJson.res[index].isOwn =false;
+                        }
+
                     })
-                    var markup = '<div class="item-view">'+
+                    var markup = '<div class="item-view" id="${id}">'+
                     '{{if isChildReview}}'+
                     '回复&nbsp;'+
                     '<span >${reviewed}</span>:</br>' +
@@ -112,14 +124,23 @@ var EOS = EOS ||  {};
                     '<span>${content}</span>'+
                     '<div class="reviewer-meta">'+
                     '<span style="color:#017e66;" class="reviewed">${reviewer}</span>'+ "&nbsp;&nbsp;"+
-                    '<span>${createTs}</span><div style="float:right;">'+
+                    '<span>${createTs}</span>' +
+                    '{{if isOwn}}'+
+                     '&nbsp;·&nbsp;' + '<span class="delete-review" style="color:#017e66;cursor:pointer;">删除</span>' +
+                    '{{/if}}'+
+                    '<div style="float:right;">'+
+                    '{{if isLogin}}'+
+                    '{{if isOwn==false}}' +
                     '<span class="replay-review" style="color:#017e66;cursor:pointer;">回复</span>' + "&nbsp;&nbsp;"+
+                    '{{/if}}' +
+                    '{{/if}}'+
                     '<span style="color:#999;" >#${floor}</span></div>' +
                     '</div>'+
                     '</div>';
                     $.template('reviewTmp', markup);
                     $.tmpl('reviewTmp', dataJson.res).appendTo(".all-reviews");
-                    article.show.showReplayReview();
+                    if(EOS.userId != null)
+                        article.show.showReplayReview();
                 }
             })
         },
@@ -142,7 +163,9 @@ var EOS = EOS ||  {};
                 container.find(".article-wrap .add-review").removeClass("hidden");
             });
         },
-        initReviewReplay:function(container){
+        deleteReview:function(container){
+            
+        }, initReviewReplay:function(container){
 
             $(container).find(".submit_btn").unbind().click(function(){
                 var reviewed = $(container).find(".reviewed").text();
