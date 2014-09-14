@@ -139,8 +139,10 @@ var EOS = EOS ||  {};
                     '</div>';
                     $.template('reviewTmp', markup);
                     $.tmpl('reviewTmp', dataJson.res).appendTo(".all-reviews");
-                    if(EOS.userId != null)
+                    if(EOS.userId != null) {
                         article.show.showReplayReview();
+                        article.show.deleteReview();
+                    }
                 }
             })
         },
@@ -163,9 +165,32 @@ var EOS = EOS ||  {};
                 container.find(".article-wrap .add-review").removeClass("hidden");
             });
         },
-        deleteReview:function(container){
-            
-        }, initReviewReplay:function(container){
+        deleteReview:function(){
+            var container = article.init.container;
+            container.find(".article-wrap .all-reviews .delete-review").unbind().click(function(){
+                var thisObj = $(this);
+                var reviewId = $(this).parent().parent().attr("id");
+                $.ajax({
+                    type:'POST',
+                    url:'/Article/deleteReview',
+                    data:{
+                        reviewId:reviewId,
+                        expId:article.init.articleId
+                    },
+                    success:function(dataJson){
+                        if(!dataJson.success){
+                            EOS.util.UIAssert(dataJson.message);
+                            return;
+                        }
+                        EOS.util.UIAssert("删除成功！");
+                        article.init.container.find(".article-wrap .all-reviews").empty();
+                        article.show.showAllReviews();
+                    }
+
+                })
+            })
+        },
+        initReviewReplay:function(container){
 
             $(container).find(".submit_btn").unbind().click(function(){
                 var reviewed = $(container).find(".reviewed").text();
@@ -176,7 +201,7 @@ var EOS = EOS ||  {};
                 console.log(article.init.articleId);
                 console.log(content);
                 $.ajax({
-                    type:'GET',
+                    type:'POST',
                     url:'/Article/saveReviewReply',
                     data:{
                         reviewed:reviewed,
