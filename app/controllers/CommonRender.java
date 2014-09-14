@@ -71,6 +71,7 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
+
     protected static void successEnter(final String userId, final String userName){
         session.put(USER_ID, userId);
         response.setCookie(USER_ID, userId, "1d");
