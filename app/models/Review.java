@@ -48,9 +48,18 @@ public class Review extends Model implements PolicySQLGenerator {
 
     private Long createTs;
 
-    private Long childReviewId;
+    private boolean isChildReview;
 
     private int floor;
+
+    public Review(long expId, String reviewer, String content){
+        this.expId = expId;
+        this.reviewer = reviewer;
+        this.content = content;
+        this.createTs = System.currentTimeMillis();
+        this.isChildReview = false;
+        this.floor = findMaxFloor(expId);
+    }
 
     public Review(){
 
@@ -62,7 +71,7 @@ public class Review extends Model implements PolicySQLGenerator {
         this.reviewer = reviewer;
         this.content = content;
         this.createTs = System.currentTimeMillis();
-        this.childReviewId = 0L;
+        this.isChildReview = true;
         this.floor = findMaxFloor(expId);
     }
 
@@ -107,12 +116,12 @@ public class Review extends Model implements PolicySQLGenerator {
         this.createTs = createTs;
     }
 
-    public long getChildReviewId(){
-        return this.childReviewId;
+    public boolean getIsChildReview(){
+        return this.isChildReview;
     }
 
-    public void setChildReviewId(long childReviewId){
-        this.childReviewId = childReviewId;
+    public void setIsChildReview(boolean isChildReview){
+        this.isChildReview = isChildReview;
     }
 
     public int getFloor(){
@@ -171,8 +180,8 @@ public class Review extends Model implements PolicySQLGenerator {
     }
 
     public boolean insert(){
-        String query = "insert into " + getMapTableName(this.expId) + " (expId, reviewed, reviewer, content, createTs, childReviewId, floor) values (?,?,?,?,?,?,?)";
-        long res = dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId, this.floor);
+        String query = "insert into " + getMapTableName(this.expId) + " (expId, reviewed, reviewer, content, createTs, isChildReview, floor) values (?,?,?,?,?,?,?)";
+        long res = dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.isChildReview, this.floor);
         if(res <= 0){
             return false;
         }else{
@@ -181,13 +190,13 @@ public class Review extends Model implements PolicySQLGenerator {
     }
 
     public long firstInsert(){
-        String query = "insert into " + getMapTableName(this.expId) + " (expId, reviewed, reviewer, content, createTs, childReviewId, floor) values (?,?,?,?,?,?,?)";
-        return dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId,this.floor);
+        String query = "insert into " + getMapTableName(this.expId) + " (expId, reviewed, reviewer, content, createTs, isChildReview, floor) values (?,?,?,?,?,?,?)";
+        return dp.insert(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.isChildReview,this.floor);
     }
 
     public boolean update(){
-        String query = "update " + getMapTableName(this.expId) + " set expId=?, reviewed=?, reviewer=?, content=?, createTs=?, childReviewId=?, floor=? where id = ?";
-        long res = dp.update(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.childReviewId, this.floor,this.id);
+        String query = "update " + getMapTableName(this.expId) + " set expId=?, reviewed=?, reviewer=?, content=?, createTs=?, isChildReview=?, floor=? where id = ?";
+        long res = dp.update(query, this.expId, this.reviewed, this.reviewer, this.content, this.createTs, this.isChildReview, this.floor,this.id);
         if(res <= 0){
             return false;
         }else{
@@ -202,7 +211,7 @@ public class Review extends Model implements PolicySQLGenerator {
 
     @Override
     public String toString(){
-        return String.format("[expId = %d, reviewed = %s, reviewer = %s,content = %s, createTs = %d, childReviewId = %d, floor = %d ]",this.expId, this.reviewed, this.reviewer, this,content, this.createTs, this.childReviewId, this.floor);
+        return String.format("[expId = %d, reviewed = %s, reviewer = %s,content = %s, createTs = %d, isChildReview = %d, floor = %d ]",this.expId, this.reviewed, this.reviewer, this,content, this.createTs, this.isChildReview, this.floor);
     }
 
     public static Review parseReview(ResultSet res){
@@ -213,7 +222,7 @@ public class Review extends Model implements PolicySQLGenerator {
             review.setReviewer(res.getString(3));
             review.setContent(res.getString(4));
             review.setCreateTs(res.getLong(5));
-            review.setChildReviewId(res.getLong(6));
+            review.setIsChildReview(res.getBoolean(6));
             review.setFloor(res.getInt(7));
             return review;
         }catch(SQLException e) {
@@ -222,7 +231,7 @@ public class Review extends Model implements PolicySQLGenerator {
         }
     }
 
-    public static final String AllProperty = " expId, reviewed, reviewer, content, createTs, childReviewId, floor ";
+    public static final String AllProperty = " expId, reviewed, reviewer, content, createTs, isChildReview, floor ";
 
     public static List<Review> findAllReviewByExp1(long expId){
         String query = "select " + AllProperty + " from " + getMapTableName(expId) + " where expId = ? order by floor asc";

@@ -99,6 +99,11 @@
             return fmt;
         }
 
+        Date.prototype.FormatMD = Date.prototype.Format("MM月dd");
+
+        Date.prototype.FormatYMD = Date.prototype.Format("yyyy-MM-dd");
+
+        Date.prototype.FormatYMDMS = Date.prototype.Format("yyyy-MM-dd hh:mm:ss");
         function isEmail(email){
             var emailReg = new RegExp("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
             return emailReg.test(email);

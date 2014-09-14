@@ -29,6 +29,28 @@
         content:" ";
         display:table;
     }
+
+    .article .not-login{
+        margin-top:20px;
+        background: lightyellow;
+        margin-left:10px;
+        padding-left:10px;
+        height:30px;
+        line-height: 30px;
+    }
+
+    .article a{
+        text-decoration: none;
+        color:#017e66;
+    }
+
+    .article a:hover{
+        text-decoration: underline;
+    }
+
+    .article .item-view{
+        background: #f0f3f2;
+    }
 </style>
 <div class="article">
     <div class="head-region">
@@ -60,21 +82,37 @@
         </div>
 
         <div class="all-reviews">
-
+            <h3 class="count-reviews"></h3>
         </div>
 
-        <div class="add-review">
+        <div class="add-review hidden">
             <h4>你的评论</h4>
             <textarea rows="5" class="review-textarea"></textarea>
             <span class="submit_btn" style="float:right;margin-top:10px;">提交评论</span>
         </div>
-        <div class="not-login">
-            <a href="/Login/login">请登录</a>
+        <div class="not-login hidden">
+            只有先登录了，才能评论，
+            <a href="/Login/login">点击登录</a>
         </div>
     </div>
 
 
 </div>
+
+<script id="reviewTmp" type="text/x-jquery-tmpl">
+    <div class="item-view">
+        {{if isChildReview}}
+        回复&nbsp;
+        <span >${reviewed}</span>
+        {{/if}}
+        <span>${content}</span>
+        <div>
+        <span>${reviewer}</span>
+        <span>${createTs}</span>
+
+        </div>
+    </div>
+</script>
 <script type="text/javascript">
     EOS.gcs('/js/article/article.js', function(){
         $(document).ready(function(){

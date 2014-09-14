@@ -16,6 +16,17 @@ var EOS = EOS ||  {};
             article.init.container = container;
             article.init.articleId = articleId;
             article.show.showArticle();
+            article.show.submitReview();
+            article.init.initReview();
+        },
+        initReview:function(){
+            var container = article.init.container;
+            if(EOS.userId != null){
+
+                container.find(".article-wrap .add-review").removeClass("hidden");
+            }else{
+                container.find(".article-wrap .not-login").removeClass("hidden");
+            }
         }
     })
 
@@ -36,6 +47,7 @@ var EOS = EOS ||  {};
                 success:function(dataJson){
                     if(!dataJson.success){
                         window.location.href = "404page.html";
+                        return;
                     }
                     content.html(dataJson.res.article);
                     title.html(dataJson.res.title);
@@ -46,9 +58,9 @@ var EOS = EOS ||  {};
                     var thatDate = new Date(dataJson.res.createTs);
                     var thatYear = thatDate.getFullYear();
                     if(nowYear == thatYear)
-                        dateTime.html(thatDate.Format("MM-dd"));
+                        dateTime.html(thatDate.Format("MM月dd日"));
                     else{
-                        dateTime.html(thatDate.Format("yyyy-MM-dd"));
+                        dateTime.html(thatDate.Format("yyyy年MM月dd日"));
                     }
                     scanTime.html(dataJson.res.scanTimes + "&nbsp;浏览");
                 }
@@ -56,10 +68,32 @@ var EOS = EOS ||  {};
 //            title.html();
 //            content.html(article.init.articleId);
         },
-        showArticleMeta:function(){
-            $.ajax({
-                type:'GET',
-                url:'/Review/'
+        submitReview:function(){
+            var container = article.init.container.find(".add-review");
+            container.find(".submit_btn").unbind().click(function(){
+                var content = container.find(".review-textarea").val().trim();
+                if(content == null || content == ""){
+                    EOS.util.UIAssert("评论内容为空，请填写评论内容");
+                    return;
+                }
+
+                var reviewer = EOS.userName;
+                $.ajax({
+                    type:'GET',
+                    url:'/Article/saveReviewByDefault',
+                    data:{
+                        expId:article.init.articleId,
+                        reviewer:EOS.userName,
+                        content:content
+                    },
+                    success:function(dataJson){
+                        if(!dataJson.success){
+                            EOS.util.UIAssert(dataJson.message);
+                            window.location.reload();
+                            return;
+                        }
+                    }
+                })
             })
         }
     });

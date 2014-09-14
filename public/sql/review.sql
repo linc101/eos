@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `review0`;
 CREATE TABLE `review0` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS `review1`;
 CREATE TABLE `review1` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `review2`;
 CREATE TABLE `review2` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -70,7 +70,7 @@ DROP TABLE IF EXISTS `review3`;
 CREATE TABLE `review3` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS `review4`;
 CREATE TABLE `review4` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `review5`;
 CREATE TABLE `review5` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -115,7 +115,7 @@ DROP TABLE IF EXISTS `review6`;
 CREATE TABLE `review6` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -130,7 +130,7 @@ DROP TABLE IF EXISTS `review7`;
 CREATE TABLE `review7` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -145,7 +145,7 @@ DROP TABLE IF EXISTS `review8`;
 CREATE TABLE `review8` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -160,7 +160,7 @@ DROP TABLE IF EXISTS `review9`;
 CREATE TABLE `review9` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -175,7 +175,7 @@ DROP TABLE IF EXISTS `review10`;
 CREATE TABLE `review10` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -190,7 +190,7 @@ DROP TABLE IF EXISTS `review11`;
 CREATE TABLE `review11` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -205,7 +205,7 @@ DROP TABLE IF EXISTS `review12`;
 CREATE TABLE `review12` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -220,7 +220,7 @@ DROP TABLE IF EXISTS `review13`;
 CREATE TABLE `review13` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -235,7 +235,7 @@ DROP TABLE IF EXISTS `review14`;
 CREATE TABLE `review14` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -250,7 +250,7 @@ DROP TABLE IF EXISTS `review31`;
 CREATE TABLE `review31` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -265,7 +265,7 @@ DROP TABLE IF EXISTS `review15`;
 CREATE TABLE `review15` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -280,7 +280,7 @@ DROP TABLE IF EXISTS `review16`;
 CREATE TABLE `review16` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -295,7 +295,7 @@ DROP TABLE IF EXISTS `review17`;
 CREATE TABLE `review17` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -310,7 +310,7 @@ DROP TABLE IF EXISTS `review18`;
 CREATE TABLE `review18` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -325,7 +325,7 @@ DROP TABLE IF EXISTS `review19`;
 CREATE TABLE `review19` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -340,7 +340,7 @@ DROP TABLE IF EXISTS `review20`;
 CREATE TABLE `review20` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -355,7 +355,7 @@ DROP TABLE IF EXISTS `review21`;
 CREATE TABLE `review21` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -370,7 +370,7 @@ DROP TABLE IF EXISTS `review22`;
 CREATE TABLE `review22` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -385,7 +385,7 @@ DROP TABLE IF EXISTS `review23`;
 CREATE TABLE `review23` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -400,7 +400,7 @@ DROP TABLE IF EXISTS `review24`;
 CREATE TABLE `review24` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -415,7 +415,7 @@ DROP TABLE IF EXISTS `review25`;
 CREATE TABLE `review25` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -430,7 +430,7 @@ DROP TABLE IF EXISTS `review26`;
 CREATE TABLE `review26` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -445,7 +445,7 @@ DROP TABLE IF EXISTS `review27`;
 CREATE TABLE `review27` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -460,7 +460,7 @@ DROP TABLE IF EXISTS `review28`;
 CREATE TABLE `review28` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -475,7 +475,7 @@ DROP TABLE IF EXISTS `review29`;
 CREATE TABLE `review29` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
@@ -490,7 +490,7 @@ DROP TABLE IF EXISTS `review30`;
 CREATE TABLE `review30` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `expId` bigint(20) DEFAULT NULL,
-  `childReviewId` bigint(20) DEFAULT NULL,
+  `isChildReview` bit(1) DEFAULT NULL,
   `content` longtext,
   `createTs` bigint(20) DEFAULT NULL,
   `floor` int(11) NOT NULL,
