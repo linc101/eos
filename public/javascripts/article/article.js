@@ -17,6 +17,7 @@ var EOS = EOS ||  {};
             article.init.articleId = articleId;
             article.show.showArticle();
             article.show.submitReview();
+            article.show.showAllReviews();
             article.init.initReview();
         },
         initReview:function(){
@@ -41,7 +42,7 @@ var EOS = EOS ||  {};
             var dateTime = container.find(".article-wrap .article-meta .datetime");
             var scanTime = container.find(".article-wrap .scan-times");
             $.ajax({
-                type:"GET",
+                type:"POST",
                 url:'/Article/getArticleById',
                 data:{articleId:article.init.articleId},
                 success:function(dataJson){
@@ -89,11 +90,44 @@ var EOS = EOS ||  {};
                     success:function(dataJson){
                         if(!dataJson.success){
                             EOS.util.UIAssert(dataJson.message);
-                            window.location.reload();
+//                            window.location.reload();
                             return;
                         }
+                        window.location.reload;
                     }
                 })
+            })
+        },
+        showAllReviews:function(){
+            $.ajax({
+                type:'GET',
+                url:'/Article/showAllReviewByExpId',
+                data:{expId:article.init.articleId},
+                success:function(dataJson){
+                    if(!dataJson.success){
+                        EOS.util.UIAssert(dataJson.message);
+                        return;
+                    }
+                    var container = article.init.container;
+                    container.find(".all-reviews .count-reviews").html("共有"+dataJson.res.length + "条评论");
+                    console.log(dataJson.res);
+                    var markup = '<div class="item-view">'+
+                    '{{if isChildReview}}'+
+                        '回复&nbsp;'+
+                        '<span >${reviewed}</span>' +
+                        '{{/if}}' +
+                            '<span>${content}</span>'+
+                            '<div>'+
+                            '<span>${reviewer}</span>'+
+                            '<span>${createTs}</span>'+
+                            '</div>'+
+                            '</div>';
+                    $.template('reviewTmp', markup);
+                    $.tmpl('reviewTmp', dataJson.res).appendTo(".all-reviews");
+//                    var html = $("#reviewTmp").tmpl(dataJson.res);
+//                    console.log(html);
+//                    container.find(".all-reviews").append(html);
+                }
             })
         }
     });

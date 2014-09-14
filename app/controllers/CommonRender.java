@@ -19,6 +19,8 @@ import play.mvc.Http;
 
 import java.util.Date;
 import java.net.URLEncoder;
+import java.util.List;
+
 /**
  * Created by yehuizhang on 14-9-3.
  */
@@ -71,6 +73,10 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
+    protected static void RenderSuccess(List<Object> listObj){
+        Result<List<Object>> res = new Result<List<Object>>();
+        renderJSON(JSONObject.fromObject(res));
+    }
 
     protected static void successEnter(final String userId, final String userName){
         session.put(USER_ID, userId);

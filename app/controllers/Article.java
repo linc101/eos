@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.ContentCovert;
+
+import java.util.List;
 /**
  * Created by yehuizhang on 14-9-9.
  */
@@ -49,18 +51,28 @@ public class Article extends CommonRender{
             RenderFailed("评论为空，请填写评论内容！");
         }
 
-        if(expId <= 0){
+        if(expId <= 0L){
             RenderFailed("id异常！");
         }
 
         long reviewId = new Review(expId, reviewer, content).firstInsert();
 
-        if(reviewId <= 0){
+        if(reviewId <= 0L){
             RenderFailed("数据库异常！");
         }
 
         RenderSuccess();
     }
 
+    public static void showAllReviewByExpId(final long expId){
+        if(expId <= 0L){
+            RenderFailed("id异常！");
+        }
+
+        List<Review> reviews = Review.findAllReviewByExp(expId);
+
+        RenderSuccess(reviews);
+
+    }
 
 }

@@ -233,7 +233,7 @@ public class Review extends Model implements PolicySQLGenerator {
 
     public static final String AllProperty = " expId, reviewed, reviewer, content, createTs, isChildReview, floor ";
 
-    public static List<Review> findAllReviewByExp1(long expId){
+    public static List<Review> findAllReviewByExp(long expId){
         String query = "select " + AllProperty + " from " + getMapTableName(expId) + " where expId = ? order by floor asc";
 
         return new JDBCBuilder.JDBCExecutor<List<Review>>(query, expId){
