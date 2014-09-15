@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import models.User;
 import play.mvc.Http;
+import util.PageOffset;
 
 import java.util.Date;
 import java.net.URLEncoder;
@@ -32,7 +33,8 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
-    @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout"})
+    @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout",
+            "UserCenter.showAllMyExps"})
     public static void checkAccess(){
         User user = (User)request.args.get(USER);
 
@@ -73,6 +75,11 @@ public class CommonRender extends Controller {
         renderJSON(JSONObject.fromObject(res));
     }
 
+    protected static void RenderSuccess(List list, int count, PageOffset offset){
+        Result<List> res = new Result<List>(list,count,offset);
+        renderJSON(JSONObject.fromObject(res));
+    }
+
     protected static void RenderSuccess(List<Object> listObj){
         Result<List<Object>> res = new Result<List<Object>>();
         renderJSON(JSONObject.fromObject(res));
@@ -92,6 +99,7 @@ public class CommonRender extends Controller {
     protected static User getUser(){
 
         User user = (User)request.args.get(USER);
+
         logger.info("------------------------------------------user:" + user);
         if(user == null){
             RenderFailed("数据库异常，请检查数据库");

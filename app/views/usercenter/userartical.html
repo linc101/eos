@@ -3,7 +3,7 @@
 
 <div class="my-exp">
     <div class="my-all-exps">
-
+       怎么不行呢？哎
     </div>
 
     <div class="pag">
@@ -11,3 +11,9 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    EOS.gcs('/js/usercenter/myexp.js', function(){
+        $(document).ready(EOS.myExp.init.doInit($(".my-exp")));
+    });
+
+</script>

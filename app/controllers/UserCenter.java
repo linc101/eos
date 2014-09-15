@@ -52,18 +52,16 @@ public class UserCenter extends CommonRender {
         }
     }
 
-    public static void showAllMyExps(final long userId, final int pn, final int ps){
-        if(userId <= 0){
-            RenderFailed("用户Id不合法！");
-        }
+    public static void showAllMyExps(final int pn, final int ps){
+        User user = getUser();
 
         PageOffset offset = new PageOffset(pn, ps);
 
-        List<Experience> exps = Experience.findExpByUserId(userId, offset);
+        List<Experience> exps = Experience.findExpByUsername(user.getUserName(), offset);
 
+        int count = Experience.countExpByUsername(user.getUserName());
 
-
-
+        RenderSuccess(exps, count, offset);
     }
 
     private static String trimString(String str){

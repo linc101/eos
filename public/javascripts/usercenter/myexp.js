@@ -11,19 +11,24 @@ var EOS = EOS || {};
     myExp.init = $.extend(myExp.init, {
         doInit:function(container){
             myExp.init.container = container;
+            myExp.show.showAllMyExps();
         }
     });
 
     myExp.show = myExp.show ||{};
     myExp.show = $.extend(myExp.show,{
         showAllMyExps:function(){
-            $.find(".pag").tmpage({
-                currPage:1,
-                pageSize:10,
-                pageCount:1,
-                ajax:{
-                    param:{
-
+            var container = myExp.init.container;
+            container.find(".pag").tmpage({
+                currPage: 1,
+                pageSize: 10,
+                pageCount: 1,
+                ajax: {
+                    on: true,
+                    dataType: 'json',
+                    url: "/UserCenter/showAllMyExps",
+                    callback: function(data){
+                        console.log("test");
                     }
                 }
             })

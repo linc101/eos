@@ -95,7 +95,10 @@ var EOS = EOS || {};
                 return $(this);
             }
         });
+
         function init(param, obj) {
+
+            //是否使用jsonp
             function isUseJsonp() {
                 var isJsonp = param.isJsonp;
                 if (isJsonp == true) {
@@ -105,10 +108,19 @@ var EOS = EOS || {};
                 }
             }
 
+
+            //每页多少条
             function getPageSizeOption() {
+                /*var html = '每页&nbsp;<select style="width: 60px;" class="paging-size-select">' +
+                 '   <option value="10" selected="selected">10</option> ' +
+                 '   <option value="20">20</option> ' +
+                 '   <option value="50">50</option> ' +
+                 '   <option value="100">100</option> ' +
+                 '</select>&nbsp;条&nbsp;';
+                 return html;*/
+
                 var pageSizeArray = param.selfPageSizeArray;
                 if (pageSizeArray === undefined || pageSizeArray == null || pageSizeArray.length <= 0) {
-
                     var html = '每页显示&nbsp;' +
                         '<span class="small-pagesize-span"><span class="paging-size5 paging-size-span paging-nav paging-size-link" style="font-weight: bold;cursor: pointer;">5</span>|&nbsp;</span>' +
                         '<span class="paging-size10 paging-size-span paging-nav paging-size-link" style="font-weight: bold;cursor: pointer;">10</span>|&nbsp;' +
@@ -140,20 +152,33 @@ var EOS = EOS || {};
 
             //设置选择每页多少条的事件
             function setPageSizeOptionEvent(obj) {
+                /*obj.find(".paging-size-select").change(function () {
+                 var newPageSize = $(this).val();
+                 pageSize = newPageSize;
+                 //保存到cookie
+                 $.cookie(tmPagingSizeCookie, newPageSize, {expires: 365, path:'/'});
+                 createView(1);
+                 });*/
                 obj.find(".paging-size-span").click(function () {
                     var newPageSize = $(this).html();
                     pageSize = newPageSize;
+                    //保存到cookie
                     $.cookie(tmPagingSizeCookie, newPageSize, {expires: 365, path:'/'});
                     createView(1);
                 });
 
             }
 
+            //设置当前的pageSize
             function setCurrentPageSizeOption(obj, curretPageSize) {
+                //obj.find(".paging-size-select").val(pageSize);
+
                 var className = "paging-size" + curretPageSize;
+                //obj.find("." + className).css("color", "#a10000");
                 if (getIsUseSmallPageSize() == false) {
                     obj.find(".small-pagesize-span").remove();
                 }
+
                 obj.find("." + className).removeClass("paging-size-link");
                 obj.find("." + className).addClass("paging-size-select");
             }
@@ -165,7 +190,6 @@ var EOS = EOS || {};
                 var pageCount;
                 var pageSize;
                 var tempPage;
-                var resultCount;
                 var linkNum = 10;
                 var defaults = new Object({
                     currPage:1,
@@ -196,9 +220,6 @@ var EOS = EOS || {};
                     }
                 });
 
-
-
-
                 function getCurrPage() {
                     if (typeof options.currPage != 'undefined') {
                         return options.currPage;
@@ -210,13 +231,6 @@ var EOS = EOS || {};
                 function getPageCount() {
                     if (typeof options.pageCount != 'undefined') {
                         return options.pageCount;
-                    } else {
-                        return defaults.pageCount;
-                    }
-                }
-                function getResultCount() {
-                    if (options.resultCount ) {
-                        return options.resultCount;
                     } else {
                         return defaults.pageCount;
                     }
@@ -331,20 +345,20 @@ var EOS = EOS || {};
 
             function isCode(val) {
                 if (val < 1) {
-                    TM.Alert.load('输入值不能小于1');
+//                    TM.Alert.load('输入值不能小于1');
 
                     //alert("输入值不能小于1");
                     return false;
                 }
                 var patrn = /^[0-9]{1,8}$/;
                 if (!patrn.exec(val)) {
-                    TM.Alert.load('请输入正确的数字');
+//                    TM.Alert.load('请输入正确的数字');
 
                     //alert("请输入正确的数字");
                     return false;
                 }
                 if (val > pageCount) {
-                    TM.Alert.load('输入值不能大于总页数');
+//                    TM.Alert.load('输入值不能大于总页数');
 
                     //alert("输入值不能大于总页数");
                     return false;
@@ -352,7 +366,7 @@ var EOS = EOS || {};
                 return true;
             }
 
-            function updateView(resultCount) {
+            function updateView() {
                 currPage = parseInt(currPage);
                 pageCount = parseInt(pageCount);
                 var link = getLink();
@@ -395,13 +409,7 @@ var EOS = EOS || {};
 
                 content += getText();
                 content += '</div>';
-
-                if( (resultCount && resultCount < 10)){
-                    obj.html('');
-                }else {
-                    obj.html(content);
-                }
-
+                obj.html(content);
                 setCurrentPageSizeOption(obj, pageSize);
 
                 obj.find(":text").keypress(function (event) {
@@ -409,6 +417,12 @@ var EOS = EOS || {};
                     if (keycode == 13) {
                         var page = $(this).val();
                         if (isCode(page)) {
+//                            obj.find("a").unbind("click");
+//                            obj.find("a").each(function() {
+//                                $(this).click(function() {
+//                                    return false;
+//                                })
+//                            });
                             createView(page);
                         }
                     }
@@ -435,6 +449,7 @@ var EOS = EOS || {};
                     getAjaxStart();
                     var varUrl = ajax.url;
                     var param = getParam();
+//                    console.info(param);
 
                     var ajaxEndCallback = function(data) {
                         if(!data){
@@ -447,22 +462,32 @@ var EOS = EOS || {};
                                 callback:ajax.callback,
                                 data:data
                             });
-                            updateView(data.count);
+                            updateView();
                             return true;
+//                                } else {
+////                                alert(data.message);
+//                                    return false;
+//                                }
                         }
                         else {
                             $('#loadingImg').parents('tr').remove();
 
                             if(data.message){
-                                TM.Alert.load(data.message);
+//                                TM.Alert.load(data.message);
                             }
+                            //alert(data.message);
                         }
 
                     }
 
                     if (isUseJsonp() == true) {
 
-                        TM.Loading.init.show();
+//                        TM.Loading.init.show();
+                        /*if (varUrl.indexOf("?") >= 0) {
+                         varUrl += "&pn=" + param.pn + "&ps=" + param.ps;
+                         } else {
+                         varUrl += "?pn=" + param.pn + "&ps=" + param.ps;
+                         }*/
                         $.ajax({
                             type: "get",
                             url: varUrl,
@@ -472,11 +497,11 @@ var EOS = EOS || {};
 
                                 ajaxEndCallback(data);
 
-                                TM.Loading.init.hidden();
+//                                TM.Loading.init.hidden();
                             },
                             error: function(){
                                 updateView();
-                                TM.Loading.init.hidden();
+//                                TM.Loading.init.hidden();
                             }
                         });
                     } else {
@@ -485,9 +510,11 @@ var EOS = EOS || {};
                             type:'post',
                             data:param,
                             contentType:"application/x-www-form-urlencoded;utf-8",
+                            //async:false,
                             dataType:'json',
                             error:function (jqXHR, textStatus) {
                                 updateView();
+                                //alert(textStatus);
                             },
                             success:function (data) {
                                 ajaxEndCallback(data);
@@ -504,7 +531,9 @@ var EOS = EOS || {};
 
             function checkParam() {
                 if (currPage < 1) {
-                    TM.Alert.load('配置参数错误\n错误代码:-1');
+//                    TM.Alert.load('配置参数错误\n错误代码:-1');
+
+                    //alert("配置参数错误\n错误代码:-1");
                     return false;
                 }
                 /*if (currPage > pageCount) {
@@ -514,7 +543,7 @@ var EOS = EOS || {};
                  return false;
                  }*/
                 if (pageSize < 2) {
-                    TM.Alert.load('配置参数错误\n错误代码:-3');
+//                    TM.Alert.load('配置参数错误\n错误代码:-3');
 
                     //alert("配置参数错误\n错误代码:-3");
                     return false;
@@ -530,7 +559,6 @@ var EOS = EOS || {};
                     var isB = true;
                     var pageCountId = getPageCountId();
                     var callback;
-
                     switch (options.dataType) {
                         case"json":
 //                        data =$.parseJSON(data);
@@ -550,7 +578,6 @@ var EOS = EOS || {};
                     if (resultPageCount) {
                         pageCount = resultPageCount;
                     }
-
                     if (isB) {
                         options.callback && options.callback(data);
                     }
@@ -578,6 +605,7 @@ var EOS = EOS || {};
             else
                 pageSize = 50;
 
+            //天猫联盟中，降权分页
             if (isSelfDefinePageSize() == true) {
                 tmPagingSizeCookie = "SelfDefinePageSize_" + tmPagingSizeCookie;
                 cookiePageSize = $.cookie(tmPagingSizeCookie);
