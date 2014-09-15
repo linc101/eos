@@ -11,7 +11,6 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-        System.out.println("session:" + session.get(Config.USER_NAME));
         render();
     }
 

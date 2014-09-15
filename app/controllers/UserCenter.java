@@ -7,6 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.commons.lang.StringUtils;
+import util.PageOffset;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yehuizhang on 14-9-6.
  */
@@ -45,6 +50,20 @@ public class UserCenter extends CommonRender {
         }else{
             RenderSuccess(articleId);
         }
+    }
+
+    public static void showAllMyExps(final long userId, final int pn, final int ps){
+        if(userId <= 0){
+            RenderFailed("用户Id不合法！");
+        }
+
+        PageOffset offset = new PageOffset(pn, ps);
+
+        List<Experience> exps = Experience.findExpByUserId(userId, offset);
+
+
+
+
     }
 
     private static String trimString(String str){

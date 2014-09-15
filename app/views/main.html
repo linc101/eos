@@ -139,10 +139,12 @@
                 },
                 logoutAction:function(){
                     var container = logout.init.container;
+                    console.log("logout");
                     $('body').find(".logout").livequery(function(){
                         $(this).click(function(){
+                            console.log("test for 2");
                             $.ajax({
-                                type:'get',
+                                type:'POST',
                                 url:'/Login/userLogout',
                                 success:function(dataJson){
                                     if(dataJson.success){

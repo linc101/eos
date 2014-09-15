@@ -55,7 +55,7 @@ public class CommonRender extends Controller {
         if(userId != null){
             return userId;
         }
-        Http.Cookie cookie = response.cookies.get(USER_ID);
+        Http.Cookie cookie = request.cookies.get(USER_ID);
         if(cookie != null){
             return cookie.value;
         }else{

@@ -250,6 +250,22 @@ public class Experience extends Model implements PolicySQLGenerator{
         }.call();
     }
 
+    public static List<Experience> findExpByUserId(long userId, PageOffset offset){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where id = ? limit ?,?";
+        return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, userId, offset.getOffset(),offset.getPs()){
+            @Override
+            public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
+                List<Experience> exps = new ArrayList<Experience>();
+                while(res.next()){
+                    Experience exp = parseExperience(res);
+                    if(exp != null)
+                        exps.add(exp);
+                }
+                return exps;
+            }
+        }.call();
+    }
+
     public static Experience findExpById(long id){
         String query = "select " + AllProperty + " from " + TABLE_NAME + " where id = ?";
         return new JDBCBuilder.JDBCExecutor<Experience>(query, id){

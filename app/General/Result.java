@@ -1,6 +1,9 @@
 package General;
 import net.sf.json.JSONArray;  
-import net.sf.json.JSONObject; 
+import net.sf.json.JSONObject;
+import util.PageOffset;
+
+import java.util.List;
 
 /**
  * Created by yehuizhang on 14-9-1.
@@ -10,11 +13,28 @@ public class Result<T> {
 
     private String message;
 
+    private int pn;
+
+    private int ps;
+
+    private int count;
+
+    private int pnCount;
+
     private T res;
 
     public Result(T res){
         this.success = true;
         this.res = res;
+    }
+
+    public Result(List list, int count, PageOffset offset){
+        this.success = true;
+        this.count = count;
+        this.pn = offset.getPn();
+        this.ps = offset.getPs();
+        this.pnCount = (count + ps -1)/ps;
+        this.res = (T)list;
     }
 
     public Result(String message){
