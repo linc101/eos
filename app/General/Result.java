@@ -19,6 +19,8 @@ public class Result<T> {
 
     private int count;
 
+    private boolean isOk;
+
     private int pnCount;
 
     private T res;
@@ -29,6 +31,7 @@ public class Result<T> {
     }
 
     public Result(List list, int count, PageOffset offset){
+        this.isOk = true;
         this.success = true;
         this.count = count;
         this.pn = offset.getPn();
@@ -40,6 +43,46 @@ public class Result<T> {
     public Result(String message){
         this.message = message;
         this.success = false;
+    }
+
+    public int getPn(){
+        return this.pn;
+    }
+
+    public void setPn(int pn){
+        this.pn = pn;
+    }
+
+    public void setPs(int ps){
+        this.ps = ps;
+    }
+
+    public int getPs(){
+        return this.ps;
+    }
+
+    public int getCount(){
+        return this.count;
+    }
+
+    public void setCount(int count){
+        this.count = count;
+    }
+
+    public boolean getIsOk(){
+        return this.isOk;
+    }
+
+    public void setIsOk(boolean isOk){
+        this.isOk = isOk;
+    }
+
+    public int getPnCount(){
+        return this.pnCount;
+    }
+
+    public void setPnCount(int pnCount){
+        this.pnCount = pnCount;
     }
 
     public Result(){

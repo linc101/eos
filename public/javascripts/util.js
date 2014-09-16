@@ -63,41 +63,17 @@ var EOS = EOS || {};
         }
     }
 })(jQuery, window));
-//example
-//holder.find('.pagenav').tmpage({
-//    currPage: 1,
-//    pageSize: 10,
-//    pageCount: 1,
-//    ajax: {
-//        param: {
-//            cid: cid,
-//            year: year,
-//            month: month
-//        }, //modify by uttp
-//        on: true,
-//        dataType: 'json',
-//        url: "/items/topItems",
-//        callback: function(data){
-//            if (!data || !data.res || data.res.length == 0) {
-//                return;
-//            }
-//            var rows = rowTmpl.tmpl(data.res);
-//            tbody.empty();
-//            tbody.append(rows);
-//        }
-//    }
-//});
+
 ((function ($, window) {
     $(function () {
         $.fn.extend({
-            tmpage:function (param) {
+            pagination:function (param) {
                 init(param, $(this));
                 return $(this);
             }
         });
 
         function init(param, obj) {
-
             //是否使用jsonp
             function isUseJsonp() {
                 var isJsonp = param.isJsonp;
@@ -219,7 +195,6 @@ var EOS = EOS || {};
                             '到&nbsp;{currText}&nbsp;页&nbsp;<input  class="gopage-submit hand" title="跳转页面" type="button" value="确定"/></span>'
                     }
                 });
-
                 function getCurrPage() {
                     if (typeof options.currPage != 'undefined') {
                         return options.currPage;
@@ -449,13 +424,11 @@ var EOS = EOS || {};
                     getAjaxStart();
                     var varUrl = ajax.url;
                     var param = getParam();
-//                    console.info(param);
 
                     var ajaxEndCallback = function(data) {
                         if(!data){
                             return;
                         }
-
                         if (data.isOk) {
                             loadPageCount({
                                 dataType:ajax.dataType,
@@ -548,6 +521,7 @@ var EOS = EOS || {};
                     //alert("配置参数错误\n错误代码:-3");
                     return false;
                 }
+
                 return true;
             }
 

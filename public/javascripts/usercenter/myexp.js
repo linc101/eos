@@ -19,7 +19,7 @@ var EOS = EOS || {};
     myExp.show = $.extend(myExp.show,{
         showAllMyExps:function(){
             var container = myExp.init.container;
-            container.find(".pag").tmpage({
+            container.find(".pag").pagination({
                 currPage: 1,
                 pageSize: 10,
                 pageCount: 1,
@@ -28,7 +28,9 @@ var EOS = EOS || {};
                     dataType: 'json',
                     url: "/UserCenter/showAllMyExps",
                     callback: function(data){
-                        console.log("test");
+
+                        var html = "<span>${article}</span>";
+                        $.tmpl(html, data.res).appendTo(container.find(".my-all-exps"));
                     }
                 }
             })
