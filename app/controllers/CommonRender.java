@@ -34,11 +34,11 @@ public class CommonRender extends Controller {
 
     protected static void RenderFailed(String message){
         Result res = new Result(message);
-        renderJSON(JSONObject.fromObject(res));
+        renderJSON(wrapObject(res));
     }
 
     @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout",
-            "UserCenter.showAllMyExps"})
+            "UserCenter.showAllMyExps", "UserCenter.doAddExperience"})
     public static void checkAccess(){
         User user = (User)request.args.get(USER);
 
@@ -71,22 +71,22 @@ public class CommonRender extends Controller {
 
     protected static void RenderSuccess(){
         Result res = new Result();
-        renderJSON(JSONObject.fromObject(res));
+        renderJSON(wrapObject(res));
     }
 
     protected static void RenderSuccess(Object obj){
         Result<Object> res = new Result<Object>(obj);
-        renderJSON(JSONObject.fromObject(res));
+        renderJSON(wrapObject(res));
     }
 
     protected static void RenderSuccess(List list, int count, PageOffset offset){
         Result<List> res = new Result<List>(list,count,offset);
-        renderJSON(JSONObject.fromObject(res));
+        renderJSON(wrapObject(res));
     }
 
     protected static void RenderSuccess(List<Object> listObj){
         Result<List<Object>> res = new Result<List<Object>>();
-        renderJSON(JSONObject.fromObject(res));
+        renderJSON(wrapObject(res));
     }
 
     protected static JSONObject wrapObject(Object obj){
@@ -113,9 +113,7 @@ public class CommonRender extends Controller {
     }
 
     protected static User getUser(){
-
         User user = (User)request.args.get(USER);
-
         logger.info("------------------------------------------user:" + user);
         if(user == null){
             RenderFailed("数据库异常，请检查数据库");

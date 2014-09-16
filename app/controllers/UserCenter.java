@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.commons.lang.StringUtils;
+import play.cache.Cache;
 import util.PageOffset;
 
 import java.util.ArrayList;
@@ -44,13 +45,14 @@ public class UserCenter extends CommonRender {
         }
 
         long articleId = new Experience(user.getUserName(), title, article).firstSave();
-
+        logger.info("--------------------userinfo:" + user);
         if(articleId <= 0){
             RenderFailed("数据库异常");
         }else{
             RenderSuccess(articleId);
         }
     }
+
 
     public static void showAllMyExps(final int pn, final int ps){
         User user = getUser();

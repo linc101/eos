@@ -27,10 +27,32 @@ var EOS = EOS || {};
                     on: true,
                     dataType: 'json',
                     url: "/UserCenter/showAllMyExps",
-                    callback: function(data){
+                    callback: function(dataJson){
+                        if(!dataJson.success){
+                            EOS.util.UIAssert(dataJson.message);
+                            return;
+                        }
+                        container.find(".my-all-exps").empty();
+                        $.each(dataJson.res, function(index, elem){
+                            var time = dataJson.res[index].createTs;
+                            dataJson.res[index].createTs = EOS.util.dealDate(time);
+                        })
+                        container.find(".my-all-exps").html("<h3>共分享了<span style=\"color:#009196;\">" + dataJson.count +"</span>篇文章</h3>");
+                        var html = "<article class=\"all-exps-detail\">" +
+                                   "<div class=\"scan-times\">" +
+                                   "<span>${scanTimes}</span>浏览"+
+                                   "</div>" +
+                                   "<div class=\"exps-brief\">"+
+                                   "<h3><a href=\"/article/${id}\" style=\"text-decoration: none;color:#333\">${title}</a></h3>" +
 
-                        var html = "<span>${article}</span>";
-                        $.tmpl(html, data.res).appendTo(container.find(".my-all-exps"));
+                                   "<div> " +
+                                   "${createTs}" +
+                                   "</div>"+
+
+                                   "</div>" +
+                                   "</article>";
+
+                        $.tmpl(html, dataJson.res).appendTo(container.find(".my-all-exps"));
                     }
                 }
             })

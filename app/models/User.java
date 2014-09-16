@@ -1,5 +1,7 @@
 package models;
 import General.Result;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
@@ -19,7 +21,9 @@ import transaction.JDBCBuilder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@JsonAutoDetect
 @Entity(name = User.TABLE_NAME)
+@JsonIgnoreProperties(value = {"entityId", "idColumn", "idName","persistent" ,"tableHashKey", "tableName"})
 public class User extends Model implements PolicySQLGenerator{
 	private static final Logger log = LoggerFactory.getLogger(User.class);
 	

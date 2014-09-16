@@ -1,13 +1,15 @@
 package controllers;
 
 import models.Experience;
-
 import models.Review;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.ContentCovert;
+
+import play.cache.Cache;
 
 import java.util.List;
 /**
@@ -111,8 +113,13 @@ public class Article extends CommonRender{
         if(expId <= 0L){
             RenderFailed("id异常！");
         }
+        List<Review> reviews = Cache.get("allreview", List.class);
+        if(reviews == null){
+            log.info("-----------------------get all reviews by expId failed!");
+            reviews = Review.findAllReviewByExp(expId);
+            Cache.set("allreview", reviews);
+        }
 
-        List<Review> reviews = Review.findAllReviewByExp(expId);
         RenderSuccess(reviews);
 
     }

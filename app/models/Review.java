@@ -1,5 +1,7 @@
 package models;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import play.db.jpa.Model;
 
 import org.slf4j.Logger;
@@ -23,7 +25,9 @@ import java.util.List;
 /**
  * Created by yehuizhang on 14-9-8.
  */
+@JsonAutoDetect
 @Entity(name=Review.TABLE_NAME)
+@JsonIgnoreProperties(value = {"entityId", "idColumn", "idName","persistent" ,"tableHashKey", "tableName"})
 public class Review extends Model implements PolicySQLGenerator {
     private static final Logger logger = LoggerFactory.getLogger(Review.class);
 
