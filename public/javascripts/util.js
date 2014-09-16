@@ -430,7 +430,7 @@ var EOS = EOS || {};
                         if(!data){
                             return;
                         }
-                        if (data.isOk) {
+                        if (data.success) {
                             loadPageCount({
                                 dataType:ajax.dataType,
                                 callback:ajax.callback,

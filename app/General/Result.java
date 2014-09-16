@@ -3,12 +3,13 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import util.PageOffset;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by yehuizhang on 14-9-1.
  */
-public class Result<T> {
+public class Result<T>  implements Serializable{
     private boolean success;
 
     private String message;
@@ -18,8 +19,6 @@ public class Result<T> {
     private int ps;
 
     private int count;
-
-    private boolean isOk;
 
     private int pnCount;
 
@@ -31,7 +30,6 @@ public class Result<T> {
     }
 
     public Result(List list, int count, PageOffset offset){
-        this.isOk = true;
         this.success = true;
         this.count = count;
         this.pn = offset.getPn();
@@ -67,14 +65,6 @@ public class Result<T> {
 
     public void setCount(int count){
         this.count = count;
-    }
-
-    public boolean getIsOk(){
-        return this.isOk;
-    }
-
-    public void setIsOk(boolean isOk){
-        this.isOk = isOk;
     }
 
     public int getPnCount(){

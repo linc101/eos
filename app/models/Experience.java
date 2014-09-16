@@ -1,5 +1,8 @@
 package models;
 
+import General.Result;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.ObjectMapper;
 import play.db.jpa.Model;
 
 import org.slf4j.Logger;
@@ -16,6 +19,7 @@ import transaction.DBBuilder.DataSrc;
 import transaction.JDBCBuilder;
 import util.PageOffset;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -31,16 +35,14 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 @JsonAutoDetect
 @Entity(name = Experience.TABLE_NAME)
-@JsonIgnoreProperties(value = {"entityId", "idColumn", "idName","persistent" ,"tableHashKey"})
+@JsonIgnoreProperties(value = {"entityId", "idColumn", "idName","persistent" ,"tableHashKey", "tableName"})
 public class Experience extends Model implements PolicySQLGenerator{
     private static final Logger logger = LoggerFactory.getLogger(Experience.class);
 
-    @JsonIgnore
     public static final String TABLE_NAME = "exp";
 
     @Lob
     @Column(name="article")
-    @JsonProperty("test")
     private String article;
 
     @Column(name="title")
@@ -281,5 +283,19 @@ public class Experience extends Model implements PolicySQLGenerator{
         }
         exp.setScanTimes(exp.getScanTimes() + 1);
         return exp.jdbcSave();
+    }
+
+    public static void main(String[] args) throws IOException {
+        System.out.println("--------test only test for Json----------------------- ");
+        List<Experience> listExps = new ArrayList<Experience>();
+        Experience exp = new Experience("1", "2", "3");
+        listExps.add(exp);
+        Experience expTemp = new Experience("4", "5", "6");
+        listExps.add(expTemp);
+        ObjectMapper mapper = new ObjectMapper();
+        Result<List<Experience>> res = new Result<List<Experience>>(listExps);
+
+        String s = mapper.writeValueAsString(res);
+        System.out.println(s);
     }
 }
