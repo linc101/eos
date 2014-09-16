@@ -1,6 +1,7 @@
 package models;
 
 import General.Result;
+import net.sf.json.JSONObject;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.ObjectMapper;
 import play.db.jpa.Model;
@@ -297,5 +298,6 @@ public class Experience extends Model implements PolicySQLGenerator{
 
         String s = mapper.writeValueAsString(res);
         System.out.println(s);
+        JSONObject jsonObject = JSONObject.fromObject(s);
     }
 }
