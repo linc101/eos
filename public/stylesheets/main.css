@@ -82,3 +82,51 @@
     width:1000px;
     margin: 0 auto;
 }
+
+.page-container .paging-nav{
+    display:inline-block;
+    zoom: 1;
+    height:20px;
+    line-height: 20px;
+    width:30px;
+    text-decoration:none;
+    margin:0px 2px;
+    font-weight:bold;
+    text-align:center;
+    padding:4px 0px;
+    border:1px solid #ddd;
+    border-radius:2px;
+    color:#009a61;
+    cursor:pointer;
+}
+
+.page-container .paging-nav:hover{
+    background-color: #f3f3f3;
+}
+
+.page-container .paging-select{
+    background-color: #009161;
+    color:#ffffff;
+    border:1px solid #009161;
+}
+
+.page-container .paging-select:hover{
+    background-color: #009161;
+}
+
+.page-container .jumpTo{
+    width:30px;
+    display:inline-block;
+    font-size:14px;
+    line-height:20px;
+    color:#555;
+    vertical-align: middle;
+    border:1px solid #ccc;
+    border-radius:2px;
+}
+
+.page-container .gopage-submit{
+    width:38px;
+    curosr:pointer;
+    height:25px;
+}

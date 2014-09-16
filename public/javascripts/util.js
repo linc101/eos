@@ -67,6 +67,7 @@ var EOS = EOS || {};
 ((function ($, window) {
     $(function () {
         $.fn.extend({
+            //每次直接调用 pagination,然后传入配置参数
             pagination:function (param) {
                 init(param, $(this));
                 return $(this);
@@ -358,7 +359,7 @@ var EOS = EOS || {};
                 } else {
                     lastPage = firstPage + linkNum;
                 }
-                var content = '<div class="tm-paging-container">';
+                var content = '<div class="page-container">';
 
                 if (currPage == 1) {
                     content += "<span class=\"page-prev page-prev-disabled\" title=\"" + getPrev() + "\"></span>&nbsp;";
@@ -557,6 +558,7 @@ var EOS = EOS || {};
                     }
                 }
             }
+            //参数赋值给options
             options = param;
             currPage = getCurrPage();
             pageCount = getPageCount();
@@ -579,7 +581,6 @@ var EOS = EOS || {};
             else
                 pageSize = 50;
 
-            //天猫联盟中，降权分页
             if (isSelfDefinePageSize() == true) {
                 tmPagingSizeCookie = "SelfDefinePageSize_" + tmPagingSizeCookie;
                 cookiePageSize = $.cookie(tmPagingSizeCookie);
