@@ -17,10 +17,11 @@ var EOS = EOS || {};
 
     myExp.show = myExp.show ||{};
     myExp.show = $.extend(myExp.show,{
+        nowPage:1,
         showAllMyExps:function(){
             var container = myExp.init.container;
             container.find(".pag").pagination({
-                currPage: 1,
+                currPage: myExp.show.nowPage,
                 pageSize: 10,
                 pageCount: 1,
                 ajax: {
@@ -32,6 +33,7 @@ var EOS = EOS || {};
                             EOS.util.UIAssert(dataJson.message);
                             return;
                         }
+                        myExp.show.nowPage = dataJson.pn;
                         container.find(".my-all-exps").empty();
                         $.each(dataJson.res, function(index, elem){
                             var time = dataJson.res[index].createTs;
@@ -48,13 +50,40 @@ var EOS = EOS || {};
                                    "<div> " +
                                    "${createTs}&nbsp;•&nbsp;" +
                                    "${reviewTimes}条评论" +
+                                   "<div class=\"operation\" style=\"float:right;color:#017e66;\">" +
+                                   "<span class=\"edit\" style=\"cursor:pointer;\">编辑</span>&nbsp;•&nbsp;" +
+                                   "<span class=\"delete\" style=\"cursor:pointer;\" id=\"${id}\">删除</span>" +
+                                   "</div>" +
                                    "</div>"+
 
                                    "</div>" +
                                    "</article>";
 
                         $.tmpl(html, dataJson.res).appendTo(container.find(".my-all-exps"));
+                        myExp.show.deleteExp();
                     }
+                }
+            })
+        },
+        deleteExp:function(){
+            var container = myExp.init.container;
+            container.find(".all-exps-detail .delete").unbind().click(function(){
+                var thisObj = $(this);
+                var thisId = thisObj.attr('id');
+                console.log(thisId);
+                if(confirm("是否删除？")) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/UserCenter/deleteExpById',
+                        data: {expId: thisId},
+                        success: function (dataJson) {
+                            if (!dataJson.success) {
+                                EOS.util.UIAssert(dataJson.message);
+                                return;
+                            }
+                            myExp.show.showAllMyExps();
+                        }
+                    })
                 }
             })
         }
