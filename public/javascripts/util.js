@@ -8,7 +8,7 @@ var EOS = EOS || {};
     EOS.util = EOS.util || {};
 
     var util = EOS.util;
-    util.UIAssert = function(text){
+    util.UIAssert = function(text, callback){
         var html = "<div style='text-align:center;line-height: 120px;'>" + text +"</div>";
         $(html).dialog({
             title:'提示',
@@ -18,6 +18,7 @@ var EOS = EOS || {};
             height:250,
             buttons:[
                 {text:'确定',click:function(){
+                    callback && callback();
                     $(this).dialog('close');
                 }}
             ]
@@ -322,20 +323,20 @@ var EOS = EOS || {};
             function isCode(val) {
                 if (val < 1) {
 //                    TM.Alert.load('输入值不能小于1');
-
+                    EOS.util.UIAssert('输入值不能小于1');
                     //alert("输入值不能小于1");
                     return false;
                 }
                 var patrn = /^[0-9]{1,8}$/;
                 if (!patrn.exec(val)) {
 //                    TM.Alert.load('请输入正确的数字');
-
+                    EOS.util.UIAssert('请输入正确的数字');
                     //alert("请输入正确的数字");
                     return false;
                 }
                 if (val > pageCount) {
 //                    TM.Alert.load('输入值不能大于总页数');
-
+                    EOS.util.UIAssert('输入值不能大于总页数');
                     //alert("输入值不能大于总页数");
                     return false;
                 }
@@ -448,6 +449,7 @@ var EOS = EOS || {};
 
                             if(data.message){
 //                                TM.Alert.load(data.message);
+
                             }
                             //alert(data.message);
                         }

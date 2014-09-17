@@ -42,7 +42,9 @@ var EOS = EOS || {};
                             window.location.href = "/Application/index";
                             return;
                         }
-                        EOS.util.UIAssert(dataJson.message);
+                        EOS.util.UIAssert(dataJson.message, function(){
+                            window.location.href = "/Login/login";
+                        });
                     }
                 })
             })
