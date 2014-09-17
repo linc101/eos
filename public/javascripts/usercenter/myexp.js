@@ -46,7 +46,8 @@ var EOS = EOS || {};
                                    "<h3><a href=\"/article/${id}\" style=\"text-decoration: none;color:#333\">${title}</a></h3>" +
 
                                    "<div> " +
-                                   "${createTs}" +
+                                   "${createTs}&nbsp;•&nbsp;" +
+                                   "${reviewTimes}条评论" +
                                    "</div>"+
 
                                    "</div>" +

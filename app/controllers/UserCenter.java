@@ -66,6 +66,15 @@ public class UserCenter extends CommonRender {
         RenderSuccess(exps, count, offset);
     }
 
+    public static void deleteExpById(final long expId){
+        boolean isSuccess = Experience.deleteById(expId);
+        if(!isSuccess){
+            RenderFailed("数据库异常，删除失败！");
+        }
+
+        RenderSuccess();
+    }
+
     private static String trimString(String str){
         if(StringUtils.isEmpty(str)){
             return null;

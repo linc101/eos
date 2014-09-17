@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import util.ContentCovert;
 
-import play.cache.Cache;
-
 import java.util.List;
 /**
  * Created by yehuizhang on 14-9-9.
@@ -63,6 +61,12 @@ public class Article extends CommonRender{
             RenderFailed("数据库异常！");
         }
 
+        boolean isIncReviewSuccess = Experience.increaseReviewTimes(expId);
+
+        if(!isIncReviewSuccess){
+            RenderFailed("数据库异常");
+        }
+
         RenderSuccess();
     }
 
@@ -88,6 +92,11 @@ public class Article extends CommonRender{
         if(reviewId <= 0L){
             RenderFailed("数据库异常！");
         }
+        boolean isIncReviewSuccess = Experience.increaseReviewTimes(expId);
+
+        if(!isIncReviewSuccess){
+            RenderFailed("数据库异常");
+        }
 
         RenderSuccess();
     }
@@ -103,6 +112,10 @@ public class Article extends CommonRender{
 
         boolean isSuccess = Review.deleteReview(reviewId, expId);
         if(isSuccess){
+            boolean isDecreaseSuccess = Experience.decreaseReviewTimes(expId);
+            if(!isDecreaseSuccess){
+                RenderFailed("数据库异常");
+            }
             RenderSuccess();
         }else{
             RenderFailed("数据库异常！");
@@ -113,13 +126,7 @@ public class Article extends CommonRender{
         if(expId <= 0L){
             RenderFailed("id异常！");
         }
-        List<Review> reviews = Cache.get("allreview", List.class);
-        if(reviews == null){
-            log.info("-----------------------get all reviews by expId failed!");
-            reviews = Review.findAllReviewByExp(expId);
-            Cache.set("allreview", reviews);
-        }
-
+        List<Review> reviews = Review.findAllReviewByExp(expId);
         RenderSuccess(reviews);
 
     }
