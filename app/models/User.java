@@ -84,7 +84,7 @@ public class User extends Model implements PolicySQLGenerator{
 	}
 	
 	public void setPassword(String password){
-		encryptPassword(password);
+		this.password = encryptPassword(password);
 	}
 	
 	public long getCreateTs(){
@@ -170,12 +170,12 @@ public class User extends Model implements PolicySQLGenerator{
 	public User(String userName, String email, String password){
 		this.userName = userName;
 		this.email = email;
-		encryptPassword(password);
+		this.password = encryptPassword(password);
 		this.createTs = System.currentTimeMillis();
 	}
 
-    private  void encryptPassword(String password){
-        this.password = Codec.hexMD5(password);
+    private  static String encryptPassword(String password){
+        return Codec.hexMD5(password);
     }
 
 	private static final User _instance = new User();
@@ -282,6 +282,21 @@ public class User extends Model implements PolicySQLGenerator{
     public static boolean resetPicPath(String picPath, long id){
         String query = "update " + TABLE_NAME +" set picPath=? where id=?";
         long res = dp.update(query, picPath, id);
+        if(res <= 0)return false;
+        else return true;
+    }
+
+    public static boolean resetBriefIntroduction(String briefIntroduction, long id){
+        String query = "update " + TABLE_NAME + " set briefIntroduction = ? where id = ?";
+        long res = dp.update(query, briefIntroduction, id);
+        if(res <= 0)return false;
+        else return true;
+    }
+
+    public static boolean changePW(String newpassword, long id){
+        String query = "update " + TABLE_NAME + " set password = ? where id = ?";
+        newpassword = encryptPassword(newpassword);
+        long res = dp.update(query, newpassword, id);
         if(res <= 0)return false;
         else return true;
     }

@@ -38,7 +38,7 @@ public class CommonRender extends Controller {
     }
 
     @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout",
-            "UserCenter.showAllMyExps", "UserCenter.doAddExperience"})
+            "UserCenter.showAllMyExps", "UserCenter.doAddExperience", "AccountSetting.changePW"})
     public static void checkAccess(){
         User user = (User)request.args.get(USER);
 
