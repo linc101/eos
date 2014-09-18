@@ -8,5 +8,8 @@ import org.slf4j.LoggerFactory;
 public class AccountSetting extends CommonRender{
     private static final Logger log = LoggerFactory.getLogger(AccountSetting.class);
 
+    public static void accountSetting(){
+        render("");
+    }
 
 }

@@ -40,7 +40,29 @@ public class User extends Model implements PolicySQLGenerator{
 	
 	@Column(name="createTs")
 	private long createTs;
-	
+
+    @Column(name="picPath")
+    private String picPath;
+
+    @Column(name="briefIntroduction")
+    private String briefIntroduction;
+
+    public String getPicPath(){
+        return this.picPath;
+    }
+
+    public void setPicPath(String picPath){
+        this.picPath = picPath;
+    }
+
+    public String getBriefIntroduction(){
+        return this.briefIntroduction;
+    }
+
+    public void setBriefIntroduction(String briefIntroduction){
+        this.briefIntroduction = briefIntroduction;
+    }
+
 	public String getUserName(){
 		return this.userName;
 	}
@@ -94,8 +116,8 @@ public class User extends Model implements PolicySQLGenerator{
 	}
 
     public long firstSave(){
-        String query = "insert into " + TABLE_NAME + "(`userName`,`email`, `password`,`createTs`) values (?,?,?,?)";
-        long res = dp.insert(query, this.userName, this.email, this.password, this.createTs);
+        String query = "insert into " + TABLE_NAME + "(`userName`,`email`, `password`,`createTs`, picPath, briefIntroduction) values (?,?,?,?,?,?)";
+        long res = dp.insert(query, this.userName, this.email, this.password, this.createTs, this.picPath, this.briefIntroduction);
         return res;
     }
 
@@ -111,8 +133,8 @@ public class User extends Model implements PolicySQLGenerator{
 
 
 	public boolean insert(){
-		String query = "insert into " + TABLE_NAME + "(`userName`,`email`, `password`,`createTs`) values (?,?,?,?)";
-		long res = dp.insert(query, this.userName, this.email, this.password, this.createTs);
+		String query = "insert into " + TABLE_NAME + "(`userName`,`email`, `password`,`createTs`, picPath,briefIntroduction) values (?,?,?,?,?,?)";
+		long res = dp.insert(query, this.userName, this.email, this.password, this.createTs, this.picPath, this.briefIntroduction);
 		if(res <= 0){
 			log.error("insert error userName:" + this.userName );
 			return false;
@@ -122,8 +144,8 @@ public class User extends Model implements PolicySQLGenerator{
 	}
 	
 	public boolean update(){
-		String query = "update " + TABLE_NAME + " set `userName` = ? , `email` = ?, `password` = ?, `createTs` = ? where userName = ?" ;
-		long res = dp.update(query, this.userName, this.email, this.password, this.createTs, this.userName);
+		String query = "update " + TABLE_NAME + " set `userName` = ? , `email` = ?, `password` = ?, `createTs` = ?, picPath = ?, briefIntroduction = ? where userName = ?" ;
+		long res = dp.update(query, this.userName, this.email, this.password, this.createTs, this.picPath, this.briefIntroduction, this.userName);
 		if(res <= 0){
 			log.error("update error userName :" + this.userName);
 			return false;
@@ -198,12 +220,16 @@ public class User extends Model implements PolicySQLGenerator{
                 String email = rs.getString(3);
                 String password = rs.getString(4);
                 Long createTs = rs.getLong(5);
+                String picPath = rs.getString(6);
+                String briefIntroduction = rs.getString(7);
                 User user = new User();
                 user.setId(id);
                 user.setUserName(userName);
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setCreateTs(createTs);
+                user.setPicPath(picPath);
+                user.setBriefIntroduction(briefIntroduction);
                 return user;
             }else{
                 return null;
@@ -213,7 +239,7 @@ public class User extends Model implements PolicySQLGenerator{
         }
         return null;
     }
-    private static final String AllProperty = " id, userName, email, password, createTs ";
+    private static final String AllProperty = " id, userName, email, password, createTs, picPath, briefIntroduction ";
     public static User finUserByName(String userName){
         String query = "select " + AllProperty + " from " + TABLE_NAME + " where userName = ?";
 
@@ -251,5 +277,12 @@ public class User extends Model implements PolicySQLGenerator{
     @Override
     public String toString(){
         return "[username: " + this.userName+" useremail:" +this.email + "]";
+    }
+
+    public static boolean resetPicPath(String picPath, long id){
+        String query = "update " + TABLE_NAME +" set picPath=? where id=?";
+        long res = dp.update(query, picPath, id);
+        if(res <= 0)return false;
+        else return true;
     }
 }
