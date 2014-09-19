@@ -15,6 +15,7 @@ var EOS = EOS || {};
            login.init.container = container;
            login.init.defaultSubmit();
            login.submit.doSubmit();
+           login.submit.doubanLogin();
        },
        defaultSubmit:function(){
            var container = login.init.container;
@@ -45,6 +46,18 @@ var EOS = EOS || {};
                         EOS.util.UIAssert(dataJson.message, function(){
                             window.location.href = "/Login/login";
                         });
+                    }
+                })
+            })
+        },
+        doubanLogin:function(){
+            var container = login.init.container;
+            container.find(".douban-login").click(function(){
+                $.ajax({
+                    type:'GET',
+                    url:'https://www.douban.com/service/auth2/auth?client_id=009d7e877f154b8501d87b967d3fe28f&redirect_uri=http://121.40.184.111/Application/index&response_type=code',
+                    success:function(dataJson){
+                        console.log(dataJson);
                     }
                 })
             })
