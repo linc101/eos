@@ -58,7 +58,7 @@ var EOS = EOS || {};
                     type:'GET',
                     url:'/URLRequest/authDouban',
                     success:function(dataJson){
-                        
+
                     }
                 })
 //                $.ajax({
