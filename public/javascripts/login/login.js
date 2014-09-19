@@ -53,13 +53,22 @@ var EOS = EOS || {};
         doubanLogin:function(){
             var container = login.init.container;
             container.find(".douban-login").click(function(){
+                console.log("enter");
                 $.ajax({
                     type:'GET',
-                    url:'https://www.douban.com/service/auth2/auth?client_id=009d7e877f154b8501d87b967d3fe28f&redirect_uri=http://121.40.184.111/Application/index&response_type=code',
+                    url:'/URLRequest/authDouban',
                     success:function(dataJson){
-                        console.log(dataJson);
+                        
                     }
                 })
+//                $.ajax({
+//                    type:'POST',
+//                    url:'https://www.douban.com/service/auth2/token?client_id=009d7e877f154b8501d87b967d3fe28f&client_secret=3a0fe37b10ff10d3&redirect_uri=http://121.40.184.111/Application/index&grant_type=authorization_code&code=357d7621a0e8de82',
+//                    success:function(dataJson){
+//                        alert(dataJson);
+//                        console.log(dataJson);
+//                    }
+//                })
             })
         }
     })
