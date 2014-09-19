@@ -1,0 +1,41 @@
+#{extends 'main.html'/}
+
+#{set 'moreStyles'}
+    #{stylesheet 'usercenter.css'/}
+    #{get 'moreStyles'/}
+#{/set}
+
+
+<div class="head-region">
+    <div class="validwidth">
+        <ul style="margin:0px;">
+            <li class="user-article height-60 usercenter-tab"><a href="/UserCenter/userCenter">我的经验</a></li>
+            <li class="user-exp-share height-60 usercenter-tab"><a href="/UserCenter/addExperience">分享经验</a></li>
+        </ul>
+    </div>
+</div>
+
+
+    #{doLayout /}
+<script type="text/javascript">
+    EOS = EOS || {};
+
+    ((function($, window){
+        var pathname = window.location.pathname;
+        if(pathname == "/UserCenter/userCenter"){
+            $('.head-region .user-article').addClass("click-li")
+        }
+        if(pathname == "/UserCenter/addExperience"){
+            $('.head-region .user-exp-share').addClass("click-li");
+        }
+
+        $('.usercenter-tab').not('.click-li').hover(function(){
+            console.log('test');
+            $(this).addClass("hover-li");
+        },function(){
+            $(this).removeClass("hover-li");
+        })
+
+    })(jQuery, window));
+</script>
+

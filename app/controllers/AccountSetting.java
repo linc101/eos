@@ -17,7 +17,22 @@ public class AccountSetting extends CommonRender{
     private static final Logger log = LoggerFactory.getLogger(AccountSetting.class);
 
     public static void accountSetting(){
-        render("");
+        render("/accountset/changepw.html");
+    }
+
+    //修改密码页面
+    public static void changePWPage(){
+
+    }
+
+    //完善资料页面
+    public static void completeInfo(){
+        render("/accountset/completeinfo.html");
+    }
+
+    //消息页面
+    public static void myMessage(){
+        render("/accountset/mymessage.html");
     }
 
     public static void changePW(final String oldPW, final String newPW, final String newPWConfirm){
