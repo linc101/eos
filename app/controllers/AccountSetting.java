@@ -8,6 +8,7 @@ import java.io.File;
 
 import models.User;
 import play.Play;
+import play.libs.Codec;
 import play.libs.Files;
 
 /**
@@ -35,13 +36,17 @@ public class AccountSetting extends CommonRender{
         render("/accountset/mymessage.html");
     }
 
-    public static void changePW(final String oldPW, final String newPW, final String newPWConfirm){
+    public static void changePW(String oldPW, final String newPW, final String newPWConfirm){
         User user = getUser();
+        log.info("oldPW:" + oldPW);
+        oldPW = User.encryptPassword(oldPW);
+        log.info(user.toString());
+        log.info("------------------oldPW1:" + user.getPassword()+"---------------------oldPW2:" + oldPW);
         if(!StringUtils.equals(user.getPassword(), oldPW)){
             RenderFailed("旧密码错误！");
         }
 
-        if(newPW.length() <= 6){
+        if(newPW.length() < 6){
             RenderFailed("密码长度太短，请重新填写！");
         }
 
@@ -52,25 +57,28 @@ public class AccountSetting extends CommonRender{
         boolean isSuccess = User.changePW(newPW, user.getId());
 
         if(isSuccess){
+            removeSession();
             RenderSuccess();
         }else{
             RenderFailed("数据库操作失败！");
         }
     }
 
-    public static void picUpload(File pic){
+
+    public static void picUpload(File pic , final String briefIntroduction){
         if(pic == null){
             RenderFailed("上传照片失败！");
         }
+
         User user = getUser();
-        String picPath = "public/userHeadIcon/" + pic.getName();
+        String picPath = "/public/images/userheadimages/" + pic.getName();
         Files.copy(pic, Play.getFile(picPath));
-        boolean isSuccess = User.resetPicPath(picPath, user.getId());
-        if(isSuccess)
-            RenderSuccess();
-        else{
-            RenderFailed("数据库操作失败！");
-        }
+//        boolean isSuccess = User.resetPicPath(picPath, user.getId());
+//        if(isSuccess)
+//            RenderSuccess();
+//        else{
+//            RenderFailed("数据库操作失败！");
+//        }
     }
 
     public static void changeBriefIntroduction(final String briefIntroduction){

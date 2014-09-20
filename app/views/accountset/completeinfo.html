@@ -1,1 +1,80 @@
 #{extends '/accountset/accountsetmain.html'/}
+#{set title:'完善我的资料'/}
+<style>
+    .complete-info{
+        margin-top:20px;
+        padding-left:10px;
+    }
+
+    .myinfo-title{
+        width:30%;
+        display: block;
+        float:left;
+        text-align:right;
+        font-weight:bold;
+        margin-right:20px;
+    }
+
+    .upload-pic{
+        border-color:#aaa;
+        margin-bottom:5px;
+    }
+</style>
+<div class="content-width complete-info" style="padding-left: 80px;">
+    <form method="POST" enctype="multipart/form-data" action="@{AccountSetting.picUpload}">
+    <div class="upload-pic">
+        <span class="myinfo-title">修改图片</span>
+        <div >
+            <img class="img-size" id="preview" alt="头像">
+            <div style="width:40%;text-align:right;">
+
+                <input name="pic" type="file" id="upload" style="cursor:pointer;position:absolute;opacity:0;width:82px;height:35px;">
+                <span class="upload-pic btn">修改头像</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="describe-yourself">
+        <span class="myinfo-title">用一句话来描述自己</span>
+        <textarea class="input-content" style="width:300px;height:80px;"></textarea>
+    </div>
+    <div style="width:40%;">
+        <input type="submit">
+        <span class="submit_btn" style="float:right;">保存</span>
+
+    </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var EOS = EOS || {};
+
+    ((function($, window){
+        EOS.completeInfo = EOS.completeInfo || {};
+        var completeInfo = EOS.completeInfo;
+
+        completeInfo.init = completeInfo.init || {};
+        $.extend(completeInfo.init, {
+            doInit:function(container){
+                completeInfo.init.container = container;
+                completeInfo.submit.doUploadPic();
+            }
+        })
+
+        completeInfo.submit = completeInfo.submit || {};
+        $.extend(completeInfo.submit, {
+            doUploadPic:function(){
+                var container = completeInfo.init.container;
+                container.find("#upload").change(function(){
+                    var pic = document.getElementById("upload");
+                    var imgObjPreview=document.getElementById("preview");
+                    imgObjPreview.src = window.URL.createObjectURL(pic.files[0]);
+                })
+            }
+        })
+    })(jQuery, window));
+
+    $(document).ready(function(){
+        EOS.completeInfo.init.doInit($(".complete-info"));
+    })
+</script>

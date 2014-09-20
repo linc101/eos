@@ -38,7 +38,8 @@ public class CommonRender extends Controller {
     }
 
     @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout",
-            "UserCenter.showAllMyExps", "UserCenter.doAddExperience", "AccountSetting.changePW"})
+            "UserCenter.showAllMyExps", "UserCenter.doAddExperience", "AccountSetting.changePW",
+            "AccountSetting.picUpload"})
     public static void checkAccess(){
         User user = (User)request.args.get(USER);
 
@@ -52,7 +53,7 @@ public class CommonRender extends Controller {
         }
 
         user = User.finUserById(userId);
-
+        logger.info("----------common render :" + user.toString());
         request.args.put(USER, user);
     }
 

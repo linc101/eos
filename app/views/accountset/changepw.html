@@ -1,7 +1,7 @@
 #{extends '/accountset/accountsetmain.html'/}
 #{set title:'修改密码'/}
 
-<div class="content-width" style="padding-left: 80px;">
+<div class="content-width modify-pw" style="padding-left: 80px;">
     <div style="width:450px;margin-top: 20px;">
     <table>
         <thead>
@@ -13,7 +13,7 @@
                 旧密码:
             </td>
             <td>
-                <input type="password" placeholder="请输入你的原始密码">
+                <input class="oldPW" type="password" placeholder="请输入你的原始密码">
             </td>
         </tr>
 
@@ -22,7 +22,7 @@
                 新密码:
             </td>
             <td>
-                <input type="password" placeholder="大于6个字符">
+                <input class="newPW" type="password" placeholder="大于或等于6个字符">
             </td>
         </tr>
         <tr>
@@ -30,7 +30,7 @@
                 确认新密码:
             </td>
             <td>
-                <input type="confirmpassword" placeholder="再次输入新密码">
+                <input class="newPWConfirm"type="password" placeholder="再次输入新密码">
             </td>
         </tr>
         <tr>
@@ -55,8 +55,77 @@
         changePW.init = changePW.init || {};
         $.extend(changePW.init,{
             doInit:function(container){
-                container = changePW.init.container;
+                changePW.init.container = container;
+                changePW.init.defaultClick();
+                changePW.submit.doSubmit();
+            },
+            defaultClick:function(){
+                var container = changePW.init.container;
+                container.find(".newPWConfirm").keydown(function(event){
+                    if(event.keyCode == 13){
+                        container.find(".submit_btn").click();
+                    }
+                });
+            }
+        })
+
+        changePW.submit = changePW.submit || {};
+        $.extend(changePW.submit,{
+            doSubmit:function(){
+                var container = changePW.init.container;
+                container.find(".submit_btn").unbind().click(function(){
+                    var oldPW = container.find(".oldPW").val();
+                    var newPW = container.find(".newPW").val();
+                    var newPWConfirm = container.find(".newPWConfirm").val();
+                    if(newPW.length < 6){
+                        EOS.util.UIAssert("请输入新密码的长度大于或等于6！", function(){
+                            changePW.submit.doClearInput();
+                        })
+                        return;
+                    }
+
+                    if(newPW != newPWConfirm){
+                        EOS.util.UIAssert("请保证两次输入的密码匹配！", function(){
+                            changePW.submit.doClearInput();
+                        });
+                        return;
+                    }
+
+                    $.ajax({
+                        type:'POST',
+                        url:'/AccountSetting/changePW',
+                        data:{
+                            oldPW:oldPW,
+                            newPW:newPW,
+                            newPWConfirm:newPWConfirm
+                        },
+                        success:function(dataJson){
+                            if(!dataJson.success){
+                                EOS.util.UIAssert(dataJson.message, function(){
+                                    changePW.submit.doClearInput();
+                                })
+                                return;
+                            }
+
+                            EOS.util.UIAssert("修改密码成功", function(){
+                                window.location.href = "/Login/login";
+                            })
+                        }
+                    })
+
+                });
+
+            },
+            doClearInput:function(){
+                var container = changePW.init.container;
+                container.find(".oldPW").val("");
+                container.find(".newPW").val("");
+                container.find(".newPWConfirm").val("");
             }
         })
     })(jQuery, window));
+
+    $(document).ready(function(){
+        EOS.changePW.init.doInit($(".modify-pw"));
+    });
 </script>
