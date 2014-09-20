@@ -19,6 +19,15 @@
         border-color:#aaa;
         margin-bottom:5px;
     }
+
+    .common-input{
+        width:240px;
+        height:20px;
+        line-height: 20px;
+        border:1px solid #ccc;
+        padding:3px 4px;
+        border-radius: 3px;
+    }
 </style>
 <div class="content-width complete-info" style="padding-left: 80px;">
     <form method="POST" enctype="multipart/form-data" action="@{AccountSetting.picUpload}">
@@ -38,9 +47,13 @@
         <span class="myinfo-title">用一句话来描述自己</span>
         <textarea class="input-content" style="width:300px;height:80px;"></textarea>
     </div>
-    <div style="width:40%;">
-        <input type="submit">
-        <span class="submit_btn" style="float:right;">保存</span>
+    <div class="midify-email">
+        <span class="myinfo-title">修改邮箱</span>
+        <input class="modify-email common-input" >
+    </div>
+    <div style="width:40%; text-align: right;margin-top: 10px;">
+        <input type="submit" class="submit_btn" style="float:right;border:0px;">
+        *{<span class="submit_btn" style="float:right;">保存</span>}*
 
     </div>
     </form>

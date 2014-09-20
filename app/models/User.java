@@ -300,4 +300,11 @@ public class User extends Model implements PolicySQLGenerator{
         if(res <= 0)return false;
         else return true;
     }
+
+    public static boolean changeInfo(String picPath, String briefIntroduction,String email){
+        String query = "update " + TABLE_NAME + " set picPath = ? , briefIntroduction = ?, email = ?";
+        long res = dp.update(query, picPath, briefIntroduction, email);
+        if(res <= 0)return false;
+        return true;
+    }
 }

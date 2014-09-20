@@ -65,20 +65,33 @@ public class AccountSetting extends CommonRender{
     }
 
 
-    public static void picUpload(File pic , final String briefIntroduction){
+    public static void picUpload(File pic , final String briefIntroduction, String email){
         if(pic == null){
             RenderFailed("上传照片失败！");
         }
 
         User user = getUser();
-        String picPath = "/public/images/userheadimages/" + pic.getName();
+        String picPath = "/public/images/userheadimages/" + user.id + "_head." + getExtensionName(pic.getName());
+
         Files.copy(pic, Play.getFile(picPath));
+
 //        boolean isSuccess = User.resetPicPath(picPath, user.getId());
 //        if(isSuccess)
 //            RenderSuccess();
 //        else{
 //            RenderFailed("数据库操作失败！");
 //        }
+    }
+
+    //获取图片后缀名
+    public static String getExtensionName(String filename) {
+        if ((filename != null) && (filename.length() > 0)) {
+            int dot = filename.lastIndexOf('.');
+            if ((dot >-1) && (dot < (filename.length() - 1))) {
+                return filename.substring(dot + 1);
+            }
+        }
+        return filename;
     }
 
     public static void changeBriefIntroduction(final String briefIntroduction){
