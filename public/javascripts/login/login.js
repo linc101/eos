@@ -34,6 +34,7 @@ var EOS = EOS || {};
             container.find('.submit_btn').unbind().click(function(){
                 var params = login.util.submitParams();
                 if(params == null) return;
+
                 $.ajax({
                     type:'get',
                     url:'/Login/userLogin',

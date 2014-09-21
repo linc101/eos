@@ -35,7 +35,7 @@
     <div class="upload-pic">
         <span class="myinfo-title">修改图片</span>
         <div >
-            <img class="img-size" id="preview" alt="头像">
+            <img  class="pic img-size" id="preview" alt="头像">
             <div style="width:40%;text-align:right;">
 
                 <input name="pic" type="file" id="upload" style="cursor:pointer;position:absolute;opacity:0;width:82px;height:35px;">
@@ -71,13 +71,31 @@
         $.extend(completeInfo.init, {
             doInit:function(container){
                 completeInfo.init.container = container;
+                completeInfo.show.doShowUserInfo();
                 completeInfo.submit.doUploadPic();
             }
         })
 
         completeInfo.show = completeInfo.show || {};
         $.extend(completeInfo.show, {
-            
+            doShowUserInfo:function(){
+                $.ajax({
+                    type:'get',
+                    url:'/AccountSetting/showUserInfo',
+                    success:function(dataJson){
+                        if(!dataJson.success){
+                            EOS.util.UIAssert(dataJson.message, function(){
+                                window.location.href = "/Application/index";
+                            })
+                        }
+                        console.log("test!");
+                        var container = EOS.completeInfo.init.container;
+                        container.find(".pic").attr("src",dataJson.res.picPath);
+                        container.find(".input-content").val(dataJson.res.briefIntroduction);
+                        container.find(".modify-email").val(dataJson.res.email);
+                    }
+                })
+            }
         })
 
         completeInfo.submit = completeInfo.submit || {};

@@ -66,20 +66,27 @@ public class AccountSetting extends CommonRender{
         }
     }
 
+    public static void showUserInfo(){
+        User user = getUser();
+
+        RenderSuccess(user);
+    }
 
     public static void picUpload(File pic , final String briefIntroduction, String email){
-        if(pic == null){
-            flash.error("pic", "图片上传错误");
-//            RenderFailed("图片上传错误");
-            completeInfo();
-            return;
-        }
-
+//        if(pic == null){
+//            flash.put("error", "图片上传错误");
+////            RenderFailed("图片上传错误");
+//            completeInfo();
+//            return;
+//        }
+        String picPath = null;
         User user = getUser();
-        Date date = new Date();
-        String picPath = "/public/images/userheadimages/" + user.id +"_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
+        if(pic != null) {
+            Date date = new Date();
+            picPath = "/public/images/userheadimages/" + user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
 
-        Files.copy(pic, Play.getFile(picPath));
+            Files.copy(pic, Play.getFile(picPath));
+        }
 
         boolean isEmail = UsageFunction.isEmail(email);
         if(!isEmail){
@@ -91,14 +98,19 @@ public class AccountSetting extends CommonRender{
         }
 
         long id = User.findEmailExisted(email);
-        if(id > 0){
+        if(id > 0  && id != user.getId()){
             flash.put("error" ,"已经存在，请使用其它的邮箱号");
 //            RenderFailed("email 已经存在，请使用其它的邮箱号");
             completeInfo();
             return;
         }
 
-        boolean isSuccess = User.changeInfo(user.getId(),picPath, briefIntroduction, email);
+        boolean isSuccess = false;
+        if(picPath != null) {
+            isSuccess = User.changeInfo(user.getId(), picPath, briefIntroduction, email);
+        }else{
+            isSuccess = User.changeInfo(user.getId(), briefIntroduction, email);
+        }
 
         if(isSuccess){
             render("/Application/index.html");
