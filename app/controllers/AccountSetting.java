@@ -5,12 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Date;
 
 import models.User;
 import play.Play;
 import play.libs.Codec;
 import play.libs.Files;
 
+import util.UsageFunction;
 /**
  * Created by uttp on 14-9-15.
  */
@@ -67,31 +69,43 @@ public class AccountSetting extends CommonRender{
 
     public static void picUpload(File pic , final String briefIntroduction, String email){
         if(pic == null){
-            RenderFailed("上传照片失败！");
+            flash.error("pic", "图片上传错误");
+//            RenderFailed("图片上传错误");
+            completeInfo();
+            return;
         }
 
         User user = getUser();
-        String picPath = "/public/images/userheadimages/" + user.id + "_head." + getExtensionName(pic.getName());
+        Date date = new Date();
+        String picPath = "/public/images/userheadimages/" + user.id +"_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
 
         Files.copy(pic, Play.getFile(picPath));
 
-//        boolean isSuccess = User.resetPicPath(picPath, user.getId());
-//        if(isSuccess)
-//            RenderSuccess();
-//        else{
-//            RenderFailed("数据库操作失败！");
-//        }
-    }
-
-    //获取图片后缀名
-    public static String getExtensionName(String filename) {
-        if ((filename != null) && (filename.length() > 0)) {
-            int dot = filename.lastIndexOf('.');
-            if ((dot >-1) && (dot < (filename.length() - 1))) {
-                return filename.substring(dot + 1);
-            }
+        boolean isEmail = UsageFunction.isEmail(email);
+        if(!isEmail){
+            flash.put("error","邮箱格式不对");
+            log.info("-----------------modify email:" + email);
+//            RenderFailed("邮箱格式不对");
+            completeInfo();
+            return;
         }
-        return filename;
+
+        long id = User.findEmailExisted(email);
+        if(id > 0){
+            flash.put("error" ,"已经存在，请使用其它的邮箱号");
+//            RenderFailed("email 已经存在，请使用其它的邮箱号");
+            completeInfo();
+            return;
+        }
+
+        boolean isSuccess = User.changeInfo(user.getId(),picPath, briefIntroduction, email);
+
+        if(isSuccess){
+            render("/Application/index.html");
+        }else{
+            flash.put("error", "数据库异常！");
+            completeInfo();
+        }
     }
 
     public static void changeBriefIntroduction(final String briefIntroduction){

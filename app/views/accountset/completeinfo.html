@@ -30,6 +30,7 @@
     }
 </style>
 <div class="content-width complete-info" style="padding-left: 80px;">
+    <span style="margin-left: 35%;color:red;">${flash?.error}</span>
     <form method="POST" enctype="multipart/form-data" action="@{AccountSetting.picUpload}">
     <div class="upload-pic">
         <span class="myinfo-title">修改图片</span>
@@ -45,11 +46,11 @@
 
     <div class="describe-yourself">
         <span class="myinfo-title">用一句话来描述自己</span>
-        <textarea class="input-content" style="width:300px;height:80px;"></textarea>
+        <textarea class="input-content" name="briefIntroduction" style="width:300px;height:80px;"></textarea>
     </div>
     <div class="midify-email">
         <span class="myinfo-title">修改邮箱</span>
-        <input class="modify-email common-input" >
+        <input class="modify-email common-input" name="email" >
     </div>
     <div style="width:40%; text-align: right;margin-top: 10px;">
         <input type="submit" class="submit_btn" style="float:right;border:0px;">
@@ -72,6 +73,11 @@
                 completeInfo.init.container = container;
                 completeInfo.submit.doUploadPic();
             }
+        })
+
+        completeInfo.show = completeInfo.show || {};
+        $.extend(completeInfo.show, {
+            
         })
 
         completeInfo.submit = completeInfo.submit || {};
