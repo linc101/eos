@@ -83,7 +83,7 @@ public class AccountSetting extends CommonRender{
         User user = getUser();
         if(pic != null) {
             Date date = new Date();
-            picPath = "/root/images/" + user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
+            picPath = "/public/images/userheadimages/" + user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
 
             Files.copy(pic, Play.getFile(picPath));
         }
