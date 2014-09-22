@@ -90,8 +90,16 @@
                         }
                         console.log("test!");
                         var container = EOS.completeInfo.init.container;
-                        container.find(".pic").attr("src",dataJson.res.picPath);
-                        container.find(".input-content").val(dataJson.res.briefIntroduction);
+                        var picPath = dataJson.res.picPath;
+                        var briefIntroduction = dataJson.res.briefIntroduction;
+                        if(picPath != null)
+                            container.find(".pic").attr("src",picPath);
+                        else{
+                            container.find(".pic").attr("src", "/public/images/userheadimages/default.png");
+                        }
+                        if(briefIntroduction != null)
+                            container.find(".input-content").val(briefIntroduction);
+
                         container.find(".modify-email").val(dataJson.res.email);
                     }
                 })

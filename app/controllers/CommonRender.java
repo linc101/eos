@@ -90,15 +90,14 @@ public class CommonRender extends Controller {
         renderJSON(wrapObject(res));
     }
 
-    protected static JSONObject wrapObject(Object obj){
+    protected static String wrapObject(Object obj){
         ObjectMapper mapper = new ObjectMapper();
         try{
             String s = mapper.writeValueAsString(obj);
-            JSONObject jsonObject = JSONObject.fromObject(s);
-            return jsonObject;
+            return s;
         } catch(IOException e){
             logger.error(e.getMessage(), e);
-            return new JSONObject();
+            return null;
         }
     }
 

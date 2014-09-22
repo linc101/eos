@@ -23,6 +23,7 @@ import util.PageOffset;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -358,5 +359,8 @@ public class Experience extends Model implements PolicySQLGenerator{
         String s = mapper.writeValueAsString(res);
         System.out.println(s);
         JSONObject jsonObject = JSONObject.fromObject(s);
+
+        Date date = new Date();
+        System.out.println("------------------------date time:" + date.getTime());
     }
 }
