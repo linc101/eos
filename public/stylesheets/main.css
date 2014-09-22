@@ -161,3 +161,28 @@
     line-height:1.5;
     border-radius:3px;
 }
+
+.tab-head{
+    border-bottom:1px solid #ddd;
+    margin:10px 0;
+    color:#333;
+}
+
+.tab-head span{
+    width:80px;
+    height:35px;
+    display:inline-block;
+    text-align: center;
+    line-height:35px ;
+    border:1px solid #ddd;
+    margin-bottom:-1px;
+    font-weight:bolder;
+    cursor:pointer;
+    background-color: #f6f6f6;
+}
+
+.tab-head .selected{
+    border-bottom:1px solid white;
+    background-color: white;
+    cursor:default;
+}
