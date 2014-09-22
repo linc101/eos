@@ -112,8 +112,22 @@
                 var container = completeInfo.init.container;
                 container.find("#upload").change(function(){
                     var pic = document.getElementById("upload");
-                    var imgObjPreview=document.getElementById("preview");
-                    imgObjPreview.src = window.URL.createObjectURL(pic.files[0]);
+                    var fileName = pic.value;
+                    var imgObjPreview = document.getElementById("preview");
+                    if(!fileName.match(/.jpg|.gif|.png|.bmp/i)){
+                        EOS.util.UIAssert("上传图片格式错误！请重新上传", function(){
+                            window.location.href = "AccountSetting/completeInfo";
+                        });
+                    }
+                    if(pic.files && pic.files[0]) {
+                        if(window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1) {
+                            imgObjPreview.src = window.webkitURL.createObjectURL(pic.files[0]);
+                        }else{
+                            imgObjPreview.src = window.URL.createObjectURL(pic.files[0]);
+                        }
+                    }else{
+                        //待定
+                    }
                 })
             }
         })
