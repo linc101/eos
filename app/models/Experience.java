@@ -346,6 +346,11 @@ public class Experience extends Model implements PolicySQLGenerator{
         return  true;
     }
 
+    public static String getExperienceUsernameById(long id){
+        String query = "select userName from " + TABLE_NAME + " where id = ? ";
+        return dp.singleStringQuery(query, id);
+    }
+
     public static void main(String[] args) throws IOException {
         System.out.println("--------test only test for Json----------------------- ");
         List<Experience> listExps = new ArrayList<Experience>();

@@ -186,3 +186,7 @@
     background-color: white;
     cursor:default;
 }
+
+.hidden{
+    display:none;
+}

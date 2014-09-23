@@ -13,6 +13,7 @@ import play.db.jpa.Model;
 import transaction.DBBuilder;
 import transaction.JDBCBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -42,8 +43,11 @@ public class Message  extends Model implements PolicySQLGenerator {
 
     private boolean isRead;
 
+    @Column(columnDefinition = "enum('SYSTEM_MES','COMMENT_MES')")
     @Enumerated(EnumType.STRING)
     private Type type;
+
+    private long expId;
 
     public enum Type{
         SYSTEM_MES,COMMENT_MES
@@ -89,6 +93,14 @@ public class Message  extends Model implements PolicySQLGenerator {
         this.isRead = isRead;
     }
 
+    public long getExpId(){
+        return this.expId;
+    }
+
+    public void setExpId(long expId){
+        this.expId = expId;
+    }
+
     public Type getType(){
         return this.type;
     }
@@ -108,12 +120,11 @@ public class Message  extends Model implements PolicySQLGenerator {
         this.type = type;
         this.createTs = System.currentTimeMillis();
         this.isRead = false;
+        this.expId = 0L;
     }
     private static final Message _instance = new Message();
 
     public static DBDispatcher dp = new DBDispatcher(DBBuilder.DataSrc.BASIC, _instance);
-
-
 
     @Override
     public String getTableName() {
@@ -151,15 +162,15 @@ public class Message  extends Model implements PolicySQLGenerator {
     }
 
     public boolean insert(){
-        String query = "insert into " + TABLE_NAME +" (fromUser, toUser, msg, type, createTs, isRead) values (?,?,?,?,?,?)";
-        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, this.type, this.createTs, this.isRead);
+        String query = "insert into " + TABLE_NAME +" (fromUser, toUser, msg, type, createTs, isRead, expId) values (?,?,?,?,?,?,?)";
+        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, this.type, this.createTs, this.isRead, this.expId);
         if(res <= 0)return false;
         else return true;
     }
 
     public boolean update(){
-        String query = "update " + TABLE_NAME + " set fromUser = ?, toUser = ?, msg = ?, type = ?, createTs = ?, isRead = ?";
-        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, this.type, this.createTs, this.isRead);
+        String query = "update " + TABLE_NAME + " set fromUser = ?, toUser = ?, msg = ?, type = ?, createTs = ?, isRead = ?, expId = ?";
+        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, this.type, this.createTs, this.isRead, this.expId);
         if(res <= 0)return false;
         else return true;
     }
@@ -184,6 +195,7 @@ public class Message  extends Model implements PolicySQLGenerator {
             }else if(StringUtils.equals(type, "COMMENT_MES")){
                 msg.setType(Type.COMMENT_MES);
             }
+            msg.setExpId(res.getLong(8));
             return msg;
         }catch(SQLException e) {
             log.error(e.getMessage(),e);
@@ -191,9 +203,10 @@ public class Message  extends Model implements PolicySQLGenerator {
         }
     }
 
-    public static final String AllProperty = " id, fromUser, toUser, msg, createTs, isRead, type ";
+    public static final String AllProperty = " id, fromUser, toUser, msg, createTs, isRead, type, expId ";
 
     public static List<Message> findAllMessageById(String toUser, Type type){
+        log.info("--------database type:" + type.name());
         String query = "select " + AllProperty + " from " + TABLE_NAME + " where toUser = ? and type = ? and isRead = false order by createTs asc";
 
         return new JDBCBuilder.JDBCExecutor<List<Message>>(query, toUser, type){

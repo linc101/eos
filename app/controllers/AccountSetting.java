@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Review;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,13 +140,11 @@ public class AccountSetting extends CommonRender{
         }
     }
 
-    public static void showCommentMsg(){
+    public static void showMsg(Type type){
+        log.info("------------------type:" + type.name());
         User user = getUser();
-
         List<Message> msgs = new ArrayList<Message>();
-
-        
-
+        msgs = Message.findAllMessageById(user.getUserName(), type);
+        RenderSuccess(msgs);
     }
-
 }

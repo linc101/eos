@@ -1,7 +1,9 @@
 package controllers;
 
 import models.Experience;
+import models.Message;
 import models.Review;
+import models.Message.Type;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -63,6 +65,13 @@ public class Article extends CommonRender{
 
         boolean isIncReviewSuccess = Experience.increaseReviewTimes(expId);
 
+        if(isIncReviewSuccess){
+            String reviewed = Experience.getExperienceUsernameById(expId);
+            Message msg = new Message(reviewer, reviewed, content, Type.COMMENT_MES);
+            msg.setExpId(expId);
+            msg.insert();
+        }
+
         if(!isIncReviewSuccess){
             RenderFailed("数据库异常");
         }
@@ -93,6 +102,13 @@ public class Article extends CommonRender{
             RenderFailed("数据库异常！");
         }
         boolean isIncReviewSuccess = Experience.increaseReviewTimes(expId);
+
+        if(isIncReviewSuccess){
+//            String reviewed = Experience.getExperienceUsernameById(expId);
+            Message msg = new Message(reviewer, reviewed, content, Type.COMMENT_MES);
+            msg.setExpId(expId);
+            msg.jdbcSave();
+        }
 
         if(!isIncReviewSuccess){
             RenderFailed("数据库异常");

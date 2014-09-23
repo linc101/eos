@@ -39,7 +39,7 @@ public class CommonRender extends Controller {
 
     @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout",
             "UserCenter.showAllMyExps", "UserCenter.doAddExperience", "AccountSetting.changePW",
-            "AccountSetting.picUpload", "AccountSetting.showUserInfo"})
+            "AccountSetting.picUpload", "AccountSetting.showUserInfo", "AccountSetting.showMsg"})
     public static void checkAccess(){
         User user = (User)request.args.get(USER);
 
@@ -116,7 +116,7 @@ public class CommonRender extends Controller {
         User user = (User)request.args.get(USER);
         logger.info("------------------------------------------user:" + user);
         if(user == null){
-            RenderFailed("数据库异常，请检查数据库");
+            RenderFailed("获取user出错！数据库异常，请检查数据库");
         }
         return user;
     }
