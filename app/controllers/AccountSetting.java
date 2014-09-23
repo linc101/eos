@@ -5,9 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import models.User;
+import models.Message;
+import models.Message.Type;
+
 import play.Play;
 import play.libs.Codec;
 import play.libs.Files;
@@ -132,6 +137,15 @@ public class AccountSetting extends CommonRender{
         }else{
             RenderFailed("数据库操作失败！");
         }
+    }
+
+    public static void showCommentMsg(){
+        User user = getUser();
+
+        List<Message> msgs = new ArrayList<Message>();
+
+        
+
     }
 
 }

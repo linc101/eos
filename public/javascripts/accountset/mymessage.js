@@ -33,7 +33,7 @@ var EOS = EOS || {};
                 }
             })
         },
-        showCommentMsg:function(){
+        showMsg:function(){
 
         }
     })

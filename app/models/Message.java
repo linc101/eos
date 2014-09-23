@@ -3,6 +3,7 @@ package models;
 import codegen.CodeGenerator.PolicySQLGenerator;
 import codegen.CodeGenerator.DBDispatcher;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +11,15 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import play.db.jpa.Model;
 import transaction.DBBuilder;
+import transaction.JDBCBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by uttp on 14-9-21.
@@ -83,6 +89,14 @@ public class Message  extends Model implements PolicySQLGenerator {
         this.isRead = isRead;
     }
 
+    public Type getType(){
+        return this.type;
+    }
+
+    public void setType(Type type){
+        this.type = type;
+    }
+
     public Message(){
 
     }
@@ -118,7 +132,7 @@ public class Message  extends Model implements PolicySQLGenerator {
 
     @Override
     public void setId(Long id) {
-
+        this.id = id;
     }
 
     public long findIdExistedById(long id){
@@ -153,5 +167,46 @@ public class Message  extends Model implements PolicySQLGenerator {
     @Override
     public String getIdName() {
         return null;
+    }
+
+    public static Message parseMessage(ResultSet res){
+        try{
+            Message msg = new Message();
+            msg.setId(res.getLong(1));
+            msg.setFrom(res.getString(2));
+            msg.setTo(res.getString(3));
+            msg.setMsg(res.getString(4));
+            msg.setCreateTs(res.getLong(5));
+            msg.setIsRead(res.getBoolean(6));
+            String type = res.getString(7);
+            if(StringUtils.equals(type, "SYSTEM_MES")){
+                msg.setType(Type.SYSTEM_MES);
+            }else if(StringUtils.equals(type, "COMMENT_MES")){
+                msg.setType(Type.COMMENT_MES);
+            }
+            return msg;
+        }catch(SQLException e) {
+            log.error(e.getMessage(),e);
+            return null;
+        }
+    }
+
+    public static final String AllProperty = " id, fromUser, toUser, msg, createTs, isRead, type ";
+
+    public static List<Message> findAllMessageById(String toUser, Type type){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where toUser = ? and type = ? and isRead = false order by createTs asc";
+
+        return new JDBCBuilder.JDBCExecutor<List<Message>>(query, toUser, type){
+            @Override
+            public List<Message> doWithResultSet(ResultSet res) throws SQLException{
+                List<Message> msgs = new ArrayList<Message>();
+                while(res.next()){
+                    Message msg = parseMessage(res);
+                    if(msg != null)
+                        msgs.add(msg);
+                }
+                return msgs;
+            }
+        }.call();
     }
 }
