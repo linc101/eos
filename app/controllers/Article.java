@@ -107,7 +107,7 @@ public class Article extends CommonRender{
 //            String reviewed = Experience.getExperienceUsernameById(expId);
             Message msg = new Message(reviewer, reviewed, content, Type.COMMENT_MES);
             msg.setExpId(expId);
-            msg.jdbcSave();
+            msg.insert();
         }
 
         if(!isIncReviewSuccess){

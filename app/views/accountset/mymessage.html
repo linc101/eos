@@ -1,6 +1,11 @@
 #{extends '/accountset/accountsetmain.html'/}
 #{set title:'我的消息'/}
 
+<style type="text/css">
+    .comment-msg, .system-msg{
+        margin-top:20px;
+    }
+</style>
 <div class="content-width my-message" style="padding-left:80px">
     <div class="msg-type-head tab-head">
         <span class="selected msg-head comment-msg-head" tarDiv="comment-msg">评论消息</span>
@@ -9,11 +14,11 @@
 
     <div class="msg-body">
         <div class="comment-msg hidden msg">
-            1
+
         </div>
 
         <div class="system-msg hidden msg">
-            2
+
         </div>
     </div>
 
