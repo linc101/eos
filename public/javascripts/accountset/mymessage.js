@@ -23,21 +23,18 @@ var EOS = EOS || {};
             var container = myMsg.init.container;
             container.find(".msg-type-head .msg-head").click(function(){
                 var thisObj = $(this);
-                if(thisObj.hasClass("selected")) return;
+//                if(thisObj.hasClass("selected")) return;
                 container.find(".msg-type-head .msg-head").removeClass("selected");
                 thisObj.addClass("selected");
                 var tarDiv = thisObj.attr("tarDiv");
                 container.find(".msg-body .msg").addClass("hidden");
                 if(tarDiv == "comment-msg"){
-                    console.log("1");
                     container.find(".msg-body .comment-msg").removeClass("hidden");
                 }else if(tarDiv == "system-msg"){
-                    console.log("2");
                     container.find(".msg-body .system-msg").removeClass("hidden");
                 }
             })
-            console.log("haoba!");
-            container.find(".msg-type-head[]").click();
+            container.find(".msg-type-head .selected").click();
         },
         showMsg:function(){
             myMsg.show.showCommentMsg();
@@ -65,7 +62,6 @@ var EOS = EOS || {};
                             "</div>";
                     $.template("commentMsgTmp", html);
                     $.tmpl("commentMsgTmp", dataJson.res).appendTo(".msg-body .comment-msg");
-
                 }
 
             })
