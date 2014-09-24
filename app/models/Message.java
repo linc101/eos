@@ -161,16 +161,26 @@ public class Message  extends Model implements PolicySQLGenerator {
         }
     }
 
+    public static String getTypeMap(Type type){
+        if(type == Type.COMMENT_MES){
+            return "COMMENT_MES";
+        }else{
+            return "SYSTEM_MES";
+        }
+    }
+
     public boolean insert(){
         String query = "insert into " + TABLE_NAME +" (fromUser, toUser, msg, type, createTs, isRead, expId) values (?,?,?,?,?,?,?)";
-        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, this.type, this.createTs, this.isRead, this.expId);
+        String typeTemp = getTypeMap(getType());
+        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, typeTemp, this.createTs, this.isRead, this.expId);
         if(res <= 0)return false;
         else return true;
     }
 
     public boolean update(){
         String query = "update " + TABLE_NAME + " set fromUser = ?, toUser = ?, msg = ?, type = ?, createTs = ?, isRead = ?, expId = ?";
-        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, this.type, this.createTs, this.isRead, this.expId);
+        String typeTemp = getTypeMap(getType());
+        long res = dp.insert(query, this.fromUser, this.toUser, this.msg, typeTemp, this.createTs, this.isRead, this.expId);
         if(res <= 0)return false;
         else return true;
     }
@@ -207,9 +217,10 @@ public class Message  extends Model implements PolicySQLGenerator {
 
     public static List<Message> findAllMessageById(String toUser, Type type){
         log.info("--------database type:" + type.name());
+        String typeTemp = getTypeMap(type);
         String query = "select " + AllProperty + " from " + TABLE_NAME + " where toUser = ? and type = ? and isRead = false order by createTs asc";
 
-        return new JDBCBuilder.JDBCExecutor<List<Message>>(query, toUser, type){
+        return new JDBCBuilder.JDBCExecutor<List<Message>>(query, toUser, typeTemp){
             @Override
             public List<Message> doWithResultSet(ResultSet res) throws SQLException{
                 List<Message> msgs = new ArrayList<Message>();

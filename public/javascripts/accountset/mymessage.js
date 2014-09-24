@@ -13,7 +13,6 @@ var EOS = EOS || {};
         doInit:function(container){
             myMsg.init.container = container;
             myMsg.show.showMsg();
-            console.log("why!");
             myMsg.show.doShow();
         }
     })
@@ -22,7 +21,7 @@ var EOS = EOS || {};
     $.extend(myMsg.show, {
         doShow:function(){
             var container = myMsg.init.container;
-            container.find(".msg-type-head .msg-head").unbind().click(function(){
+            container.find(".msg-type-head .msg-head").click(function(){
                 var thisObj = $(this);
                 if(thisObj.hasClass("selected")) return;
                 container.find(".msg-type-head .msg-head").removeClass("selected");
@@ -37,14 +36,15 @@ var EOS = EOS || {};
                     container.find(".msg-body .system-msg").removeClass("hidden");
                 }
             })
-            container.find(".msg-type-head .comment-msg-head").click();
+            console.log("haoba!");
+            container.find(".msg-type-head[]").click();
         },
         showMsg:function(){
             myMsg.show.showCommentMsg();
         },
         showCommentMsg:function(){
             var container = myMsg.init.container;
-
+            console.log("test!");
             $.ajax({
                 type:'GET',
                 data:{
@@ -55,11 +55,11 @@ var EOS = EOS || {};
                     if(!dataJson.success){
                         return;
                     }
-                    var html = "<div expId = ${{id}}>" +
+                    var html = "<div expId = ${id}>" +
                             "<section>" +
-                            "<div>${{reviewer}}回复了:" +
-                            "<span class='msg-location' expId = ${{id}}>${{msg}}</span>" +
-                            "<span>${{createTs}}</span>" +
+                            "<div>${from}回复了:" +
+                            "<span class='msg-location' expId = ${id}>${msg}</span>" +
+                            "<span>${createTs}</span>" +
                             "</div>" +
                             "</section>" +
                             "</div>";
