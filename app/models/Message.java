@@ -242,4 +242,10 @@ public class Message  extends Model implements PolicySQLGenerator {
             return true;
         }
     }
+
+    public static int findCountUnreadMsg(String toUser){
+        String query = "select count(*) from " + TABLE_NAME + " where toUser = ? and fromUser <> ? and isRead=false";
+        int count = (int)dp.singleLongQuery(query, toUser, toUser);
+        return count;
+    }
 }
