@@ -218,9 +218,9 @@ public class Message  extends Model implements PolicySQLGenerator {
     public static List<Message> findAllMessageById(String toUser, Type type){
         log.info("--------database type:" + type.name());
         String typeTemp = getTypeMap(type);
-        String query = "select " + AllProperty + " from " + TABLE_NAME + " where toUser = ? and type = ? and isRead = false order by createTs asc";
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where toUser = ? and type = ? and fromUser <> ? and isRead = false order by createTs asc";
 
-        return new JDBCBuilder.JDBCExecutor<List<Message>>(query, toUser, typeTemp){
+        return new JDBCBuilder.JDBCExecutor<List<Message>>(query, toUser, typeTemp, toUser){
             @Override
             public List<Message> doWithResultSet(ResultSet res) throws SQLException{
                 List<Message> msgs = new ArrayList<Message>();
@@ -232,5 +232,14 @@ public class Message  extends Model implements PolicySQLGenerator {
                 return msgs;
             }
         }.call();
+    }
+
+    public static boolean markReaded(long id){
+        String query = "update " + TABLE_NAME + " set isRead = true where id = ?";
+        long msgId =  dp.update(query, id);
+        if(msgId <= 0)return false;
+        else {
+            return true;
+        }
     }
 }

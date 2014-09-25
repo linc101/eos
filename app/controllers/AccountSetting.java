@@ -147,4 +147,17 @@ public class AccountSetting extends CommonRender{
         msgs = Message.findAllMessageById(user.getUserName(), type);
         RenderSuccess(msgs);
     }
+
+    public static void markReaded(long msgId){
+        if(msgId <= 0){
+            RenderFailed("message id 不合法！");
+        }
+
+        boolean isSuccess = Message.markReaded(msgId);
+        if(isSuccess){
+            RenderSuccess();
+        }else{
+            RenderFailed("数据库异常！");
+        }
+    }
 }
