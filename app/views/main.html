@@ -76,8 +76,8 @@
 
             .my-msg-count{
                 position:absolute;
-                top:0px;
-                right:0px;
+                top:-1px;
+                right:8px;
                 padding:0 4px;
                 background-color: #ed1c24;
                 max-height: 16px;
@@ -87,7 +87,7 @@
                 font-size: 12px;
                 font-weight:normal;
                 text-align:center;
-                colr:white;
+                color:white;
                 border-radius:14px;
             }
 
@@ -100,8 +100,8 @@
                 <li class="l-item hover-on"><a href="javascript:void(0)">经验</a></li>
             </ul>
             <ul class="user-login-head" style="display:none;">
-                    <li class="r-item">
-                        <a href="javascript:void(0)" class="my-msg-notice">
+                    <li class="r-item hover-on">
+                        <a href="/AccountSetting/myMessage" class="my-msg-notice">
                             <span>我的消息</span>
                         </a>
 
@@ -223,37 +223,26 @@
                 },
                 noticeMsg:function(){
                     if(EOS.userId != null) {
-                        setInterval(function () {
-                            $.ajax({
-                                type: 'get',
-                                url: '/Application/findCountMsg',
-                                success: function (dataJson) {
-                                    if (!dataJson.success) {
-                                        EOS.util.UIAssert(dataJson.message);
-                                        return;
-                                    }
-                                    var container = logout.init.container;
-                                    container.find(".my-msg-notice .my-msg-count").remove();
-                                    container.find(".my-msg-notice").append("<span class='my-msg-count'>" + dataJson.res + "</span>");
-                                }
-                            })
-                        }, 5000);
+                        setInterval(logout.submit.noticeMsgCount, 50000);
                     }
                 },
                 noticeMsgCount:function(){
-                    $.ajax({
-                        type: 'get',
-                        url: '/Application/findCountMsg',
-                        success: function (dataJson) {
-                            if (!dataJson.success) {
-                                EOS.util.UIAssert(dataJson.message);
-                                return;
+                    if(EOS.userId != null) {
+                        $.ajax({
+                            type: 'get',
+                            url: '/Application/findCountMsg',
+                            success: function (dataJson) {
+                                if (!dataJson.success) {
+                                    EOS.util.UIAssert(dataJson.message);
+                                    return;
+                                }
+                                var container = logout.init.container;
+                                container.find(".my-msg-notice .my-msg-count").remove();
+                                if(dataJson.res != 0)
+                                    container.find(".my-msg-notice").append("<span class='my-msg-count'>" + dataJson.res + "</span>");
                             }
-                            var container = logout.init.container;
-                            container.find(".my-msg-notice .my-msg-count").remove();
-                            container.find(".my-msg-notice").append("<span class='my-msg-count'>" + dataJson.res + "</span>");
-                        }
-                    })
+                        })
+                    }
                 }
             })
 

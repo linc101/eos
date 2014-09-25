@@ -101,7 +101,8 @@ var EOS = EOS || {};
                                 window.location.reload();
                             });
                         }
-                        thisObj.parent().parent().hide();
+//                        thisObj.parent().parent().hide();
+                        window.location.reload();
                     }
                 })
             })
