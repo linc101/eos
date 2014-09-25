@@ -41,6 +41,9 @@ var EOS = EOS || {};
         },
         showCommentMsg:function(){
             var container = myMsg.init.container;
+            var noneHtml = "<div style='text-align: center;margin-top:20px;'>" +
+                "<span >暂时没有消息!</span>"+
+                "</div>";
             console.log("test!");
             $.ajax({
                 type:'GET',
@@ -55,9 +58,6 @@ var EOS = EOS || {};
                     container.find(".msg-body .comment-msg").empty();
                     console.log(dataJson.res.length);
                     if(dataJson.res.length == 0){
-                        var noneHtml = "<div style='text-align: center;margin-top:20px;'>" +
-                                       "<span >暂时没有消息!</span>"+
-                                       "</div>";
                         container.find(".msg-body .comment-msg").append(noneHtml);
                         return;
                     }
@@ -80,7 +80,28 @@ var EOS = EOS || {};
                     $.tmpl("commentMsgTmp", dataJson.res).appendTo(".msg-body .comment-msg");
                     myMsg.show.markMsgReaded();
                 }
+            })
 
+            $.ajax({
+                type:'GET',
+                data:{
+                    type:'SYSTEM_MES'
+                },
+                url:'/AccountSetting/showMsg',
+                success:function(dataJson){
+                    if(!dataJson.success){
+                        return;
+                    }
+                    container.find(".msg-body .system-msg").empty();
+                    if(dataJson.res.length == 0){
+                        container.find(".msg-body .system-msg").append(noneHtml);
+                        return;
+                    }
+
+                    $.each(dataJson.res, function(index, element){
+                        dataJson.res[index].createTs = EOS.util.dealDate(dataJson.res[index].createTs);
+                    });
+                }
             })
         },
         markMsgReaded:function(){
