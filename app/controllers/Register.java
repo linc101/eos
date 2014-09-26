@@ -1,9 +1,10 @@
 package controllers;
 
-
 import org.apache.commons.lang.StringUtils;
 
+import models.Message;
 import models.User;
+import models.Message.Type;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,8 @@ public class Register extends CommonRender {
 
         if(userId > 0L) {
             successEnter(userId.toString(), userName);
+            Message sysMsg = new Message("系统消息", user.getUserName(), "恭喜，您已经成功注册！", Type.SYSTEM_MES);
+            sysMsg.insert();
             RenderSuccess();
         }else{
             RenderFailed("用户数据插入出错，数据库异常！");

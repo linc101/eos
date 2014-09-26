@@ -190,3 +190,34 @@
 .hidden{
     display:none;
 }
+
+#footer{
+    border-top:1px solid #eee;
+    padding:30px 0;
+    color:#888;
+    line-height:1.6;
+    vertical-align:top;
+    margin-top:10px;
+}
+
+#footer a{
+    text-decoration: none;
+}
+
+#footer dt{
+    margin-bottom:15px;
+}
+
+#footer dd{
+    margin:5px 0 0 0;
+}
+
+.container{
+    width:1050px;
+}
+
+.col-sm-2{
+    width:16.66667%;
+    float:left;
+}
+
