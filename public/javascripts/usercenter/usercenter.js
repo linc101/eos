@@ -24,12 +24,12 @@ var EOS = EOS || {};
             container.find(".exp-wrap .submit_btn").unbind().click(function(){
                 console.log(container.find('exp-wrap .input-content').val());
                 var expTitle = container.find('.exp-wrap .input-title').val().trim(),
-                    expContent = container.find('.exp-wrap .input-content').val().trim();
+                    expContent = container.find('.exp-wrap .jqte_editor').html();
                 if(expTitle.length < 6){
                     EOS.util.UIAssert("请确保输入的标题长度大于6");
                     return;
                 }
-
+                console.log(expContent);
                 if(expContent.length == 0 || expContent == null){
                     EOS.util.UIAssert("请输入内容");
                     return;

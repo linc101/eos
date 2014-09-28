@@ -28,6 +28,13 @@
         padding:3px 4px;
         border-radius: 3px;
     }
+
+    .submit_info::after{
+        clear:both;
+        display: table;
+        content: " ";
+    }
+
 </style>
 <div class="content-width complete-info" style="padding-left: 80px;">
     <span style="margin-left: 35%;color:red;">${flash?.error}</span>
@@ -52,7 +59,7 @@
         <span class="myinfo-title">修改邮箱</span>
         <input class="modify-email common-input" name="email" >
     </div>
-    <div style="width:40%; text-align: right;margin-top: 10px;">
+    <div class="submit_info" style="width:40%; text-align: right;margin-top: 10px;">
         <input type="submit" class="submit_btn" style="float:right;border:0px;">
         *{<span class="submit_btn" style="float:right;">保存</span>}*
 

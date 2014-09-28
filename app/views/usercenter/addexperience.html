@@ -4,7 +4,7 @@
 <style type="text/css">
     .input-title{
         height:30px;
-        padding:2px 6px;
+        /*padding:2px 6px;*/
         font-size:18px;
         line-height:30px;
         border-radius: 2px;
@@ -15,7 +15,7 @@
         margin-bottom: 5px;
     }
     .exp-wrap{
-        width:600px;
+        width:80%;
         float:left;
     }
     .input-content{
@@ -31,24 +31,36 @@
         height:auto;
         margin-bottom: 5px;
     }
-
+    .share-exp::after, .share-exp::before{
+        clear:both;
+        content:" ";
+        display:table;
+    }
 
 </style>
+
+<link rel="stylesheet" type="text/css" href="/css/jquery-te-1.4.0.css">
+
 <div class="content-width share-exp" style="padding-left:80px;">
     <div class="exp-wrap">
         <h2>经验分享</h2>
 
         <input class="input-title" placeholder="标题,(简单描述经历6~80个字之间)" tabindex="1" type="text">
-        <textarea tabindex="2" class="input-content" rows="15"></textarea>
+        *{<textarea tabindex="2" class="input-content" rows="15"></textarea>}*
+        <textarea name="textarea" class="jqte-test"></textarea>
         <span class="submit_btn">提交</span>
     </div>
 
 </div>
 
 <script type="text/javascript">
-    EOS.gcs("/js/usercenter/usercenter.js", function(){
-        $(document).ready(function(){
-            EOS.addExp.init.doInit($(".share-exp"));
+
+    EOS.gcs("/js/jquery-te-1.4.0.min.js", function(){
+        EOS.gcs("/js/usercenter/usercenter.js", function(){
+            $(document).ready(function(){
+                $('.jqte-test').jqte();
+                EOS.addExp.init.doInit($(".share-exp"));
+            })
         })
     })
 </script>
