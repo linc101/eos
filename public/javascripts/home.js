@@ -79,9 +79,13 @@ var EOS = EOS || {};
 
                         var html = "<section>" +
                             "<div class=\"article-rank\">" +
-                            "<div class=\"article-comment\"></div>" +
+                            "<div class=\"article-comment\">${reviewTimes}" +
+                            "<small>回复</small>"+
+                            "</div>" +
                             "</div>" +
                             "</section>";
+                        console.log($(tarDiv).find(tarDiv + "-content"))
+                        $.tmpl(html, dataJson.res).appendTo($(tarDiv).find(tarDiv + "-content"));
 //                        myExp.show.nowPage = dataJson.pn;
 //                        container.find(".my-all-exps").empty();
 //                        $.each(dataJson.res, function(index, elem){
