@@ -66,6 +66,16 @@ public class UserCenter extends CommonRender {
         RenderSuccess(exps, count, offset);
     }
 
+    public static void showAllExps(final int pn, final int ps, String field, boolean isDesc){
+        if(StringUtils.isEmpty(field)){
+            RenderFailed("显示的字段不正确");
+        }
+        PageOffset po = new PageOffset(pn, ps);
+        List<Experience> exps = Experience.findAllExpByField(field, isDesc,po);
+        int count = Experience.countAllExp();
+        RenderSuccess(exps, count, po);
+    }
+
     public static void deleteExpById(final long expId){
         boolean isSuccess = Experience.deleteById(expId);
         if(!isSuccess){

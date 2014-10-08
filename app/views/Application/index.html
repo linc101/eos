@@ -1,23 +1,53 @@
 #{extends 'main.html' /}
 #{set title:'分享成功经验' /}
+
+<style>
+    .article-rank{
+        float:left;
+        margin-right:5px;
+        font-size:18px;
+        text-align:center;
+        line-height: 1.2;
+        color:#666;
+    }
+
+    .article-comment{
+        background-color: #009a61;
+        color:#fff;
+        display:inline-block;
+        width:40px;
+        height:42px;
+        border-radius:1px;
+    }
+</style>
 <div class="content-width home-page" style="padding-left:80px">
     <div class="home-page-head tab-head">
-        <span class="selected article-head new-article-head" tarDiv="new-article">最新文章</span>
-        <span class="article-head hot-article-head" tarDiv="hot-article" >热门文章</span>
+        <span class="selected new-article-head article-head" tarDiv="new-article">最新文章</span>
+        <span class="msg-head hot-article-head article-head" tarDiv="hot-article" >热门文章</span>
     </div>
 
     <div class="home-body">
-        <div class="new-article hidden">
-            1
+        <div class="new-article hidden article-content">
+            <div class=".new-article-content"></div>
+            <div class="pag" style="text-align: center;">
+
+            </div>
         </div>
 
-        <div class="hot-article hidden">
-            2
+        <div class="hot-article hidden article-content">
+            <div class=".hot-article-content"></div>
+            <div class="pag" style="text-align: center;">
+
+            </div>
         </div>
     </div>
 
 </div>
 
 <script type="text/javascript">
-
+    EOS.gcs("/js/home.js", function(){
+        $(document).ready(function(){
+            EOS.home.init.doInit($(".home-page"));
+        })
+    })
 </script>
