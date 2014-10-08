@@ -298,6 +298,11 @@ public class Experience extends Model implements PolicySQLGenerator{
         return (int)dp.singleLongQuery(query, userName);
     }
 
+    public static int countAllExp(){
+        String query = "select count(*) from " + TABLE_NAME ;
+        return (int)dp.singleLongQuery(query);
+    }
+
     @Override
     public String toString(){
         return "[userName:"+ this.getUserName() +  " title:"+ this.getTitle() + " article: "+ this.getArticle() +"]";
@@ -351,6 +356,29 @@ public class Experience extends Model implements PolicySQLGenerator{
         return dp.singleStringQuery(query, id);
     }
 
+    public static List<Experience> findAllExpByField(String field, boolean isDesc, PageOffset offset){
+        StringBuilder query = new StringBuilder("select " + AllProperty + " from " + TABLE_NAME + " order by ? ");
+        if(isDesc == true){
+            query.append(" desc ");
+        }else{
+            query.append(" asc ");
+        }
+        query.append(" limit ?,?");
+        String q = query.toString();
+        return new JDBCBuilder.JDBCExecutor<List<Experience>>(q, field, offset.getOffset(),offset.getPs()){
+            @Override
+            public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
+                List<Experience> exps = new ArrayList<Experience>();
+                while(res.next()){
+                    Experience exp = parseExperience(res);
+                    if(exp != null)
+                        exps.add(exp);
+                }
+                return exps;
+            }
+        }.call();
+    }
+
     public static void main(String[] args) throws IOException {
         System.out.println("--------test only test for Json----------------------- ");
         List<Experience> listExps = new ArrayList<Experience>();
@@ -368,4 +396,6 @@ public class Experience extends Model implements PolicySQLGenerator{
         Date date = new Date();
         System.out.println("------------------------date time:" + date.getTime());
     }
+
+
 }
