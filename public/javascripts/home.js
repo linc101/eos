@@ -4,6 +4,6 @@
 var EOS = EOS || {};
 
 ((function($, window){
-    
+    EOS.home = EOS.home || {};
 
 })(jQuery,window));
