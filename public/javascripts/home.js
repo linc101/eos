@@ -82,10 +82,22 @@ var EOS = EOS || {};
                             "<div class=\"article-comment\">${reviewTimes}" +
                             "<small>回复</small>"+
                             "</div>" +
+                            "<div class=\"article-scan\">${scanTimes}" +
+                            "<small>浏览</small>"+
+                            "</div>" +
+                            "<div style=\"display:inline-block;\">" +
+                            "<div style=\"text-align:left;font-size:13px;\">" +
+                            "${userName}&nbsp;•&nbsp;${createTs}"+
+                            "</div>"+
+                            "<div>" +
+                            "<a href=\"/article/${id}\" style=\"text-decoration: none;color:#333;font-size:16px;font-weight:bold;\">${title}</a>"+
+                            "</div>"+
+                            "</div>"+
                             "</div>" +
                             "</section>";
                         console.log($(tarDiv).find(tarDiv + "-content"))
                         $.tmpl(html, dataJson.res).appendTo($(tarDiv).find(tarDiv + "-content"));
+
 //                        myExp.show.nowPage = dataJson.pn;
 //                        container.find(".my-all-exps").empty();
 //                        $.each(dataJson.res, function(index, elem){

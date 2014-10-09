@@ -72,6 +72,9 @@ public class UserCenter extends CommonRender {
         }
         PageOffset po = new PageOffset(pn, ps);
         List<Experience> exps = Experience.findAllExpByField(field, isDesc,po);
+        for(Experience exp: exps){
+            logger.error(" " +exp.getScanTimes());
+        }
         int count = Experience.countAllExp();
         RenderSuccess(exps, count, po);
     }

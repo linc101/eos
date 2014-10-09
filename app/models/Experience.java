@@ -357,7 +357,8 @@ public class Experience extends Model implements PolicySQLGenerator{
     }
 
     public static List<Experience> findAllExpByField(String field, boolean isDesc, PageOffset offset){
-        StringBuilder query = new StringBuilder("select " + AllProperty + " from " + TABLE_NAME + " order by ? ");
+        StringBuilder query = new StringBuilder("select " + AllProperty + " from " + TABLE_NAME + " order by ");
+        query.append(field);
         if(isDesc == true){
             query.append(" desc ");
         }else{
@@ -365,7 +366,9 @@ public class Experience extends Model implements PolicySQLGenerator{
         }
         query.append(" limit ?,?");
         String q = query.toString();
-        return new JDBCBuilder.JDBCExecutor<List<Experience>>(q, field, offset.getOffset(),offset.getPs()){
+        logger.info("field:" + field + " isDesc:"+isDesc + " offset:" + offset.getOffset());
+        logger.error(q);
+        return new JDBCBuilder.JDBCExecutor<List<Experience>>(q, offset.getOffset(),offset.getPs()){
             @Override
             public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
                 List<Experience> exps = new ArrayList<Experience>();
