@@ -8,6 +8,9 @@ import models.Message.Type;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.libs.Codec;
+import play.cache.Cache;
+
 /**
  * Created by yehuizhang on 14-9-1.
  */
@@ -15,7 +18,8 @@ public class Register extends CommonRender {
     private static final Logger logger = LoggerFactory.getLogger(Register.class);
 
     public static void registerPage(){
-        render("Register/register.html");
+        String randomID = Codec.UUID();
+        render("Register/register.html", randomID);
     }
 
     public static void isEmailRegister(final String email){
@@ -25,8 +29,13 @@ public class Register extends CommonRender {
         RenderSuccess();
     }
 
-    public static void doRegister(final String email, final String userName,final String password){
-        logger.info("------------email:" + email + " userName:" + userName + " password:" + password);
+
+    public static void doRegister(final String code, final String randomID, final String email, final String userName,final String password){
+        String randomCode = (String)Cache.get(randomID);
+        logger.error("randomCode:" + randomCode + "  code:" + code);
+        if(StringUtils.isEmpty(randomCode) || !code.equalsIgnoreCase(randomCode)){
+            RenderFailed("验证码输入错误");
+        }
         emptyEmail(email);
         existedEmail(email);
 

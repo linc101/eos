@@ -30,6 +30,15 @@ var EOS = EOS || {};
                 container.find(".register-content").fadeIn(400);
             });
 
+        },
+        changeCaptcha:function(){
+            var container = register.init.container;
+            container.find(".captcha-image").unbind().click(function(){
+                $.ajax({
+                    url:""
+
+                })
+            })
         }
     })
 
@@ -95,8 +104,10 @@ var EOS = EOS || {};
                 username        = container.find(".username").val(),
                 password        = container.find(".password").val(),
                 confirmpassword = container.find(".confirmpassword").val(),
-                usernamereg     = new RegExp("[\u4E00-\u9FA50-9A-Za-z]{2,16}");
-
+                usernamereg     = new RegExp("[\u4E00-\u9FA50-9A-Za-z]{2,16}"),
+                code            = container.find(".captcha").val(),
+                randomID        = container.find(".captcha-image").attr("randomIDValue");
+            console.log(randomID);
             if(!isEmail(email)){
                 alert("请输入正确的邮箱格式！");
                 return null;
@@ -121,6 +132,8 @@ var EOS = EOS || {};
             data.email = email;
             data.userName = username;
             data.password = password;
+            data.code = code;
+            data.randomID = randomID;
             return data;
 
         }

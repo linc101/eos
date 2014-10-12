@@ -8,8 +8,11 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
+import play.libs.Codec;
 import play.mvc.Controller;
 import play.mvc.Before;
+import play.cache.Cache;
+import play.libs.Images;
 
 import static config.Config.*;
 
@@ -31,6 +34,13 @@ import java.util.List;
  */
 public class CommonRender extends Controller {
     private static final Logger logger = LoggerFactory.getLogger(CommonRender.class);
+
+    public static void getCaptcha(String randomID){
+        Images.Captcha captcha = Images.captcha();
+        String code = captcha.getText("#FF0C19");
+        Cache.set(randomID, code, "10mn");
+        renderBinary(captcha);
+    }
 
     protected static void RenderFailed(String message){
         Result res = new Result(message);
