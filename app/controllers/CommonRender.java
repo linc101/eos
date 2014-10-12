@@ -42,6 +42,14 @@ public class CommonRender extends Controller {
         renderBinary(captcha);
     }
 
+    public static void changeCaptcha(){
+        String randomID = Codec.UUID();
+        Images.Captcha captcha = Images.captcha();
+        String code = captcha.getText("#FF0C19");
+        Cache.set(randomID, code, "10mn");
+        RenderSuccess(randomID);
+    }
+
     protected static void RenderFailed(String message){
         Result res = new Result(message);
         renderJSON(wrapObject(res));
@@ -64,7 +72,6 @@ public class CommonRender extends Controller {
         }
 
         user = User.finUserById(userId);
-        logger.info("----------common render :" + user.toString());
         request.args.put(USER, user);
     }
 
@@ -125,7 +132,6 @@ public class CommonRender extends Controller {
 
     protected static User getUser(){
         User user = (User)request.args.get(USER);
-        logger.info("------------------------------------------user:" + user);
         if(user == null){
             RenderFailed("获取user出错！数据库异常，请检查数据库");
         }

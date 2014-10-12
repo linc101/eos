@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.libs.Codec;
 import play.cache.Cache;
+import play.libs.Images;
 
 /**
  * Created by yehuizhang on 14-9-1.
@@ -28,7 +29,6 @@ public class Register extends CommonRender {
 
         RenderSuccess();
     }
-
 
     public static void doRegister(final String code, final String randomID, final String email, final String userName,final String password){
         String randomCode = (String)Cache.get(randomID);

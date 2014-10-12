@@ -15,10 +15,11 @@ var EOS = EOS || {};
             register.submit.initSubmit();
             register.init.defaultSubmit();
             register.init.showWelcome();
+            register.init.changeCaptcha();
         },
         defaultSubmit:function(){
             var container = register.init.container;
-            container.find(".confirmpassword").keydown(function (event){
+            container.find(".captcha").keydown(function (event){
                 if(event.keyCode == 13){
                     container.find(".submit_btn").click();
                 }
@@ -35,7 +36,12 @@ var EOS = EOS || {};
             var container = register.init.container;
             container.find(".captcha-image").unbind().click(function(){
                 $.ajax({
-                    url:""
+                    type:'get',
+                    url:"/Register/changeCaptcha",
+                    success:function(dataJson){
+                        container.find(".captcha-image").attr("src", "/register/getcaptcha?randomID=" + dataJson.res);
+                        container.find(".captcha-image").attr("randomIDValue", dataJson.res);
+                    }
 
                 })
             })
@@ -107,7 +113,6 @@ var EOS = EOS || {};
                 usernamereg     = new RegExp("[\u4E00-\u9FA50-9A-Za-z]{2,16}"),
                 code            = container.find(".captcha").val(),
                 randomID        = container.find(".captcha-image").attr("randomIDValue");
-            console.log(randomID);
             if(!isEmail(email)){
                 alert("请输入正确的邮箱格式！");
                 return null;
