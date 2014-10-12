@@ -46,6 +46,17 @@ var EOS = EOS || {};
         })
     }
 
+    util.Register = function(callback){
+        var html = "<div>张业辉</div>";
+        $(html).dialog({
+            title:'注册',
+            modal:true,
+            width:500,
+            height:300,
+            closeText: "hide"
+        })
+    }
+
     util.dealDate = function(createTs){
         if(createTs == null){
             return null;

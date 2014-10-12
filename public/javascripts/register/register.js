@@ -14,6 +14,7 @@ var EOS = EOS || {};
             register.init.container = container;
             register.submit.initSubmit();
             register.init.defaultSubmit();
+            register.init.showWelcome();
         },
         defaultSubmit:function(){
             var container = register.init.container;
@@ -22,6 +23,13 @@ var EOS = EOS || {};
                     container.find(".submit_btn").click();
                 }
             })
+        },
+        showWelcome:function(){
+            var container = register.init.container;
+            container.find(".wel-register").slideDown(600, function(){
+                container.find(".register-content").fadeIn(400);
+            });
+
         }
     })
 

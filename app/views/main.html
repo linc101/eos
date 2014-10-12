@@ -116,11 +116,8 @@
                     </li>
             </ul>
             <ul class="user-nologin-head">
-
                     <li class="r-item hover-on"><a href="/Register/registerPage">注册</a></li>
-                    <li class="r-item hover-on"><a href="/Login/login">登陆</a></li>
-
-
+                    <li class="r-item hover-on"><a class="user-login" href="javascript:void(0)">登陆</a></li>
             </ul>
             </div>
         </div>
@@ -259,13 +256,12 @@
                     logout.submit.userConfig();
                     logout.submit.noticeMsgCount();
                     logout.submit.noticeMsg();
+                    logout.submit.userRegister();
                 },
                 logoutAction:function(){
                     var container = logout.init.container;
-                    console.log("logout");
                     $('body').find(".logout").livequery(function(){
                         $(this).click(function(){
-                            console.log("test for 2");
                             $.ajax({
                                 type:'POST',
                                 url:'/Login/userLogout',
@@ -343,6 +339,13 @@
                             }
                         })
                     }
+                },
+                userRegister:function(){
+                    var container = logout.init.container;
+                    container.find(".user-register").unbind().click(function(){
+                        console.log("register");
+                        EOS.util.Register();
+                    })
                 }
             })
 

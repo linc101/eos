@@ -1,14 +1,15 @@
-#{extends 'main.html'/}
-#{set title:"注册" /}
+#{extends 'fontpage.html'/}
+#{set title:'欢迎加入经验分享社区'/}
+
 <style>
 
-
     .register-content{
-        margin:40px 400px 0 400px;
-        border:1px solid #cdcdcd;
-        padding:40px 0px 20px 0px;
-        background-color: #f9fcfd;
-
+        /*margin:40px 400px 0 400px;*/
+        /*border:1px solid #cdcdcd;*/
+        padding:30px 0px 25px 0px;
+        background-color: #ffffff;
+        width:600px;
+        margin:auto;
     }
 
     .register-title{
@@ -18,14 +19,23 @@
         margin:10px auto;
         border-bottom: 3px solid #019875;
     }
+
+    body{
+        background-color: #f3f3f3;
+    }
 </style>
+
 <div class="register">
-    <div class="register-title">
-        <span style="">请填写注册信息</span>
-        <span style="float:right;margin-right:10px;color:#7fcaff;cursor:pointer;"><a href="/Login/login" style="color:#7fcaff;display: block;text-decoration: none;">登陆</a></span>
-        <span style="float:right;">已有账号，</span>
+    *{<div class="register-title">}*
+        *{<span style="">请填写注册信息</span>}*
+        *{<span style="float:right;margin-right:10px;color:#7fcaff;cursor:pointer;"><a href="/Login/login" style="color:#7fcaff;display: block;text-decoration: none;">登陆</a></span>}*
+        *{<span style="float:right;">已有账号，</span>}*
+    *{</div>}*
+    <div class="wel-register" style="display:none;color:#777;text-align:center;margin:50px 0 40px 0;font-size:20px;">
+        <span>欢迎加入专业的经验分享社区</span>
     </div>
-    <div class="register-content">
+    <div class="register-content" style="display:none;">
+        <div style="font-weight:bolder;text-align:center;margin-bottom:15px;">注册新帐号</div>
         <table>
             <tbody>
             <tr>
@@ -33,7 +43,7 @@
                     <span>注册邮箱:</span>
                 </td>
                 <td>
-                    <input class="email" type="text">
+                    <input class="email" type="text" placeholder="邮箱">
                 </td>
             </tr>
             <tr>
@@ -49,7 +59,7 @@
                     <span>用户名:</span>
                 </td>
                 <td>
-                    <input class="username" type="text">
+                    <input class="username" type="text" placeholder="用户名">
                 </td>
             </tr>
             <tr>
@@ -65,7 +75,7 @@
                     <span>密码:</span>
                 </td>
                 <td>
-                    <input class="password" type="password">
+                    <input class="password" type="password" placeholder="密码">
                 </td>
             </tr>
             <tr>
@@ -81,7 +91,7 @@
                     <span>确认密码:</span>
                 </td>
                 <td>
-                    <input class="confirmpassword" type="password">
+                    <input class="confirmpassword" type="password" placeholder="确认密码">
                 </td>
             </tr>
             <tr>

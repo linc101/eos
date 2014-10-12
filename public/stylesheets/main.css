@@ -1,3 +1,34 @@
+table{
+    width:100%;
+    margin:0 auto;
+    font-size:14px;
+}
+
+table tbody tr td:first-child{
+    width:23%;
+    text-align: right;
+}
+
+table tbody tr td:last-child{
+    width:60%;
+    text-align: left;
+}
+
+table .tip{
+    color:#737373;
+}
+
+table input{
+    height:22px;
+    width:255px;
+    line-height:22px;
+    border:1px solid #cdcdcd;
+    font-size:14px;
+    color:#000000;
+    /*padding-left:5px;*/
+    padding:2px 5px;
+}
+
 .submit_btn{
     width:80px;
     height:34px;
