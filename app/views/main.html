@@ -121,6 +121,10 @@
             </ul>
             </div>
         </div>
+
+        <div id="test-dialog">
+            <span>name:</span><input type="text">
+        </div>
     </div>
     #{doLayout /}
     <footer id="footer">
@@ -236,6 +240,7 @@
                     logout.init.container = container;
                     logout.submit.submitInit();
                     logout.init.initHead();
+                    logout.init.testDialog();
                 },
                 initHead:function(){
                     var container = logout.init.container;
@@ -244,6 +249,14 @@
                         container.find(".user-nologin-head").addClass("hidden");
                         container.find(".user-login-head #login-username").html(decodeURI(EOS.userName));
                     }
+                },
+                testDialog:function(){
+                   EOS.Logout.login = $("#test-dialog").dialog({
+                        autoOpen: false,
+                        height: 400,
+                        width: 550,
+                        modal: true
+                   })
                 }
             })
 
@@ -256,7 +269,7 @@
                     logout.submit.userConfig();
                     logout.submit.noticeMsgCount();
                     logout.submit.noticeMsg();
-                    logout.submit.userRegister();
+                    logout.submit.userLogin();
                 },
                 logoutAction:function(){
                     var container = logout.init.container;
@@ -340,11 +353,11 @@
                         })
                     }
                 },
-                userRegister:function(){
+                userLogin:function(){
                     var container = logout.init.container;
-                    container.find(".user-register").unbind().click(function(){
-                        console.log("register");
-                        EOS.util.Register();
+                    container.find(".user-login").unbind().click(function(){
+                        console.log("login");
+                        EOS.Logout.login.dialog("open");
                     })
                 }
             })
