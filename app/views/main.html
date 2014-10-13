@@ -91,6 +91,14 @@
                 border-radius:14px;
             }
 
+            .login-input{
+                width:310px;
+                height:16px;
+                padding:10px 5px;
+                border:1px solid #ddd;
+                font-size:14px;
+                color:#666;
+            }
         </style>
     <body>
     <div class="toolbar-wrap">
@@ -122,8 +130,31 @@
             </div>
         </div>
 
-        <div id="test-dialog">
-            <span>name:</span><input type="text">
+        <div id="user-login">
+            <div class="login-region" style="margin-top:20px;">
+                <div style="text-align: center;margin-bottom:14px;">
+                    <input type="text" class="login-input mail" placeholder="邮箱">
+                </div>
+                <div style="text-align: center;margin-bottom:14px;">
+                    <input type="text" class="login-input password" placeholder="密码">
+                </div>
+                <div>
+                    <input type="checkbox">
+                    <span>下次自动登录</span>
+                    <a href="javascript:void(0)">忘记了密码？</a>
+                </div>
+                <div style="text-align:center;">
+                    <span class="submit_btn" style="width:320px;height:40px;font-size:18px;line-height: 40px;font-weight:bolder;">登录</span>
+                </div>
+                <div>
+                    <span>注册</span>
+                </div>
+
+                <div class="other-login">
+                    <span>可以使用一下方式登录</span>
+                </div>
+
+            </div>
         </div>
     </div>
     #{doLayout /}
@@ -227,6 +258,9 @@
             </div>
         </div>
     </footer>
+    <div style="text-align: center; font-size:12px;">
+        <span>©2014 经验分享<a href="http://www.miitbeian.gov.cn/" style="text-decoration: none;">浙ICP备14034625号</a></span>
+    </div>
     </body>
     <script type="text/javascript">
         var EOS = EOS || {};
@@ -251,10 +285,11 @@
                     }
                 },
                 testDialog:function(){
-                   EOS.Logout.login = $("#test-dialog").dialog({
+                   EOS.Logout.login = $("#user-login").dialog({
+                        title:'登录经验分享社区帐号',
                         autoOpen: false,
                         height: 400,
-                        width: 550,
+                        width: 350,
                         modal: true
                    })
                 }
