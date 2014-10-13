@@ -128,15 +128,15 @@
                     <li class="r-item hover-on"><a class="user-login" href="javascript:void(0)">登陆</a></li>
             </ul>
             </div>
-        </div>
+
 
         <div id="user-login">
             <div class="login-region" style="margin-top:20px;">
                 <div style="text-align: center;margin-bottom:14px;">
-                    <input type="text" class="login-input mail" placeholder="邮箱">
+                    <input type="text" class="login-input email" placeholder="邮箱">
                 </div>
                 <div style="text-align: center;margin-bottom:14px;">
-                    <input type="text" class="login-input password" placeholder="密码">
+                    <input type="password" class="login-input password" placeholder="密码">
                 </div>
                 <div style="font-size:13px;margin-bottom:14px;">
                     <input type="checkbox" style="vertical-align: middle;">
@@ -157,6 +157,8 @@
             </div>
         </div>
     </div>
+    </div>
+    </body>
     #{doLayout /}
     <footer id="footer">
         <div class="container">
@@ -265,7 +267,7 @@
     <script type="text/javascript">
         EOS.gcs("/js/main.js", function(){
             $(document).ready(function(){
-                EOS.Main.init.doInit($('.toolbar'));
+                EOS.Main.init.doInit($('.toolbar-wrap'));
             })
         })
 

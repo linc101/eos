@@ -43,6 +43,7 @@ var EOS = EOS || {};
             main.submit.noticeMsgCount();
             main.submit.noticeMsg();
             main.submit.userLogin();
+            main.submit.submitLogin();
         },
         logoutAction:function(){
             var container = main.init.container;
@@ -133,8 +134,57 @@ var EOS = EOS || {};
             })
         },
         submitLogin:function(){
-            var container = main.init.container;
+            var container = main.init.container.find("#user-login");
+            console.log("login");
+            console.log(container);
+            console.log("login");
+            container.find(".submit_btn").unbind().click(function(){
+                console.log("submitlogin");
+                var params = main.util.submitParams();
+                if(params == null) return;
 
+                $.ajax({
+                    type:'get',
+                    url:'/Login/userLogin',
+                    data:params,
+                    success:function(dataJson){
+                        if(dataJson.success){
+                            window.location.href = "/Application/index";
+                            return;
+                        }
+                        EOS.util.UIAssert(dataJson.message);
+                    }
+                })
+            })
+
+        }
+    })
+
+    main.util = main.util || {};
+    main.util = $.extend(main.util, {
+        submitParams:function(){
+            var container = main.init.container.find("#user-login");
+            console.log("param");
+            console.log(container);
+            console.log("param");
+            var email       = container.find(".email").val(),
+                password    = container.find(".password").val();
+
+            if(email == null){
+                EOS.util.UIAssert('请输入邮箱！');
+                return null;
+            }
+
+            if(password == null){
+                EOS.util.UIAssert('请输入密码！')
+                return null;
+            }
+
+            var params = {};
+            params.email = email;
+            params.password = password;
+
+            return params;
         }
     })
 
