@@ -138,21 +138,21 @@
                 <div style="text-align: center;margin-bottom:14px;">
                     <input type="text" class="login-input password" placeholder="密码">
                 </div>
-                <div>
-                    <input type="checkbox">
+                <div style="font-size:13px;margin-bottom:14px;">
+                    <input type="checkbox" style="vertical-align: middle;">
                     <span>下次自动登录</span>
-                    <a href="javascript:void(0)">忘记了密码？</a>
+                    <a href="javascript:void(0)" style="text-decoration: none;float:right;">忘记了密码？</a>
                 </div>
                 <div style="text-align:center;">
                     <span class="submit_btn" style="width:320px;height:40px;font-size:18px;line-height: 40px;font-weight:bolder;">登录</span>
                 </div>
-                <div>
-                    <span>注册</span>
+                <div style="font-size:13px;margin-bottom:14px;margin-top:14px;text-align:right;margin-right:10px;">
+                    <a href="/Register/registerPage" style="text-decoration: none;">注册</a>
                 </div>
 
-                <div class="other-login">
-                    <span>可以使用一下方式登录</span>
-                </div>
+                *{<div class="other-login">}*
+                    *{<span>可以使用一下方式登录</span>}*
+                *{</div>}*
 
             </div>
         </div>
@@ -263,143 +263,10 @@
     </div>
     </body>
     <script type="text/javascript">
-        var EOS = EOS || {};
-        ((function($, window){
-            EOS.Logout = EOS.Logout || {};
-            var logout = EOS.Logout;
-
-            logout.init = logout.init || {};
-            logout.init = $.extend(logout.init,{
-                doInit:function(container){
-                    logout.init.container = container;
-                    logout.submit.submitInit();
-                    logout.init.initHead();
-                    logout.init.testDialog();
-                },
-                initHead:function(){
-                    var container = logout.init.container;
-                    if(EOS.userId != null) {
-                        container.find(".user-login-head").show();
-                        container.find(".user-nologin-head").addClass("hidden");
-                        container.find(".user-login-head #login-username").html(decodeURI(EOS.userName));
-                    }
-                },
-                testDialog:function(){
-                   EOS.Logout.login = $("#user-login").dialog({
-                        title:'登录经验分享社区帐号',
-                        autoOpen: false,
-                        height: 400,
-                        width: 350,
-                        modal: true
-                   })
-                }
+        EOS.gcs("/js/main.js", function(){
+            $(document).ready(function(){
+                EOS.Main.init.doInit($('.toolbar'));
             })
-
-            logout.submit = logout.submit || {};
-            logout.submit = $.extend(logout.submit, {
-                submitInit:function(){
-                    logout.submit.logoutAction();
-                    logout.submit.tabChange();
-                    logout.submit.tabFocus();
-                    logout.submit.userConfig();
-                    logout.submit.noticeMsgCount();
-                    logout.submit.noticeMsg();
-                    logout.submit.userLogin();
-                },
-                logoutAction:function(){
-                    var container = logout.init.container;
-                    $('body').find(".logout").livequery(function(){
-                        $(this).click(function(){
-                            $.ajax({
-                                type:'POST',
-                                url:'/Login/userLogout',
-                                success:function(dataJson){
-                                    if(dataJson.success){
-                                        window.location.href = "/Application/index";
-                                        return;
-                                    }
-                                    EOS.util.UIAssert(dataJson.message);
-                                }
-                            })
-                        })
-
-                    })
-                },
-                tabChange:function(){
-                    var container = logout.init.container;
-                    container.find('.l-item').click(function(){
-                        container.find('.l-item').removeClass('current');
-                        $(this).addClass('current');
-                    })
-                },
-                tabFocus:function(){
-                    var container = logout.init.container;
-                    $('body').find('.hover-on').livequery(function(){
-                        $(this).hover(function(){
-                            $(this).addClass('mouseon');
-                        },function(){
-                            $(this).removeClass('mouseon');
-                        });
-                    })
-                },
-                userConfig:function(){
-                    var container = logout.init.container;
-                    container.find('#login-username').poshytip({
-                        className : 'tip-yellowsimple',
-                        content : '<div style="height:3px;"></div>' +
-                                '<a href="/UserCenter/userCenter" class="downlist_a">用户中心</a>'+
-                                '<br/>' +
-                                '<div style="height:10px;"></div>' +
-                                '<a href="/AccountSetting/accountSetting" class="downlist_a hover-on">帐号设置</a>' +
-                                '<br/>' +
-                                '<div style="height:10px;"></div>' +
-                                '<a href="javascript:void(0)" class="downlist_a logout hover-on">退出</a>',
-
-                        alignTo : 'target',
-                        showTimeout:0,
-                        alignX : 'inner-right',
-                        alignY : 'bottom',
-                        offsetX : 0,
-                        offsetY : 5,
-                        fade : false,
-                        slide : false
-                    });
-                },
-                noticeMsg:function(){
-                    if(EOS.userId != null) {
-                        setInterval(logout.submit.noticeMsgCount, 5000);
-                    }
-                },
-                noticeMsgCount:function(){
-                    if(EOS.userId != null) {
-                        $.ajax({
-                            type: 'get',
-                            url: '/Application/findCountMsg',
-                            success: function (dataJson) {
-                                if (!dataJson.success) {
-                                    EOS.util.UIAssert(dataJson.message);
-                                    return;
-                                }
-                                var container = logout.init.container;
-                                container.find(".my-msg-notice .my-msg-count").remove();
-                                if(dataJson.res != 0)
-                                    container.find(".my-msg-notice").append("<span class='my-msg-count'>" + dataJson.res + "</span>");
-                            }
-                        })
-                    }
-                },
-                userLogin:function(){
-                    var container = logout.init.container;
-                    container.find(".user-login").unbind().click(function(){
-                        console.log("login");
-                        EOS.Logout.login.dialog("open");
-                    })
-                }
-            })
-
-        })(jQuery, window));
-
-        $(document).ready(function(){
-            EOS.Logout.init.doInit($('.toolbar'));
         })
+
     </script>
