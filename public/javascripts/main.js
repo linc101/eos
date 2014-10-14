@@ -13,6 +13,7 @@ var EOS = EOS || {};
             main.submit.submitInit();
             main.init.initHead();
             main.init.testDialog();
+            main.init.defaultSubmit();
         },
         initHead:function(){
             var container = main.init.container;
@@ -29,6 +30,14 @@ var EOS = EOS || {};
                 height: 400,
                 width: 350,
                 modal: true
+            })
+        },
+        defaultSubmit:function(){
+            var container = main.init.container;
+            $('#user-login .password').keydown(function(event){
+                if(event.keyCode == 13){
+                    $('#user-login .submit_btn').click();
+                }
             })
         }
     })
@@ -134,15 +143,11 @@ var EOS = EOS || {};
             })
         },
         submitLogin:function(){
-            var container = main.init.container.find("#user-login");
-            console.log("login");
-            console.log(container);
-            console.log("login");
-            container.find(".submit_btn").unbind().click(function(){
-                console.log("submitlogin");
+            var container = main.init.container;
+            container.find("#user-login .submit_btn").unbind().click(function(){
+                container.find("#user-login").show();
                 var params = main.util.submitParams();
                 if(params == null) return;
-
                 $.ajax({
                     type:'get',
                     url:'/Login/userLogin',
@@ -163,13 +168,8 @@ var EOS = EOS || {};
     main.util = main.util || {};
     main.util = $.extend(main.util, {
         submitParams:function(){
-            var container = main.init.container.find("#user-login");
-            console.log("param");
-            console.log(container);
-            console.log("param");
-            var email       = container.find(".email").val(),
-                password    = container.find(".password").val();
-
+            var email       = $(".login-region .email").val(),
+                password    = $(".login-region .password").val();
             if(email == null){
                 EOS.util.UIAssert('请输入邮箱！');
                 return null;
