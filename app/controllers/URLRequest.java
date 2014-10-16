@@ -23,6 +23,7 @@ import java.util.Scanner;
 public class URLRequest extends CommonRender{
     private static final Logger log = LoggerFactory.getLogger(URLRequest.class);
 
+
     public static void authDouban(){
         URLConnection connection = null;
         try{
