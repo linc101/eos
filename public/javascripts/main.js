@@ -30,6 +30,13 @@ var EOS = EOS || {};
                 width: 350,
                 modal: true
             })
+        },
+        defaultLogin:function(){
+            $('#user-login .password').keydown(function(event){
+                if(event.keyCode == 13){
+                    container.find('.submit_btn').click();
+                }
+            })
         }
     })
 
@@ -135,11 +142,7 @@ var EOS = EOS || {};
         },
         submitLogin:function(){
             var container = main.init.container.find("#user-login");
-            console.log("login");
-            console.log(container);
-            console.log("login");
             container.find(".submit_btn").unbind().click(function(){
-                console.log("submitlogin");
                 var params = main.util.submitParams();
                 if(params == null) return;
 
@@ -164,9 +167,6 @@ var EOS = EOS || {};
     main.util = $.extend(main.util, {
         submitParams:function(){
             var container = main.init.container.find("#user-login");
-            console.log("param");
-            console.log(container);
-            console.log("param");
             var email       = container.find(".email").val(),
                 password    = container.find(".password").val();
 
