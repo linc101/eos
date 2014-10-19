@@ -49,6 +49,13 @@ public class Login extends CommonRender {
         RenderSuccess();
     }
 
+    public static void userLoginByweibo() throws WeiboException, IOException{
+//        Oauth oauth = new Oauth();
+//        BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
+        redirect("https://api.weibo.com/oauth2/authorize?client_id=2359627633&redirect_uri=www.sharexperience11.com/Application/index&response_type=code");
+    }
+
+
     public static void main(String [] args) throws WeiboException, IOException{
         Oauth oauth = new Oauth();
         BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
