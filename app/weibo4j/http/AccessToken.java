@@ -20,6 +20,7 @@ public class AccessToken extends WeiboResponse implements Serializable {
 		JSONObject json =res.asJSONObject();
 		try{
 			accessToken = json.getString("access_token");
+            System.out.println("accessToken:" + accessToken);
 			expireIn = json.getString("expires_in");
 			refreshToken = json.getString("refresh_token");
 			uid = json.getString("uid");

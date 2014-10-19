@@ -4,6 +4,8 @@ import models.User;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.commons.httpclient.*;
+import org.apache.commons.httpclient.methods.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import weibo4j.Oauth;
 import weibo4j.http.AccessToken;
 import weibo4j.model.WeiboException;
 import weibo4j.util.BareBonesBrowserLaunch;
+
 /**
  * Created by yehuizhang on 14-9-4.
  */
@@ -62,28 +65,34 @@ public class Login extends CommonRender {
         oauth.authorize("code");
         AccessToken token = oauth.getAccessTokenByCode(code);
         String accessToken = token.getAccessToken();
+        log.info("access token:" + accessToken);
         String uid = token.getUid();
         Users um = new Users(accessToken);
         weibo4j.model.User weibo_user = um.showUserById(uid);
         log.info("weibo user info:" + weibo_user.toString());
     }
+
     public static void main(String [] args) throws WeiboException, IOException{
+//        Oauth oauth = new Oauth();
+//        BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
+//        System.out.println(oauth.authorize("code"));
+//        System.out.print("Hit enter when it's done.[Enter]:");
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        String code = br.readLine();
+//        log.info("code: " + code);
+//        try{
+//            System.out.println(oauth.getAccessTokenByCode(code));
+//        } catch (WeiboException e) {
+//            if(401 == e.getStatusCode()){
+//                log.info("Unable to get the access token.");
+//            }else{
+//                e.printStackTrace();
+//            }
+//        }
         Oauth oauth = new Oauth();
-        BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
-        System.out.println(oauth.authorize("code"));
-        System.out.print("Hit enter when it's done.[Enter]:");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String code = br.readLine();
-        log.info("code: " + code);
-        try{
-            System.out.println(oauth.getAccessTokenByCode(code));
-        } catch (WeiboException e) {
-            if(401 == e.getStatusCode()){
-                log.info("Unable to get the access token.");
-            }else{
-                e.printStackTrace();
-            }
-        }
+        AccessToken accessToken = oauth.getTokenInfoByAccessToken("2.00zP9ywBNwkgZC88ed636688LYjnsD");
+        System.out.println("create_at:"+ accessToken.getExpireIn());
+        System.out.println("main accessToken:" + accessToken);
     }
 
 }

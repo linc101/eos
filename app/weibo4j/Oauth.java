@@ -89,6 +89,12 @@ public class Oauth extends Weibo {
 								.getValue("redirect_URI")) }, false, null));
 	}
 
+    public AccessToken getTokenInfoByAccessToken(String accessToken) throws WeiboException{
+            return new AccessToken(client.post(WeiboConfig.getValue("tokenInfoURL"),
+                    new PostParameter[]{new PostParameter("access_token", accessToken)},false, null
+            ));
+    }
+
 	public String authorize(String response_type) throws WeiboException {
 		return WeiboConfig.getValue("authorizeURL").trim() + "?client_id="
 				+ WeiboConfig.getValue("client_ID").trim() + "&redirect_uri="
@@ -112,4 +118,6 @@ public class Oauth extends Weibo {
 				+ "&response_type=" + response_type + "&state=" + state
 				+ "&scope=" + scope;
 	}
+
+
 }

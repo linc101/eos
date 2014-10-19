@@ -283,7 +283,7 @@ public class HttpClient implements java.io.Serializable {
 	public Response post(String url, PostParameter[] params,
 			Boolean WithTokenHeader, String token) throws WeiboException {
 		log("Request:");
-		log("POST" + url);
+		log("POST " + url);
 		PostMethod postMethod = new PostMethod(url);
 		for (int i = 0; i < params.length; i++) {
 			postMethod.addParameter(params[i].getName(), params[i].getValue());

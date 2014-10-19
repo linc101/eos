@@ -1,0 +1,61 @@
+0    WARN  [2014-10-19 20:07:46]  Going to buffer response body of large or unknown size. Using getResponseBodyAsStream instead is recommended.
+0    DEBUG [2014-10-19 20:40:01]  Request:
+1    DEBUG [2014-10-19 20:40:01]  POSThttps://api.weibo.com/oauth2/get_token_info
+1124 DEBUG [2014-10-19 20:40:03]  Response:
+1124 DEBUG [2014-10-19 20:40:03]  https StatusCode:200
+1124 DEBUG [2014-10-19 20:40:03]  Server:nginx/1.2.0
+1124 DEBUG [2014-10-19 20:40:03]  Date:Sun, 19 Oct 2014 12:38:47 GMT
+1125 DEBUG [2014-10-19 20:40:03]  Content-Type:text/plain;charset=UTF-8
+1125 DEBUG [2014-10-19 20:40:03]  Content-Length:98
+1125 DEBUG [2014-10-19 20:40:03]  Connection:keep-alive
+1125 DEBUG [2014-10-19 20:40:03]  Pragma:No-cache
+1125 DEBUG [2014-10-19 20:40:03]  Cache-Control:no-cache
+1125 DEBUG [2014-10-19 20:40:03]  Expires:Thu, 01 Jan 1970 00:00:00 GMT
+1126 DEBUG [2014-10-19 20:40:03]  Api-Server-IP:10.75.2.83
+1130 DEBUG [2014-10-19 20:40:03]  {"uid":1787568623,"appkey":"2359627633","scope":null,"create_at":1413720438,"expire_in":157678110}
+
+0    DEBUG [2014-10-19 20:42:28]  Request:
+1    DEBUG [2014-10-19 20:42:28]  POSThttps://api.weibo.com/oauth2/get_token_info
+964  DEBUG [2014-10-19 20:42:29]  Response:
+964  DEBUG [2014-10-19 20:42:29]  https StatusCode:200
+964  DEBUG [2014-10-19 20:42:29]  Server:nginx/1.2.0
+964  DEBUG [2014-10-19 20:42:29]  Date:Sun, 19 Oct 2014 12:41:13 GMT
+964  DEBUG [2014-10-19 20:42:29]  Content-Type:text/plain;charset=UTF-8
+965  DEBUG [2014-10-19 20:42:29]  Content-Length:98
+965  DEBUG [2014-10-19 20:42:29]  Connection:keep-alive
+965  DEBUG [2014-10-19 20:42:29]  Pragma:No-cache
+965  DEBUG [2014-10-19 20:42:29]  Cache-Control:no-cache
+965  DEBUG [2014-10-19 20:42:29]  Expires:Thu, 01 Jan 1970 00:00:00 GMT
+965  DEBUG [2014-10-19 20:42:29]  Api-Server-IP:10.75.25.114
+978  DEBUG [2014-10-19 20:42:29]  {"uid":1787568623,"appkey":"2359627633","scope":null,"create_at":1413720438,"expire_in":157677964}
+
+0    DEBUG [2014-10-19 20:44:07]  Request:
+1    DEBUG [2014-10-19 20:44:07]  POSThttps://api.weibo.com/oauth2/get_token_info
+1155 DEBUG [2014-10-19 20:44:09]  Response:
+1156 DEBUG [2014-10-19 20:44:09]  https StatusCode:200
+1156 DEBUG [2014-10-19 20:44:09]  Server:nginx/1.2.0
+1156 DEBUG [2014-10-19 20:44:09]  Date:Sun, 19 Oct 2014 12:42:53 GMT
+1156 DEBUG [2014-10-19 20:44:09]  Content-Type:text/plain;charset=UTF-8
+1156 DEBUG [2014-10-19 20:44:09]  Content-Length:98
+1157 DEBUG [2014-10-19 20:44:09]  Connection:keep-alive
+1157 DEBUG [2014-10-19 20:44:09]  Pragma:No-cache
+1157 DEBUG [2014-10-19 20:44:09]  Cache-Control:no-cache
+1157 DEBUG [2014-10-19 20:44:09]  Expires:Thu, 01 Jan 1970 00:00:00 GMT
+1157 DEBUG [2014-10-19 20:44:09]  Api-Server-IP:10.75.25.114
+1162 DEBUG [2014-10-19 20:44:09]  {"uid":1787568623,"appkey":"2359627633","scope":null,"create_at":1413720438,"expire_in":157677864}
+
+0    DEBUG [2014-10-19 20:46:26]  Request:
+1    DEBUG [2014-10-19 20:46:26]  POSThttps://api.weibo.com/oauth2/get_token_info
+982  DEBUG [2014-10-19 20:46:27]  Response:
+983  DEBUG [2014-10-19 20:46:27]  https StatusCode:200
+983  DEBUG [2014-10-19 20:46:27]  Server:nginx/1.2.0
+983  DEBUG [2014-10-19 20:46:27]  Date:Sun, 19 Oct 2014 12:45:11 GMT
+983  DEBUG [2014-10-19 20:46:27]  Content-Type:text/plain;charset=UTF-8
+983  DEBUG [2014-10-19 20:46:27]  Content-Length:98
+984  DEBUG [2014-10-19 20:46:27]  Connection:keep-alive
+984  DEBUG [2014-10-19 20:46:27]  Pragma:No-cache
+984  DEBUG [2014-10-19 20:46:27]  Cache-Control:no-cache
+984  DEBUG [2014-10-19 20:46:27]  Expires:Thu, 01 Jan 1970 00:00:00 GMT
+984  DEBUG [2014-10-19 20:46:27]  Api-Server-IP:10.75.25.114
+996  DEBUG [2014-10-19 20:46:27]  {"uid":1787568623,"appkey":"2359627633","scope":null,"create_at":1413720438,"expire_in":157677726}
+
