@@ -9,7 +9,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import weibo4j.Users;
 import weibo4j.Oauth;
+import weibo4j.http.AccessToken;
 import weibo4j.model.WeiboException;
 import weibo4j.util.BareBonesBrowserLaunch;
 /**
@@ -55,7 +57,16 @@ public class Login extends CommonRender {
         redirect("https://api.weibo.com/oauth2/authorize?client_id=2359627633&redirect_uri=www.localhost:9000/Application/index&response_type=code");
     }
 
-
+    public static void getWeiboUserInfoByCode(String code) throws WeiboException, IOException{
+        Oauth oauth = new Oauth();
+        oauth.authorize("code");
+        AccessToken token = oauth.getAccessTokenByCode(code);
+        String accessToken = token.getAccessToken();
+        String uid = token.getUid();
+        Users um = new Users(accessToken);
+        weibo4j.model.User weibo_user = um.showUserById(uid);
+        log.info("weibo user info:" + weibo_user.toString());
+    }
     public static void main(String [] args) throws WeiboException, IOException{
         Oauth oauth = new Oauth();
         BareBonesBrowserLaunch.openURL(oauth.authorize("code"));

@@ -109,6 +109,26 @@
             }
         </style>
     <body>
+    <script type="text/javascript">
+        var code = null
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r!=null) return (r[2]); return null;
+        }
+
+        function getWeiboUserInfo(code){
+            $.ajax({
+                type:"GET",
+                url:"/Login/getWeiboUserInfoByCode",
+                data:{code:code}
+            })
+        }
+        if(((code = GetQueryString("code")) != null)){
+            getWeiboUserInfo(code);
+        }
+
+    </script>
     <div class="toolbar-wrap">
         <div class="toolbar">
             <ul>
@@ -274,6 +294,7 @@
     </div>
     </body>
     <script type="text/javascript">
+
         EOS.gcs("/js/main.js", function(){
             $(document).ready(function(){
                 EOS.Main.init.doInit($('.toolbar-wrap'));

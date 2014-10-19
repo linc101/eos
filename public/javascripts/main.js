@@ -9,11 +9,11 @@ var EOS = EOS || {};
     main.init = main.init || {};
     main.init = $.extend(main.init,{
         doInit:function(container){
-            main.init.container = container;
-            main.submit.submitInit();
-            main.init.initHead();
-            main.init.testDialog();
-            main.init.defaultSubmit();
+                main.init.container = container;
+                main.submit.submitInit();
+                main.init.initHead();
+                main.init.testDialog();
+                main.init.defaultSubmit();
         },
         initHead:function(){
             var container = main.init.container;

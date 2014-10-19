@@ -44,6 +44,7 @@ public class AccessToken extends WeiboResponse implements Serializable {
 	public String getRefreshToken() {
 		return refreshToken;
 	}
+    public String getUid(){return uid;}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
