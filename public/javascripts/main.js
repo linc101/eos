@@ -9,11 +9,12 @@ var EOS = EOS || {};
     main.init = main.init || {};
     main.init = $.extend(main.init,{
         doInit:function(container){
-                main.init.container = container;
-                main.submit.submitInit();
-                main.init.initHead();
-                main.init.testDialog();
-                main.init.defaultSubmit();
+            main.init.container = container;
+            main.submit.submitInit();
+            main.init.initHead();
+            main.init.testDialog();
+            main.init.defaultSubmit();
+            main.init.weiboLogin();
         },
         initHead:function(){
             var container = main.init.container;
@@ -38,6 +39,23 @@ var EOS = EOS || {};
                     $('#user-login .submit_btn').click();
                 }
             })
+        },
+        weiboLogin:function(){
+            console.log("weiboLogin");
+            WB2.anyWhere(function (W) {
+                W.widget.connectButton({
+                    id: "wb_connect_btn",
+                    type: '3,2',
+                    callback: {
+                        login: function (o) { //登录后的回调函数
+                            alert("login: " + o.screen_name)
+                        },
+                        logout: function () { //退出后的回调函数
+                            alert('logout');
+                        }
+                    }
+                });
+            });
         }
     })
 
