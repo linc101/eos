@@ -174,4 +174,15 @@ public class WeiboUser extends Model implements PolicySQLGenerator {
             return true;
         }
     }
+
+    public boolean update(){
+        String query = "update " + TABLE_NAME + " set weibo_uid = ?, access_token = ?, weibo_username = ?, create_ts = ?, update_ts = ?, expires_ts = ?, auth_count = ?";
+        long res = dp.update(query, this.weiboUID, this.accessToken, this.weiboUsername, this.createTs, this.updateTs, this.expiresTs, this.authCount);
+        if(res <= 0){
+            log.error("update failed!");
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
