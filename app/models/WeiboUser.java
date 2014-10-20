@@ -130,6 +130,11 @@ public class WeiboUser extends Model implements PolicySQLGenerator {
         this.id = id;
     }
 
+    public static long findIfExistedByUID(String uid){
+        String query = "select id from " + TABLE_NAME + " where uid=? ";
+        return dp.singleLongQuery(query, uid);
+    }
+
     @Override
     public boolean jdbcSave() {
         return false;
@@ -153,7 +158,20 @@ public class WeiboUser extends Model implements PolicySQLGenerator {
         this.authCount = 1;
     }
 
+    public static String ALLPROPERTY = " weibo_uid, access_token, weibo_username, create_ts, update_ts, expires_ts, auth_count ";
+
     public static final WeiboUser _instance = new WeiboUser();
 
     public static DBDispatcher dp = new DBDispatcher(DataSrc.BASIC, _instance);
+
+    public boolean insert(){
+        String query = "insert into " + TABLE_NAME + " (" + ALLPROPERTY + ") values (?,?,?,?,?,?,?)";
+        long res = dp.insert(query,this.weiboUID, this.accessToken, this.weiboUsername, this.createTs, this.updateTs, this.expiresTs, this.authCount);
+        if(res <= 0){
+            log.error("insert falied!");
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

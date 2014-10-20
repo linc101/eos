@@ -293,9 +293,7 @@ public class User extends Model implements PolicySQLGenerator{
 
     public static boolean changePW(String newpassword, long id){
         String query = "update " + TABLE_NAME + " set password = ? where id = ?";
-        log.info("-------newpassword:" + newpassword);
         newpassword = encryptPassword(newpassword);
-        log.info("-----------after encrypt newpassword:" + newpassword);
         long res = dp.update(query, newpassword, id);
         if(res <= 0)return false;
         else return true;
