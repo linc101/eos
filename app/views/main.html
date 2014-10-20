@@ -180,8 +180,11 @@
                     <span>可以使用一下方式登录</span>
                     <div>
                         *{<a class="threeside_login weibo_login" href="/Login/userLoginByweibo" style="background-position: 35px -120px;"></a>}*
-                            <wb:login-button type="3,4" onlogin="login" onlogout="logout">登录按钮</wb:login-button>
+                            *{<wb:login-button type="3,4" onlogin="login" onlogout="logout">登录按钮</wb:login-button>}*
                         *{<div id="wb_login_btn"></div>}*
+                        <a class="weibo_login" href="/Login/userLoginByweibo">
+                            <img src="http://img.t.sinajs.cn/t4/appstyle/open/images/website/loginbtn/loginbtn_03.png" alt="" id="btnStyleImg1">
+                        </a>
                     </div>
                 </div>
 
@@ -296,15 +299,6 @@
     </div>
     </body>
 
-    <script>
-        function login(o){
-            alert("test login");
-        }
-
-        function logout(o){
-            alert("test logout");
-        }
-    </script>
     <script type="text/javascript">
 
         EOS.gcs("/js/main.js", function(){

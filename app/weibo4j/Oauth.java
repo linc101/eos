@@ -1,6 +1,7 @@
 package weibo4j;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -95,6 +96,11 @@ public class Oauth extends Weibo {
             ));
     }
 
+    public void publishWeibo(String access_token, String status) throws WeiboException{
+        client.post(WeiboConfig.getValue("publishURL"),
+                new PostParameter[]{new PostParameter("access_token", access_token), new PostParameter("status", URLEncoder.encode(status))}, false, null);
+    }
+
 	public String authorize(String response_type) throws WeiboException {
 		return WeiboConfig.getValue("authorizeURL").trim() + "?client_id="
 				+ WeiboConfig.getValue("client_ID").trim() + "&redirect_uri="
@@ -118,6 +124,4 @@ public class Oauth extends Weibo {
 				+ "&response_type=" + response_type + "&state=" + state
 				+ "&scope=" + scope;
 	}
-
-
 }

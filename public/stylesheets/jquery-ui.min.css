@@ -1765,7 +1765,8 @@ body .ui-tooltip {
 .ui-widget-overlay {
     /*background: #666 url("images/ui-bg_diagonals-thick_20_666666_40x40.png") 50% 50% repeat;*/
     opacity: .5;
-    filter: Alpha(Opacity=50)
+    filter: Alpha(Opacity=50);
+    background-color:#666;
 }
 
 .ui-widget-shadow {

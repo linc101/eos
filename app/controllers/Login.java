@@ -65,7 +65,7 @@ public class Login extends CommonRender {
         oauth.authorize("code");
         AccessToken token = oauth.getAccessTokenByCode(code);
         String accessToken = token.getAccessToken();
-        log.info("access token:" + accessToken);
+        log.info("access token:" + token.toString());
         String uid = token.getUid();
         Users um = new Users(accessToken);
         weibo4j.model.User weibo_user = um.showUserById(uid);
@@ -89,10 +89,12 @@ public class Login extends CommonRender {
 //                e.printStackTrace();
 //            }
 //        }
+//        Oauth oauth = new Oauth();
+//        AccessToken accessToken = oauth.getTokenInfoByAccessToken("2.00zP9ywBNwkgZC88ed636688LYjnsD");
+//        System.out.println("create_at:"+ accessToken.getExpireIn());
+//        System.out.println("main accessToken:" + accessToken);
         Oauth oauth = new Oauth();
-        AccessToken accessToken = oauth.getTokenInfoByAccessToken("2.00zP9ywBNwkgZC88ed636688LYjnsD");
-        System.out.println("create_at:"+ accessToken.getExpireIn());
-        System.out.println("main accessToken:" + accessToken);
+        oauth.publishWeibo("2.00mKFyvBNwkgZC44c006dc1903pEOc", "test only for test!!!!!");
     }
 
 }
