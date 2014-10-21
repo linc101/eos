@@ -1,6 +1,7 @@
 package controllers;
 
 import models.User;
+import models.WeiboUser;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,11 +65,19 @@ public class Login extends CommonRender {
         Oauth oauth = new Oauth();
         oauth.authorize("code");
         AccessToken token = oauth.getAccessTokenByCode(code);
+
         String accessToken = token.getAccessToken();
         log.info("access token:" + token.toString());
         String uid = token.getUid();
         Users um = new Users(accessToken);
         weibo4j.model.User weibo_user = um.showUserById(uid);
+        WeiboUser weiboUser = new WeiboUser(token, weibo_user.getScreenName());
+        boolean isSuccess = weiboUser .jdbcSave();
+        if(isSuccess){
+            RenderSuccess();
+        }else{
+            RenderFailed("微博三方登陆用户失败");
+        }
         log.info("weibo user info:" + weibo_user.toString());
     }
 

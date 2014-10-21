@@ -366,8 +366,6 @@ public class Experience extends Model implements PolicySQLGenerator{
         }
         query.append(" limit ?,?");
         String q = query.toString();
-        logger.info("field:" + field + " isDesc:"+isDesc + " offset:" + offset.getOffset());
-        logger.error(q);
         return new JDBCBuilder.JDBCExecutor<List<Experience>>(q, offset.getOffset(),offset.getPs()){
             @Override
             public List<Experience> doWithResultSet(ResultSet res) throws SQLException{

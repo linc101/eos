@@ -131,13 +131,18 @@ public class WeiboUser extends Model implements PolicySQLGenerator {
     }
 
     public static long findIfExistedByUID(String uid){
-        String query = "select id from " + TABLE_NAME + " where uid=? ";
+        String query = "select id from " + TABLE_NAME + " where weibo_uid=? ";
         return dp.singleLongQuery(query, uid);
     }
 
     @Override
     public boolean jdbcSave() {
-        return false;
+        long id = findIfExistedByUID(this.weiboUID);
+        if(id <= 0){
+            return insert();
+        }else{
+            return update();
+        }
     }
 
     @Override
@@ -176,13 +181,19 @@ public class WeiboUser extends Model implements PolicySQLGenerator {
     }
 
     public boolean update(){
-        String query = "update " + TABLE_NAME + " set weibo_uid = ?, access_token = ?, weibo_username = ?, create_ts = ?, update_ts = ?, expires_ts = ?, auth_count = ?";
-        long res = dp.update(query, this.weiboUID, this.accessToken, this.weiboUsername, this.createTs, this.updateTs, this.expiresTs, this.authCount);
+        String query = "update " + TABLE_NAME + " set weibo_uid = ?, access_token = ?, weibo_username = ?, update_ts = ?, expires_ts = ?, auth_count = ? where weibo_uid = ?";
+        int authCount = getAuthCountByUID(this.weiboUID) + 1;
+        long res = dp.update(query, this.weiboUID, this.accessToken, this.weiboUsername, this.updateTs, this.expiresTs, authCount, this.weiboUID);
         if(res <= 0){
             log.error("update failed!");
             return false;
         }else{
             return true;
         }
+    }
+
+    public static int getAuthCountByUID(String weiboUID){
+        String query = "select auth_count from " + TABLE_NAME + " where weibo_uid = ? ";
+        return (int)dp.singleLongQuery(query, weiboUID);
     }
 }
