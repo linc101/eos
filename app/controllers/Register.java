@@ -23,10 +23,13 @@ public class Register extends CommonRender {
         render("Register/register.html", randomID);
     }
 
+    public static void thirdPartRegister(String uid){
+        render("Register/thirdpartregister.html", uid);
+    }
+
     public static void isEmailRegister(final String email){
         emptyEmail(email);
         existedEmail(email);
-
         RenderSuccess();
     }
 
@@ -50,6 +53,26 @@ public class Register extends CommonRender {
 
         if(userId > 0L) {
             successEnter(userId.toString(), userName);
+            Message sysMsg = new Message("系统消息", user.getUserName(), "恭喜，您已经成功注册！", Type.SYSTEM_MES);
+            sysMsg.insert();
+            RenderSuccess();
+        }else{
+            RenderFailed("用户数据插入出错，数据库异常！");
+        }
+    }
+
+    public static void doRegisterThirdPart(final String email, final String password){
+        emptyEmail(email);
+        existedEmail(email);
+
+        lengthPassword(password);
+
+        User user = new User(email, email, password);
+
+        Long userId = user.firstSave();
+
+        if(userId > 0L) {
+            successEnter(userId.toString(), email);
             Message sysMsg = new Message("系统消息", user.getUserName(), "恭喜，您已经成功注册！", Type.SYSTEM_MES);
             sysMsg.insert();
             RenderSuccess();

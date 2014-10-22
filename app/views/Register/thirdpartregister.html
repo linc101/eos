@@ -1,0 +1,172 @@
+#{extends 'fontpage.html'/}
+#{set title:'欢迎加入经验分享社区'/}
+
+<style>
+
+    .register-content{
+        padding:30px 0px 25px 0px;
+        background-color: #ffffff;
+        width:600px;
+        margin:auto;
+    }
+
+    .register-title{
+        font-size:18px;
+        width:700px;
+        color:#999;
+        margin:10px auto;
+        border-bottom: 3px solid #019875;
+    }
+
+    body{
+        background-color: #f3f3f3;
+    }
+</style>
+
+<div class="register" uid="${uid}">
+
+    <div class="wel-register" style="color:#777;text-align:center;margin:50px 0 40px 0;font-size:20px;">
+        <span>欢迎加入专业的经验分享社区</span>
+    </div>
+    <div class="register-content">
+        <div style="font-weight:bolder;text-align:center;margin-bottom:15px;">还有一步第三方账号就完成注册啦！</div>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <span>注册邮箱:</span>
+                </td>
+                <td>
+                    <input class="email" type="text" placeholder="邮箱">
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <span class="tip email-register" style="cursor:pointer;color:#7fcaff">验证是否已被注册</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>密码:</span>
+                </td>
+                <td>
+                    <input class="password" type="password" placeholder="密码">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <span class="tip">不少于6个字符</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <span class="submit_btn" style="margin-top:8px;">注册</span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    ((function($, window){
+        EOS.thirdPartRegister = EOS.thirdPartRegister || {};
+        var thirdPartRegister = EOS.thirdPartRegister;
+
+        thirdPartRegister.init = thirdPartRegister.init || {};
+        $.extend(thirdPartRegister.init, {
+            doInit:function(container){
+                thirdPartRegister.init.container = container;
+                thirdPartRegister.init.doSubmit();
+                thirdPartRegister.init.emailRegister();
+            },
+            doSubmit:function(){
+                var container = thirdPartRegister.init.container;
+                container.find(".submit_btn").unbind().click(function(){
+                    var email = container.find(".email").val().trim(),
+                        pw    = container.find(".password").val();
+                    if(email == null){
+                        alert("请输入邮箱");
+                        return;
+                    }
+                    if(!isEmail(email)){
+                        alert("请输入正确的邮箱格式!");
+                        return;
+                    }
+                    if(pw == null){
+                        alert("请输入密码！");
+                        return;
+                    }
+                    if(pw.length < 6){
+                        alert("请输入长度大于6的密码");
+                        return;
+                    }
+
+                    $.ajax({
+                        type:"get",
+                        url:"/Register/doRegisterThirdPart",
+                        data:{
+                            email:email,
+                            password:pw
+                        },
+                        success:function(dataJson){
+                            if(dataJson.success){
+//                            EOS.util.UIAssert("恭喜，注册成功！");
+                                window.location.href = "/Application/index";
+                                return;
+                            }
+                            alert(dataJson.message);
+                        }
+                    })
+
+                })
+            },
+            emailRegister:function(){
+                var container = thirdPartRegister.init.container;
+                container.find('.email-register').unbind().click(function(){
+                    var email = container.find(".email").val();
+                    console.log("click");
+                    var flag = isEmail(email);
+                    if(flag == false){
+                        EOS.util.UIAssert("请输入邮箱的正确格式!");
+                        return;
+                    }
+                    $.ajax({
+                        type:'get',
+                        url:'/Register/isEmailRegister',
+                        data:{email:email},
+                        success:function(dataJson){
+                            if(dataJson.success){
+                                EOS.util.UIAssert("恭喜，邮箱可用！");
+                                return;
+                            }
+
+                            alert(dataJson.message);
+                        }
+
+                    })
+                })
+            }
+        })
+    })(jQuery, window));
+
+    $(document).ready(function(){
+        EOS.thirdPartRegister.init.doInit($(".register"));
+    })
+
+</script>

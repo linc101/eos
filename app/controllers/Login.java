@@ -56,8 +56,6 @@ public class Login extends CommonRender {
     }
 
     public static void userLoginByweibo() throws WeiboException, IOException{
-//        Oauth oauth = new Oauth();
-//        BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
         redirect("https://api.weibo.com/oauth2/authorize?client_id=2359627633&redirect_uri=www.localhost:9000/Application/index&response_type=code");
     }
 
@@ -71,37 +69,39 @@ public class Login extends CommonRender {
         String uid = token.getUid();
         Users um = new Users(accessToken);
         weibo4j.model.User weibo_user = um.showUserById(uid);
-        WeiboUser weiboUser = new WeiboUser(token, weibo_user.getScreenName());
-        boolean isSuccess = weiboUser .jdbcSave();
+        //获取微博登陆用户信息
+        WeiboUser weiboUser = WeiboUser.finWeibouserByUID(token.getUid());
+        //如果数据库中存在微博登陆信息
+        if(weiboUser != null){
+            //更新登陆微博信息
+            updateWeiboUser(token, weibo_user, weiboUser);
+            RenderSuccess(weiboUser);
+        }
+        weiboUser = new WeiboUser(token, weibo_user.getScreenName());
+        boolean isSuccess = weiboUser.jdbcSave();
         if(isSuccess){
-            RenderSuccess();
+            RenderSuccess(weiboUser);
         }else{
             RenderFailed("微博三方登陆用户失败");
         }
         log.info("weibo user info:" + weibo_user.toString());
     }
 
+    private static void updateWeiboUser(AccessToken token, weibo4j.model.User weibo_user, WeiboUser weiboUser){
+        weiboUser.setAccessToken(token.getAccessToken());
+        weiboUser.setWeiboUsername(weibo_user.getScreenName());
+        weiboUser.setUpdateTs(System.currentTimeMillis());
+        weiboUser.setExpiresTs(Long.parseLong(token.getExpireIn()));
+        boolean isSuccess = weiboUser.update();
+        if(!isSuccess){
+            RenderFailed("跟新微博登陆信息失败！");
+        }
+    }
+
+    public static void findUserConnectedCount(){
+
+    }
     public static void main(String [] args) throws WeiboException, IOException{
-//        Oauth oauth = new Oauth();
-//        BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
-//        System.out.println(oauth.authorize("code"));
-//        System.out.print("Hit enter when it's done.[Enter]:");
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        String code = br.readLine();
-//        log.info("code: " + code);
-//        try{
-//            System.out.println(oauth.getAccessTokenByCode(code));
-//        } catch (WeiboException e) {
-//            if(401 == e.getStatusCode()){
-//                log.info("Unable to get the access token.");
-//            }else{
-//                e.printStackTrace();
-//            }
-//        }
-//        Oauth oauth = new Oauth();
-//        AccessToken accessToken = oauth.getTokenInfoByAccessToken("2.00zP9ywBNwkgZC88ed636688LYjnsD");
-//        System.out.println("create_at:"+ accessToken.getExpireIn());
-//        System.out.println("main accessToken:" + accessToken);
         Oauth oauth = new Oauth();
         oauth.publishWeibo("2.00mKFyvBNwkgZC44c006dc1903pEOc", "test only for test!!!!!");
     }
