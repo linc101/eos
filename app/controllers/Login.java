@@ -56,7 +56,7 @@ public class Login extends CommonRender {
     }
 
     public static void userLoginByweibo() throws WeiboException, IOException{
-        redirect("https://api.weibo.com/oauth2/authorize?client_id=2359627633&redirect_uri=www.localhost:9000/Application/index&response_type=code");
+        redirect("https://api.weibo.com/oauth2/authorize?client_id=2359627633&redirect_uri=http://www.sharexperience11.com/Application/index&response_type=code");
     }
 
     public static void getWeiboUserInfoByCode(String code) throws WeiboException, IOException{
