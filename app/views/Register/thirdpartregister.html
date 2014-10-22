@@ -23,9 +23,9 @@
     }
 </style>
 
-<div class="register" uid="${uid}">
+<div class="register">
 
-    <div class="wel-register" style="color:#777;text-align:center;margin:50px 0 40px 0;font-size:20px;">
+    <div class="wel-register" uid="${uid}" style="color:#777;text-align:center;margin:50px 0 40px 0;font-size:20px;">
         <span>欢迎加入专业的经验分享社区</span>
     </div>
     <div class="register-content">
@@ -94,12 +94,22 @@
                 thirdPartRegister.init.container = container;
                 thirdPartRegister.init.doSubmit();
                 thirdPartRegister.init.emailRegister();
+                thirdPartRegister.init.defaultSubmit();
+            },
+            defaultSubmit:function(){
+                var container = thirdPartRegister.init.container;
+                container.find(".password").keydown(function (event){
+                    if(event.keyCode == 13){
+                        container.find(".submit_btn").click();
+                    }
+                })
             },
             doSubmit:function(){
                 var container = thirdPartRegister.init.container;
                 container.find(".submit_btn").unbind().click(function(){
                     var email = container.find(".email").val().trim(),
-                        pw    = container.find(".password").val();
+                        pw    = container.find(".password").val(),
+                        uid   = container.find(".wel-register").attr("uid");
                     if(email == null){
                         alert("请输入邮箱");
                         return;
@@ -116,17 +126,22 @@
                         alert("请输入长度大于6的密码");
                         return;
                     }
+                    if(uid == null){
+                        alert("uid不存在！");
+                        window.location.href = "/Application/index"
+                    }
 
                     $.ajax({
                         type:"get",
                         url:"/Register/doRegisterThirdPart",
                         data:{
                             email:email,
-                            password:pw
+                            password:pw,
+                            uid:uid
                         },
                         success:function(dataJson){
                             if(dataJson.success){
-//                            EOS.util.UIAssert("恭喜，注册成功！");
+
                                 window.location.href = "/Application/index";
                                 return;
                             }
@@ -140,7 +155,6 @@
                 var container = thirdPartRegister.init.container;
                 container.find('.email-register').unbind().click(function(){
                     var email = container.find(".email").val();
-                    console.log("click");
                     var flag = isEmail(email);
                     if(flag == false){
                         EOS.util.UIAssert("请输入邮箱的正确格式!");

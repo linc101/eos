@@ -30,7 +30,7 @@ public class Application extends CommonRender {
             }catch(WeiboException e){
                 log.info(e.getMessage(), e);
             }
-            redirect("/Application/index");
+
         }
     }
 
@@ -50,6 +50,15 @@ public class Application extends CommonRender {
         if(weiboUser != null){
             //更新登陆微博信息
             updateWeiboUser(token, weibo_user, weiboUser);
+            long userId = weiboUser.getUserId();
+            log.error("userId:" + userId);
+            if(userId > 0L){
+                User user = User.findUserById(userId);
+                successEnter(""+userId, user.getUserName());
+                redirect("/Application/index");
+            }
+
+            redirect("/Register/thirdPartRegister?uid="+uid);
             return;
         }
         weiboUser = new WeiboUser(token, weibo_user.getScreenName());
@@ -57,6 +66,7 @@ public class Application extends CommonRender {
         if(!isSuccess){
             RenderFailed("微博三方登陆用户失败");
         }
+        redirect("/Register/thirdPartRegister?uid="+uid);
     }
 
     private static void updateWeiboUser(AccessToken token, weibo4j.model.User weibo_user, WeiboUser weiboUser){
@@ -66,7 +76,7 @@ public class Application extends CommonRender {
         weiboUser.setExpiresTs(Long.parseLong(token.getExpireIn()));
         boolean isSuccess = weiboUser.update();
         if(!isSuccess){
-            RenderFailed("跟新微博登陆信息失败！");
+            RenderFailed("更新微博登陆信息失败！");
         }
     }
 

@@ -261,10 +261,21 @@ public class User extends Model implements PolicySQLGenerator{
 
     }
 
+    public static User findUserById(long userId){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where id = ?";
+//        Long userIdL  = Long.valueOf(userId);
+        return new JDBCBuilder.JDBCExecutor<User>(query, userId){
+            @Override
+            public User doWithResultSet(ResultSet rs) throws SQLException{
+                return doWithResult(rs);
+            }
+        }.call();
+    }
+
     public static User finUserById(String userId){
         String query = "select " + AllProperty + " from " + TABLE_NAME + " where id = ?";
         Long userIdL  = Long.valueOf(userId);
-        return new JDBCBuilder.JDBCExecutor<User>(query, userIdL){
+        return new JDBCBuilder.JDBCExecutor<User>(query, userId){
             @Override
             public User doWithResultSet(ResultSet rs) throws SQLException{
                 return doWithResult(rs);

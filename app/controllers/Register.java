@@ -1,5 +1,6 @@
 package controllers;
 
+import models.WeiboUser;
 import org.apache.commons.lang.StringUtils;
 
 import models.Message;
@@ -61,7 +62,7 @@ public class Register extends CommonRender {
         }
     }
 
-    public static void doRegisterThirdPart(final String email, final String password){
+    public static void doRegisterThirdPart(final String email, final String password, final String uid){
         emptyEmail(email);
         existedEmail(email);
 
@@ -72,6 +73,11 @@ public class Register extends CommonRender {
         Long userId = user.firstSave();
 
         if(userId > 0L) {
+
+            boolean isSuccess = WeiboUser.setUserId(userId.toString(), uid);
+            if(!isSuccess){
+                RenderFailed("微博用户插入对应的用户id失败");
+            }
             successEnter(userId.toString(), email);
             Message sysMsg = new Message("系统消息", user.getUserName(), "恭喜，您已经成功注册！", Type.SYSTEM_MES);
             sysMsg.insert();

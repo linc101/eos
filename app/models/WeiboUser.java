@@ -253,4 +253,16 @@ public class WeiboUser extends Model implements PolicySQLGenerator {
             }
         }.call();
     }
+
+    public static boolean setUserId(String userId, String weiboUID){
+        log.info("-------------------userId:" + userId + "   weiboUID:" + weiboUID);
+        String query = "update " + TABLE_NAME + " set user_id = ? where weibo_uid = ?";
+        long id =  dp.update(query, userId, weiboUID);
+        if(id <= 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 }
