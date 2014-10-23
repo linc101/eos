@@ -535,4 +535,14 @@ public class Comments extends Weibo {
 						new PostParameter[] { new PostParameter("cids", cids) },
 						access_token));
 	}
+
+
+    /**
+     * 得到微博的mid
+     */
+    public Comment getWeiboID(String mid) throws WeiboException{
+        return new Comment(client.get(WeiboConfig.getValue("weibo_id"),
+                new PostParameter[]{
+                        new PostParameter("mid", mid), new PostParameter("type", 1)}, access_token));
+    }
 }

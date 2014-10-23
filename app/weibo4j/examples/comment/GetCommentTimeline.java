@@ -8,7 +8,7 @@ import weibo4j.model.WeiboException;
 public class GetCommentTimeline {
 
 	public static void main(String[] args) {
-		String access_token = args[0];
+		String access_token = "2.00zP9ywBNwkgZC88ed636688LYjnsD";
 		Comments cm = new Comments(access_token);
 		try {
 			CommentWapper comment = cm.getCommentTimeline();
