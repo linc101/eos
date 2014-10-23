@@ -33,36 +33,7 @@
     <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
     <script src="/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="/js/jquery.tmpl.min.js" type="text/javascript"></script>
-    *{<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2359627633&debug=true" type="text/javascript" charset="utf-8"></script>}*
-    *{<script type="text/javascript">}*
-        *{var code = null}*
-        *{function GetQueryString(name) {}*
-            *{var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");}*
-            *{var r = window.location.search.substr(1).match(reg);}*
-            *{if (r!=null) return (r[2]); return null;}*
-        *{}}*
 
-        *{function getWeiboUserInfo(code){}*
-            *{$.ajax({}*
-                *{type:"GET",}*
-                *{url:"/Login/getWeiboUserInfoByCode",}*
-                *{data:{code:code},}*
-                *{success:function(dataJson){}*
-                    *{if(dataJson.success == false){}*
-                        *{EOS.util.UIAssert(dataJson.message, function(){}*
-                            *{window.location.href = "/Application/index";}*
-                        *{});}*
-                        *{return;}*
-                    *{}}*
-                    *{window.location.href = "/Application/index"}*
-                    *{console.log("test for test :" + dataJson.res);}*
-                *{}}*
-            *{})}*
-        *{}}*
-        *{if(((code = GetQueryString("code")) != null)){}*
-            *{getWeiboUserInfo(code);}*
-        *{}}*
-    *{</script>}*
     <script type="text/javascript">
         if(!window.jQuery){
             var script = document.createElement('script');

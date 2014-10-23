@@ -1,133 +1,11 @@
 #{extends 'fontpage.html'/}
-        <style>
 
-            .toolbar-wrap{
-                background-color: #323232;
-                border-bottom:1px solid #666;
-                position:relative;
-                box-shadow:1px 1px 3px #bbb;
-            }
-            .toolbar{
-                height:33px;
-                line-height:30px;
-                background-color: #323232;
-                position: relative;
-                width:1050px;
-                padding-left:130px;
-                margin:0 auto;
-                z-index:2;
-            }
-
-            .head-region li,.toolbar li{
-                list-style:none;
-            }
-            .toolbar .l-item{
-                float:left;
-                padding: 0px 3px;
-            }
-
-            .toolbar .r-item{
-                float:right;
-                list-style:none;
-            }
-            .toolbar ul{
-                padding:0px;
-                margin:0px;
-            }
-            .toolbar li{
-                color:#f3eeee;
-                font-size:15px;
-                background-color: #323232;
-                margin-right:20px;
-                cursor: pointer;
-            }
-            .toolbar div span a{
-                color:#bbc8c3;
-                font-size:16px;
-                background-color: #323232;
-                margin-right:20px;
-                cursor:pointer;
-            }
-            .toolbar-wrap .toolbar a{
-                text-decoration: none;
-                color:#bbc8c3;
-            }
-            .toolbar .current{
-                border-bottom: 3px solid #008151;
-            }
-            .toolbar .current a{
-                color:#ffffff;
-            }
-
-            .toolbar-wrap .mouseon a{
-                color:#ffffff;
-            }
-
-            .downlist_a{
-                text-decoration:  none;
-                color: #bcc8c7;
-                font-size:13px;
-                padding-right:10px;
-            }
-
-            .hidden{
-                display:none;
-            }
-
-            .my-msg-count{
-                position:absolute;
-                top:-1px;
-                right:8px;
-                padding:0 4px;
-                background-color: #ed1c24;
-                max-height: 16px;
-                max-width:28px;
-                height:14px;
-                line-height: 14px;
-                font-size: 12px;
-                font-weight:normal;
-                text-align:center;
-                color:white;
-                border-radius:14px;
-            }
-
-            .login-input{
-                width:310px;
-                height:16px;
-                padding:10px 5px;
-                border:1px solid #ddd;
-                font-size:14px;
-                color:#666;
-            }
-            .threeside_login{
-                background:url('/public/images/sanfang_login.png');
-                width:37px;
-                height:37px;
-                display:block;
-                float:left;
-                cursor:pointer;
-            }
-
-            .forgetpw::before, .forgetpw::after{
-                content:"";
-                display:table;
-                clear:both;
-            }
-
-            .other-login{
-                font-size:13px;
-                border-top:1px solid #d9d9d9;
-                margin-top:30px;
-                padding:10px 0 0 10px;
-            }
-        </style>
-    <body>
-
-    <div class="toolbar-wrap">
+<div class="toolbar-wrap">
         <div class="toolbar">
             <ul>
-                <li class="l-item  current hover-on"><a href="/Application/index">首页</a></li>
+                <li class="l-item hover-on front-page"><a href="/Application/index">首页</a></li>
                 *{<li class="l-item hover-on"><a href="javascript:void(0)">经验</a></li>}*
+                <li class="l-item hover-on weibo-tool"><a href="/weibo">微博小工具</a></li>
             </ul>
             <ul class="user-login-head" style="display:none;">
                     <li class="r-item hover-on">
@@ -188,7 +66,6 @@
         </div>
     </div>
     </div>
-    </body>
     #{doLayout /}
     <footer id="footer">
         <div class="container">
@@ -294,7 +171,16 @@
         <span>©2014 经验分享<a href="http://www.miitbeian.gov.cn/" style="text-decoration: none;">浙ICP备14034625号</a></span>
     </div>
     </body>
-
+    <script>
+        *{alert("${request.path}")}*
+        var pathname = window.location.pathname;
+        $(".toolbar-wrap .toolbar .l-item").removeClass("current");
+        if(pathname == "/" || pathname == "/Application/index"){
+            $(".toolbar-wrap .toolbar .front-page").addClass("current");
+        }else if (pathname == "/weibo"){
+            $(".toolbar-wrap .toolbar .weibo-tool").addClass("current");
+        }
+    </script>
     <script type="text/javascript">
 
         EOS.gcs("/js/main.js", function(){
