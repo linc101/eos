@@ -107,6 +107,19 @@
                 float:left;
                 cursor:pointer;
             }
+
+            .forgetpw::before, .forgetpw::after{
+                content:"";
+                display:table;
+                clear:both;
+            }
+
+            .other-login{
+                font-size:13px;
+                border-top:1px solid #d9d9d9;
+                margin-top:30px;
+                padding:10px 0 0 10px;
+            }
         </style>
     <body>
 
@@ -142,23 +155,25 @@
                 <div style="text-align: center;margin-bottom:14px;">
                     <input type="text" class="login-input email" placeholder="邮箱">
                 </div>
-                <div style="text-align: center;margin-bottom:14px;">
+                <div style="text-align: center;margin-bottom:10px;">
                     <input type="password" class="login-input password" placeholder="密码">
                 </div>
-                <div style="font-size:13px;margin-bottom:14px;">
-                    <input type="checkbox" style="vertical-align: middle;">
-                    <span>下次自动登录</span>
-                    <a href="javascript:void(0)" style="text-decoration: none;float:right;">忘记了密码？</a>
+                <div style="font-size:13px;margin-bottom:10px;" class="forgetpw">
+                    *{<input type="checkbox" style="vertical-align: middle;">}*
+                    *{<span>下次自动登录</span>}*
+                    <a href="javascript:void(0)" style="text-decoration: none;float:right;color:#1b66c7;">忘记了密码？</a>
                 </div>
                 <div style="text-align:center;">
                     <span class="submit_btn" style="width:320px;height:40px;font-size:18px;line-height: 40px;font-weight:bolder;">登录</span>
                 </div>
-                <div style="font-size:13px;margin-bottom:14px;margin-top:14px;text-align:right;margin-right:10px;">
-                    <a href="/Register/registerPage" style="text-decoration: none;">注册</a>
+                <div style="font-size:13px;margin-bottom:20px;margin-top:10px;text-align:right;margin-right:10px;">
+                    <a href="/Register/registerPage" style="text-decoration: none;color:#1b66c7;">注册</a>
                 </div>
 
                 <div class="other-login">
+                    <div style="margin-bottom:14px;">
                     <span>可以使用一下方式登录</span>
+                    </div>
                     <div>
                         *{<a class="threeside_login weibo_login" href="/Login/userLoginByweibo" style="background-position: 35px -120px;"></a>}*
                             *{<wb:login-button type="3,4" onlogin="login" onlogout="logout">登录按钮</wb:login-button>}*

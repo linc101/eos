@@ -265,4 +265,8 @@ public class WeiboUser extends Model implements PolicySQLGenerator {
         }
     }
 
+    public static void main(String[] args){
+
+    }
+
 }
