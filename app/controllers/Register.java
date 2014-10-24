@@ -66,16 +66,21 @@ public class Register extends CommonRender {
 
     public static void doRegisterThirdPart(final String email, final String password, final String uid){
         emptyEmail(email);
-        existedEmail(email);
 
         lengthPassword(password);
 
-        User user = new User(email, email, password);
+        User user = User.userLogin(email, password);
+
+        if(user != null){
+            successEnter(user.getId().toString(), user.getUserName());
+            RenderSuccess();
+        }
+
+        user = new User(email, email, password);
 
         Long userId = user.firstSave();
 
         if(userId > 0L) {
-
             boolean isSuccess = WeiboUser.setUserId(userId.toString(), uid);
             if(!isSuccess){
                 RenderFailed("微博用户插入对应的用户id失败");

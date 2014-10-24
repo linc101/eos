@@ -288,6 +288,16 @@ public class User extends Model implements PolicySQLGenerator{
         return "[username: " + this.userName+" useremail:" +this.email + " password:" + this.password +"]";
     }
 
+    public static boolean isMatching(String email, String password){
+        password = encryptPassword(password);
+        String query = "select id from " + TABLE_NAME + " where email = ? and password = ? ";
+        long id = dp.singleLongQuery(query, email, password);
+        if(id <= 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
     public static boolean resetPicPath(String picPath, long id){
         String query = "update " + TABLE_NAME +" set picPath=? where id=?";
         long res = dp.update(query, picPath, id);
