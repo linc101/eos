@@ -118,6 +118,10 @@ public class CommonRender extends Controller {
 
     /*
      *产生验证码
+     *
+     *实现的原理是得到唯一的编码，然后得到的验证码字符串保存在cache中
+     *这样就可以与传回来的唯一编码进行比较
+     *
      */
     public static void getCaptcha(String randomID){
         Images.Captcha captcha = Images.captcha();
