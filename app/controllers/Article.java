@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import util.ContentCovert;
 
 import java.util.List;
+
+import static controllers.WrapRender.*;
 /**
  * Created by yehuizhang on 14-9-9.
  */

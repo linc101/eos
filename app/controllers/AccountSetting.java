@@ -19,6 +19,8 @@ import play.libs.Codec;
 import play.libs.Files;
 
 import util.UsageFunction;
+
+import static controllers.WrapRender.*;
 /**
  * Created by uttp on 14-9-15.
  */

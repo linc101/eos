@@ -17,9 +17,10 @@ import weibo4j.Users;
 import weibo4j.http.AccessToken;
 import weibo4j.model.WeiboException;
 
+import static controllers.WrapRender.*;
+
 public class Application extends CommonRender {
     private static Logger log = LoggerFactory.getLogger(Application.class);
-
 
     public static void index(String code) {
         if(StringUtils.isEmpty(code))

@@ -2,11 +2,9 @@ package controllers;
 
 import General.Result;
 
-import config.Config;
 import models.Experience;
 import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import play.libs.Codec;
 import play.mvc.Controller;
@@ -21,13 +19,13 @@ import org.slf4j.LoggerFactory;
 
 import models.User;
 import play.mvc.Http;
-import util.PageOffset;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.net.URLEncoder;
 import java.util.List;
+
+import static controllers.WrapRender.*;
 
 /**
  * Created by yehuizhang on 14-9-3.
@@ -35,26 +33,10 @@ import java.util.List;
 public class CommonRender extends Controller {
     private static final Logger logger = LoggerFactory.getLogger(CommonRender.class);
 
-    public static void getCaptcha(String randomID){
-        Images.Captcha captcha = Images.captcha();
-        String code = captcha.getText("#FF0C19");
-        Cache.set(randomID, code, "10mn");
-        renderBinary(captcha);
-    }
-
-    public static void changeCaptcha(){
-        String randomID = Codec.UUID();
-        Images.Captcha captcha = Images.captcha();
-        String code = captcha.getText("#FF0C19");
-        Cache.set(randomID, code, "10mn");
-        RenderSuccess(randomID);
-    }
-
-    protected static void RenderFailed(String message){
-        Result res = new Result(message);
-        renderJSON(wrapObject(res));
-    }
-
+    /*
+     *@Before是在每次请求这些url的时候，需要先调用checkAccess()方法。
+     *判断请求request的args是否有USER参数，如果没有则存起来，方便需要用户名的时候得到用户信息
+     */
     @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout",
             "UserCenter.showAllMyExps", "UserCenter.doAddExperience", "AccountSetting.changePW",
             "AccountSetting.picUpload", "AccountSetting.showUserInfo", "AccountSetting.showMsg",
@@ -75,6 +57,9 @@ public class CommonRender extends Controller {
         request.args.put(USER, user);
     }
 
+    /*
+     *每次请求时都会从客户端得到session和cookie的值， 故可以得到每次请求的cookie和session的值
+     */
     private static String getUserIdFromCookie(){
         String userId = session.get(USER_ID);
         if(userId != null){
@@ -88,37 +73,9 @@ public class CommonRender extends Controller {
         }
     }
 
-    protected static void RenderSuccess(){
-        Result res = new Result();
-        renderJSON(wrapObject(res));
-    }
-
-    protected static void RenderSuccess(Object obj){
-        Result<Object> res = new Result<Object>(obj);
-        renderJSON(wrapObject(res));
-    }
-
-    protected static void RenderSuccess(List list, int count, PageOffset offset){
-        Result<List> res = new Result<List>(list,count,offset);
-        renderJSON(wrapObject(res));
-    }
-
-    protected static void RenderSuccess(List<Object> listObj){
-        Result<List<Object>> res = new Result<List<Object>>();
-        renderJSON(wrapObject(res));
-    }
-
-    protected static String wrapObject(Object obj){
-        ObjectMapper mapper = new ObjectMapper();
-        try{
-            String s = mapper.writeValueAsString(obj);
-            return s;
-        } catch(IOException e){
-            logger.error(e.getMessage(), e);
-            return null;
-        }
-    }
-
+    /*
+     *每此登陆成功后设置cookie的值，这里的cookie值包括userid and username
+     */
     protected static void successEnter(final String userId, final String userName){
         session.put(USER_ID, userId);
         response.setCookie(USER_ID, userId, "1d");
@@ -157,5 +114,23 @@ public class CommonRender extends Controller {
         System.out.println(s);
         JSONObject jsonObject = JSONObject.fromObject(s);
         renderJSON(new JSONObject());
+    }
+
+    /*
+     *产生验证码
+     */
+    public static void getCaptcha(String randomID){
+        Images.Captcha captcha = Images.captcha();
+        String code = captcha.getText("#FF0C19");
+        Cache.set(randomID, code, "10mn");
+        renderBinary(captcha);
+    }
+
+    public static void changeCaptcha(){
+        String randomID = Codec.UUID();
+        Images.Captcha captcha = Images.captcha();
+        String code = captcha.getText("#FF0C19");
+        Cache.set(randomID, code, "10mn");
+        RenderSuccess(randomID);
     }
 }

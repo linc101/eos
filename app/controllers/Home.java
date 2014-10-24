@@ -1,6 +1,8 @@
 package controllers;
 
 import play.libs.Images;
+
+import static controllers.WrapRender.*;
 /**
  * Created by uttp on 14-10-12.
  */

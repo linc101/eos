@@ -17,6 +17,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
+import static controllers.WrapRender.*;
+
 /**
  * Created by hgqput on 14-9-19.
  */

@@ -18,6 +18,8 @@ import weibo4j.http.AccessToken;
 import weibo4j.model.WeiboException;
 import weibo4j.util.BareBonesBrowserLaunch;
 
+import static controllers.WrapRender.*;
+
 /**
  * Created by yehuizhang on 14-9-4.
  */
