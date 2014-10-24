@@ -95,27 +95,6 @@ public class CommonRender extends Controller {
         return user;
     }
 
-    public static void Test(){
-        System.out.println("--------test only test for Json----------------------- ");
-        List<Experience> listExps = new ArrayList<Experience>();
-        Experience exp = new Experience("1", "2", "3");
-        listExps.add(exp);
-        Experience expTemp = new Experience("4", "5", "6");
-        listExps.add(expTemp);
-        ObjectMapper mapper = new ObjectMapper();
-        Result<List<Experience>> res = new Result<List<Experience>>(listExps);
-
-        String s = null;
-        try {
-            s = mapper.writeValueAsString(res);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(s);
-        JSONObject jsonObject = JSONObject.fromObject(s);
-        renderJSON(new JSONObject());
-    }
-
     /*
      *产生验证码
      *

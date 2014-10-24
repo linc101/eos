@@ -57,48 +57,8 @@ public class Login extends CommonRender {
         RenderSuccess();
     }
 
-    public static void userLoginByweibo() throws WeiboException, IOException{
-        redirect("https://api.weibo.com/oauth2/authorize?client_id=2359627633&redirect_uri=http://www.sharexperience11.com/Application/index&response_type=code");
-    }
 
-    public static void getWeiboUserInfoByCode(String code) throws WeiboException, IOException{
-        Oauth oauth = new Oauth();
-        oauth.authorize("code");
-        AccessToken token = oauth.getAccessTokenByCode(code);
 
-        String accessToken = token.getAccessToken();
-        log.info("access token:" + token.toString());
-        String uid = token.getUid();
-        Users um = new Users(accessToken);
-        weibo4j.model.User weibo_user = um.showUserById(uid);
-        //获取微博登陆用户信息
-        WeiboUser weiboUser = WeiboUser.finWeibouserByUID(token.getUid());
-        //如果数据库中存在微博登陆信息
-        if(weiboUser != null){
-            //更新登陆微博信息
-            updateWeiboUser(token, weibo_user, weiboUser);
-            RenderSuccess(weiboUser);
-        }
-        weiboUser = new WeiboUser(token, weibo_user.getScreenName());
-        boolean isSuccess = weiboUser.jdbcSave();
-        if(isSuccess){
-            RenderSuccess(weiboUser);
-        }else{
-            RenderFailed("微博三方登陆用户失败");
-        }
-        log.info("weibo user info:" + weibo_user.toString());
-    }
-
-    private static void updateWeiboUser(AccessToken token, weibo4j.model.User weibo_user, WeiboUser weiboUser){
-        weiboUser.setAccessToken(token.getAccessToken());
-        weiboUser.setWeiboUsername(weibo_user.getScreenName());
-        weiboUser.setUpdateTs(System.currentTimeMillis());
-        weiboUser.setExpiresTs(Long.parseLong(token.getExpireIn()));
-        boolean isSuccess = weiboUser.update();
-        if(!isSuccess){
-            RenderFailed("跟新微博登陆信息失败！");
-        }
-    }
 
     public static void findUserConnectedCount(){
 

@@ -7,6 +7,8 @@ GET     /                                       Application.index
 
 GET     /weibo                                  WeiBo.index
 
+GET     /weiboAuth                              WeiBo.WeiboAuthCallBack
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

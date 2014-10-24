@@ -124,4 +124,8 @@ public class Oauth extends Weibo {
 				+ "&response_type=" + response_type + "&state=" + state
 				+ "&scope=" + scope;
 	}
+
+    public static void main(String[] args){
+
+    }
 }
