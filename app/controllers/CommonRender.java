@@ -1,11 +1,5 @@
 package controllers;
 
-import General.Result;
-
-import models.Experience;
-import net.sf.json.JSONObject;
-
-import org.codehaus.jackson.map.ObjectMapper;
 import play.libs.Codec;
 import play.mvc.Controller;
 import play.mvc.Before;
@@ -20,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import models.User;
 import play.mvc.Http;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.net.URLEncoder;
-import java.util.List;
 
 import static controllers.WrapRender.*;
 

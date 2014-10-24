@@ -57,15 +57,8 @@ public class Login extends CommonRender {
         RenderSuccess();
     }
 
+    public static void findUserConnectedCount() {
 
-
-
-    public static void findUserConnectedCount(){
-
-    }
-    public static void main(String [] args) throws WeiboException, IOException{
-        Oauth oauth = new Oauth();
-        oauth.publishWeibo("2.00mKFyvBNwkgZC44c006dc1903pEOc", "test only for test!!!!!");
     }
 
 }

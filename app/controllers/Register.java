@@ -7,6 +7,7 @@ import models.Message;
 import models.User;
 import models.Message.Type;
 
+import play.mvc.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.libs.Codec;
@@ -131,5 +132,15 @@ public class Register extends CommonRender {
         }
         return;
     }
+
+    @Before(only = {"Register.thirdPartRegister"})
+    public static void checkThirdpartRegister(){
+        logger.error("check third part login");
+        String sign = flash.get("thirdpart_register");
+        if(StringUtils.isEmpty(sign)){
+            redirect("/Application/index");
+        }
+    }
+
 }
 

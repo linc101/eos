@@ -54,36 +54,46 @@ public class WeiBo extends CommonRender{
         Oauth oauth = new Oauth();
         oauth.authorize("code");
         AccessToken token = oauth.getAccessTokenByCode(code);
-        
+
+        //得到授权的微博用户信息
         String accessToken = token.getAccessToken();
         String uid = token.getUid();
         Users um = new Users(accessToken);
         weibo4j.model.User weibo_user = um.showUserById(uid);
-        //获取微博登陆用户信息
+
+        //查找此用户是否授权过且数据保存在本地
         WeiboUser weiboUser = WeiboUser.finWeibouserByUID(token.getUid());
-        //如果数据库中存在微博登陆信息
+
+        //如果授权过，且数据保存下来了
         if(weiboUser != null){
             //更新登陆微博信息
             updateWeiboUser(token, weibo_user, weiboUser);
+            //是否关联了用户名
             long userId = weiboUser.getUserId();
             log.error("userId:" + userId);
+            //如果已经关联了用户
             if(userId > 0L){
                 User user = User.findUserById(userId);
-                successEnter(""+userId, user.getUserName());
-                redirect("/Application/index");
+                if(user != null) {
+                    successEnter("" + userId, user.getUserName());
+                    redirect("/Application/index");
+                }
             }
-
+            flash.put("thirdpart_register","true");
             redirect("/Register/thirdPartRegister?uid="+uid);
             return;
         }
+
         weiboUser = new WeiboUser(token, weibo_user.getScreenName());
         boolean isSuccess = weiboUser.jdbcSave();
         if(!isSuccess){
-            RenderFailed("微博三方登陆用户失败");
+            RenderFailed("微博三方登陆存储用户信息到本地失败！");
         }
+        flash.put("thirdpart_register","true");
         redirect("/Register/thirdPartRegister?uid="+uid);
     }
 
+    //跟新用户数据主要是accesstoken更新，微博用户名的更新以及时间的更新
     protected static void updateWeiboUser(AccessToken token, weibo4j.model.User weibo_user, WeiboUser weiboUser){
         weiboUser.setAccessToken(token.getAccessToken());
         weiboUser.setWeiboUsername(weibo_user.getScreenName());
