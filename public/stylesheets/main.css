@@ -380,3 +380,48 @@ table input{
     margin-top:30px;
     padding:10px 0 0 10px;
 }
+
+/*
+**tabs统一css start
+**html example in app/views/weibo/index.html
+**
+**js example in public/javascripts/tabs.js
+*/
+.tab .tabs-head_1 ul{
+    list-style:none;
+    -webkit-padding-start:0px;
+}
+
+.tab .tabs-head_1 ul::after, .tabs-head_1 ul::before{
+    content:" ";
+    display:table;
+    clear:both;
+}
+
+.tab .tabs-head_1 ul li{
+    float:left;
+    width:50px;
+    height:32px;
+    line-height: 32px;
+    text-align: center;
+    background-color: #eee;
+    border-radius:3px;
+    margin-right:7px;
+}
+
+.tab .tabs-head_1 ul li{
+    cursor:pointer;
+}
+
+.tab .tabs-body_1 div{
+    display:none;
+}
+
+.tab .tabs-body .current{
+    display:inline;
+}
+
+/*
+**tabs统一css end
+**
+*/

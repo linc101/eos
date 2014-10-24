@@ -12,4 +12,6 @@ public class WeiBo extends CommonRender{
     public static void index(){
         render("/weibo/index.html");
     }
+
+    
 }
