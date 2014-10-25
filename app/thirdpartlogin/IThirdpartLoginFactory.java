@@ -1,4 +1,6 @@
-package thirdparelogin;
+package thirdpartlogin;
+
+import thirdpartlogin.IThirdpartLogin;
 
 /**
  * Created by yehuizhang on 14/10/24.

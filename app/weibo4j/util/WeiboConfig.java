@@ -22,5 +22,10 @@ public class WeiboConfig {
 
     public static void updateProperties(String key,String value) {    
             props.setProperty(key, value); 
-    } 
+    }
+
+    public static void main(String[] args){
+        Properties ps = WeiboConfig.props;
+        System.out.println(ps);
+    }
 }
