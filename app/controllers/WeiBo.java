@@ -9,7 +9,7 @@ import weibo4j.Users;
 import weibo4j.http.AccessToken;
 import weibo4j.model.WeiboException;
 
-import java.io.IOException;
+import org.apache.commons.lang.StringUtils;
 
 import static controllers.WrapRender.*;
 
@@ -28,6 +28,9 @@ public class WeiBo extends CommonRender{
      *即用户成功授权后将会调用这个函数
      */
     public static void WeiboAuthCallBack(String code){
+        if(StringUtils.isEmpty(code)){
+            redirect("/");
+        }
         try {
             setWeiboUserInfoByCode(code);
         }catch(WeiboException e){
