@@ -31,7 +31,7 @@ public class DoubanUser extends Model implements PolicySQLGenerator{
     private String accessToken;
 
     @Column(name = "user_id")
-    private String userId;
+    private long userId;
 
     @Column(name = "username")
     private String username;
@@ -46,7 +46,7 @@ public class DoubanUser extends Model implements PolicySQLGenerator{
     private Long createTs;
 
     @Column(name = "doubanuser_id")
-    private Long doubanUserId;
+    private String doubanUserId;
 
     public DoubanUser(){
 
@@ -56,21 +56,23 @@ public class DoubanUser extends Model implements PolicySQLGenerator{
 
     public static DBDispatcher dp = new DBDispatcher(DataSrc.BASIC, _instance);
 
-    public DoubanUser(String accessToken, String userId, String username, String expiresin, String refreshToken, String createTs){
+    public DoubanUser(String accessToken, String doubanUserId, String username, String expiresin, String refreshToken){
         this.accessToken = accessToken;
         this.username = username;
-        this.userId = userId;
+        this.userId = -1L;
         this.expiresin = expiresin;
         this.refreshToken = refreshToken;
         this.createTs = System.currentTimeMillis();
-        this.doubanUserId = -1L;
+        this.doubanUserId = doubanUserId;
     }
 
-    public long getDoubanUserId(){
+
+
+    public String getDoubanUserId(){
         return this.doubanUserId;
     }
 
-    public void setDoubanUserId(long doubanUserId){
+    public void setDoubanUserId(String doubanUserId){
         this.doubanUserId = doubanUserId;
     }
 
@@ -82,11 +84,11 @@ public class DoubanUser extends Model implements PolicySQLGenerator{
         this.accessToken = accessToken;
     }
 
-    public String getUserId(){
+    public long getUserId(){
         return this.userId;
     }
 
-    public void setUserId(String userId){
+    public void setUserId(long userId){
         this.userId = userId;
     }
 
@@ -142,9 +144,43 @@ public class DoubanUser extends Model implements PolicySQLGenerator{
         this.id = id;
     }
 
+    public static final String ALLPROPERTY = " id, access_token, user_id, username, expires_in, refresh_token, create_ts, doubanuser_id ";
+
+    public long findIfExistedByDoubanUserId(String doubanUserId){
+        String query = "select id from " + TABLE_NAME + " where doubanuser_id = ? ";
+        return dp.singleLongQuery(query, doubanUserId);
+    }
+
+    public boolean update(){
+        String query = "update " + TABLE_NAME + " set access_token = ?, user_id = ?, username = ?, expires_in = ?, refresh_token = ?, create_ts = ? where doubanuser_id = ? ";
+        long res = dp.update(query, this.accessToken, this.userId, this.username, this.expiresin, this.refreshToken, this.createTs, this.doubanUserId);
+        if(res <= 0){
+            log.error("update error!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean insert(){
+        String query = "insert into " + TABLE_NAME + " (" + ALLPROPERTY + ") values (?,?,?,?,?,?,?,?)";
+        long res = dp.insert(query, this.id, this.accessToken, this.userId, this.username, this.expiresin, this.refreshToken, this.createTs, this.doubanUserId);
+        if(res <= 0){
+            log.error("insert failed!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     @Override
     public boolean jdbcSave() {
-        return false;
+        long id = findIfExistedByDoubanUserId(this.doubanUserId);
+        if(id <= 0){
+            return insert();
+        }else{
+            return update();
+        }
     }
 
     @Override

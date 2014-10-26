@@ -1,5 +1,6 @@
 package controllers;
 
+import models.DoubanUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +39,10 @@ public class Douban extends CommonRender{
                     redirect("/");
                 }else{
                     JSONObject json = JSONObject.fromObject(res);
-                    AccessToken accessToken = new AccessToken();
-                    setAccessToken(json, accessToken);
-                    log.error(accessToken.toString());
+                    DoubanUser doubanUser = new DoubanUser(json.getString("access_token"), json.getString("douban_user_id"), json.getString("douban_user_name"), json.getString("expires_in"),
+                            json.getString("refresh_token")
+                    );
+                    
                 }
             } catch (Exception e) {
                 log.error(e.getMessage());
