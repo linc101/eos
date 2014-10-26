@@ -47,7 +47,7 @@ public class WeiBo extends CommonRender{
      */
     public static void userLoginByweibo(){
         redirect("https://api.weibo.com/oauth2/authorize?client_id=2359627633&" +
-                "redirect_uri=http://www.localhost:9000/weiboAuth&response_type=code");
+                "redirect_uri=http://www.sharexperience11.com/weiboAuth&response_type=code");
     }
 
     /*
