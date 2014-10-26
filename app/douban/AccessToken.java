@@ -7,9 +7,19 @@ import java.io.Serializable;
 
 public class AccessToken implements Serializable{
     private String accessToken = null;
-    private Integer expiresIn = null;
+    private String expiresIn = null;
     private String refreshToken = null;
     private String doubanUserId = null;
+    private String doubanUsername = null;
+
+
+    public String getDoubanUsername(){
+        return doubanUsername;
+    }
+
+    public void setDoubanUsername(String doubanUsername){
+        this.doubanUsername = doubanUsername;
+    }
 
     /**
      * @return the accessToken
@@ -28,14 +38,14 @@ public class AccessToken implements Serializable{
     /**
      * @return the expiresIn
      */
-    public Integer getExpiresIn() {
+    public String getExpiresIn() {
         return expiresIn;
     }
 
     /**
      * @param expiresIn the expiresIn to set
      */
-    public void setExpiresIn(Integer expiresIn) {
+    public void setExpiresIn(String expiresIn) {
         this.expiresIn = expiresIn;
     }
 
@@ -75,11 +85,19 @@ public class AccessToken implements Serializable{
         this.accessToken = accessToken;
     }
 
-    public AccessToken (String accessToken, int expiresIn, String refreshToken, String doubanUserId) {
+    public AccessToken (String accessToken, String expiresIn, String refreshToken, String doubanUserId, String doubanUsername) {
         this.accessToken = accessToken;
         this.doubanUserId = doubanUserId;
         this.expiresIn = expiresIn;
         this.refreshToken = refreshToken;
+        this.doubanUserId = doubanUsername;
+    }
+
+    @Override
+    public String toString(){
+        return "AccessToken[accessToken:"+this.accessToken +
+                " expiresIn: " +this.expiresIn + " refreshToken: " + this.refreshToken + " doubanUserId:" +
+                this.doubanUserId +"]";
     }
 
 }

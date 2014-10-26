@@ -6,9 +6,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import play.cache.Cache;
-import play.libs.Codec;
-import play.libs.Images;
 import play.mvc.Controller;
 import util.PageOffset;
 

@@ -170,3 +170,55 @@
 1220 DEBUG [2014-10-25 16:49:06]  Connection can be kept alive for 10000 MILLISECONDS
 1220 INFO  [2014-10-25 16:49:06]  {"access_token":"2507116b1b9072076f15344152b15615","douban_user_name":"uttp","douban_user_id":"81211981","expires_in":604800,"refresh_token":"b5d685dc2588879221839194709996b6"}
 1221 DEBUG [2014-10-25 16:49:06]  Connection 0.0.0.0:55270<->211.147.4.49:443 closed
+0    DEBUG [2014-10-26 14:29:33]  Get connection for route {s}->https://www.douban.com
+843  DEBUG [2014-10-26 14:29:33]  Connecting to www.douban.com:443
+1203 DEBUG [2014-10-26 14:29:34]  CookieSpec selected: best-match
+1224 DEBUG [2014-10-26 14:29:34]  Auth cache not set in the context
+1224 DEBUG [2014-10-26 14:29:34]  Target auth state: UNCHALLENGED
+1225 DEBUG [2014-10-26 14:29:34]  Proxy auth state: UNCHALLENGED
+1226 DEBUG [2014-10-26 14:29:34]  Attempt 1 to execute request
+1226 DEBUG [2014-10-26 14:29:34]  Sending request: POST /service/auth2/token HTTP/1.1
+1227 DEBUG [2014-10-26 14:29:34]   >> "POST /service/auth2/token HTTP/1.1[\r][\n]"
+1229 DEBUG [2014-10-26 14:29:34]   >> "Content-Length: 185[\r][\n]"
+1230 DEBUG [2014-10-26 14:29:34]   >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+1230 DEBUG [2014-10-26 14:29:34]   >> "Host: www.douban.com[\r][\n]"
+1230 DEBUG [2014-10-26 14:29:34]   >> "Connection: Keep-Alive[\r][\n]"
+1230 DEBUG [2014-10-26 14:29:34]   >> "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)[\r][\n]"
+1231 DEBUG [2014-10-26 14:29:34]   >> "[\r][\n]"
+1231 DEBUG [2014-10-26 14:29:34]  >> POST /service/auth2/token HTTP/1.1
+1231 DEBUG [2014-10-26 14:29:34]  >> Content-Length: 185
+1231 DEBUG [2014-10-26 14:29:34]  >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+1231 DEBUG [2014-10-26 14:29:34]  >> Host: www.douban.com
+1231 DEBUG [2014-10-26 14:29:34]  >> Connection: Keep-Alive
+1232 DEBUG [2014-10-26 14:29:34]  >> User-Agent: Apache-HttpClient/4.3.5 (java 1.5)
+1232 DEBUG [2014-10-26 14:29:34]   >> "client_id=009d7e877f154b8501d87b967d3fe28f&client_secret=3a0fe37b10ff10d3&redirect_uri=http%3A%2F%2Fwww.localhost%3A9000%2FdoubanAuth&grant_type=authorization_code&code=85889f5c0d4f8760"
+1285 DEBUG [2014-10-26 14:29:34]   << "HTTP/1.1 200 OK[\r][\n]"
+1289 DEBUG [2014-10-26 14:29:34]   << "Server: nginx[\r][\n]"
+1290 DEBUG [2014-10-26 14:29:34]   << "Date: Sun, 26 Oct 2014 06:27:53 GMT[\r][\n]"
+1290 DEBUG [2014-10-26 14:29:34]   << "Content-Type: application/json; charset=UTF-8[\r][\n]"
+1290 DEBUG [2014-10-26 14:29:34]   << "Content-Length: 176[\r][\n]"
+1290 DEBUG [2014-10-26 14:29:34]   << "Connection: keep-alive[\r][\n]"
+1290 DEBUG [2014-10-26 14:29:34]   << "Keep-Alive: timeout=10[\r][\n]"
+1291 DEBUG [2014-10-26 14:29:34]   << "Expires: Sun, 1 Jan 2006 01:00:00 GMT[\r][\n]"
+1291 DEBUG [2014-10-26 14:29:34]   << "Pragma: no-cache[\r][\n]"
+1291 DEBUG [2014-10-26 14:29:34]   << "Cache-Control: must-revalidate, no-cache, private[\r][\n]"
+1291 DEBUG [2014-10-26 14:29:34]   << "X-Douban-Splittest: movie.tv-chart-gaia[\r][\n]"
+1291 DEBUG [2014-10-26 14:29:34]   << "X-DAE-Node: nain2[\r][\n]"
+1292 DEBUG [2014-10-26 14:29:34]   << "[\r][\n]"
+1293 DEBUG [2014-10-26 14:29:34]  Receiving response: HTTP/1.1 200 OK
+1293 DEBUG [2014-10-26 14:29:34]  << HTTP/1.1 200 OK
+1293 DEBUG [2014-10-26 14:29:34]  << Server: nginx
+1293 DEBUG [2014-10-26 14:29:34]  << Date: Sun, 26 Oct 2014 06:27:53 GMT
+1294 DEBUG [2014-10-26 14:29:34]  << Content-Type: application/json; charset=UTF-8
+1294 DEBUG [2014-10-26 14:29:34]  << Content-Length: 176
+1294 DEBUG [2014-10-26 14:29:34]  << Connection: keep-alive
+1294 DEBUG [2014-10-26 14:29:34]  << Keep-Alive: timeout=10
+1294 DEBUG [2014-10-26 14:29:34]  << Expires: Sun, 1 Jan 2006 01:00:00 GMT
+1294 DEBUG [2014-10-26 14:29:34]  << Pragma: no-cache
+1294 DEBUG [2014-10-26 14:29:34]  << Cache-Control: must-revalidate, no-cache, private
+1294 DEBUG [2014-10-26 14:29:34]  << X-Douban-Splittest: movie.tv-chart-gaia
+1294 DEBUG [2014-10-26 14:29:34]  << X-DAE-Node: nain2
+1301 DEBUG [2014-10-26 14:29:34]  Connection can be kept alive for 10000 MILLISECONDS
+1315 DEBUG [2014-10-26 14:29:34]   << "{"access_token":"1b2cc5c0db93728d5186514292ba57a7","douban_user_name":"uttp","douban_user_id":"81211981","expires_in":604800,"refresh_token":"a780b496877ca712f6821dc39675f536"}"
+1315 DEBUG [2014-10-26 14:29:34]  Releasing connection org.apache.http.impl.conn.ManagedClientConnectionImpl@ac3dfb9
+1316 DEBUG [2014-10-26 14:29:34]  Connection can be kept alive for 10000 MILLISECONDS
