@@ -1,5 +1,6 @@
 package douban;
 
+import java.io.IOException;
 import java.util.*;
 
 import org.apache.http.HttpResponse;
@@ -40,12 +41,25 @@ public class HttpClientPost {
         }
     }
 
-    public String sendPost() throws Exception{
-        this.httpPost.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
-        HttpResponse response = httpClient.execute(this.httpPost);
-        if(response.getStatusLine().getStatusCode() == 200){
-            String result = EntityUtils.toString(response.getEntity());
-            return result;
+    public String sendPost(){
+        HttpResponse response = null;
+        try {
+            this.httpPost.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
+            response = httpClient.execute(this.httpPost);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                String result = EntityUtils.toString(response.getEntity());
+                return result;
+            }
+        }catch (Exception e){
+
+        }finally{
+            if(response != null){
+                try {
+                    response.getEntity().getContent().close();
+                } catch (IOException e) {
+                    log.error(e.getMessage());
+                }
+            }
         }
         return null;
     }

@@ -15,6 +15,10 @@ import play.db.jpa.Model;
 
 import transaction.DBBuilder.DataSrc;
 import transaction.JDBCBuilder;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Created by yehuizhang on 14/10/26.
  */
@@ -144,7 +148,6 @@ public class DoubanUser extends Model implements PolicySQLGenerator{
         this.id = id;
     }
 
-    public static final String ALLPROPERTY = " id, access_token, user_id, username, expires_in, refresh_token, create_ts, doubanuser_id ";
 
     public long findIfExistedByDoubanUserId(String doubanUserId){
         String query = "select id from " + TABLE_NAME + " where doubanuser_id = ? ";
@@ -186,5 +189,60 @@ public class DoubanUser extends Model implements PolicySQLGenerator{
     @Override
     public String getIdName() {
         return null;
+    }
+
+    public static final String ALLPROPERTY = " id, access_token, user_id, username, expires_in, refresh_token, create_ts, doubanuser_id ";
+
+    private static DoubanUser doWithResult(ResultSet rs){
+        try {
+            if (rs.next()) {
+                long id = rs.getLong(1);
+                String accessToken = rs.getString(2);
+                long userId = rs.getLong(3);
+                String userName = rs.getString(4);
+                String expiresTs = rs.getString(5);
+                String refreshToken = rs.getString(6);
+                long createTs = rs.getLong(7);
+                String doubanUserId = rs.getString(8);
+
+                DoubanUser doubanUser = new DoubanUser();
+                doubanUser.setId(id);
+                doubanUser.setAccessToken(accessToken);
+                doubanUser.setUserId(userId);
+                doubanUser.setUsername(userName);
+                doubanUser.setExpirsein(expiresTs);
+                doubanUser.setRefreshToken(refreshToken);
+                doubanUser.setCreateTs(createTs);
+                doubanUser.setDoubanUserId(doubanUserId);
+                return doubanUser;
+            }else{
+                return null;
+            }
+        }catch(SQLException e){
+            log.warn(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    public static DoubanUser finDoubanUserById(String doubanUserId){
+        String query = "select " + ALLPROPERTY + " from " + TABLE_NAME + " where doubanuser_id = ?";
+
+        return new JDBCBuilder.JDBCExecutor<DoubanUser>(query, doubanUserId){
+            @Override
+            public DoubanUser doWithResultSet(ResultSet rs) throws SQLException {
+                return doWithResult(rs);
+            }
+        }.call();
+    }
+
+    public static boolean setUserId(String userId, String doubanUserId){
+        log.info("-------------------userId:" + userId + "   doubanUserId:" + doubanUserId);
+        String query = "update " + TABLE_NAME + " set user_id = ? where  doubanuser_id = ?";
+        long id =  dp.update(query, userId, doubanUserId);
+        if(id <= 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

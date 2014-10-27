@@ -83,7 +83,7 @@ public class WeiBo extends CommonRender{
                 }
             }
             flash.put("thirdpart_register","true");
-            redirect("/Register/thirdPartRegister?uid="+uid);
+            redirect("/Register/thirdPartRegister?uid="+uid+"&type=1");
             return;
         }
 

@@ -25,7 +25,7 @@
 
 <div class="register">
 
-    <div class="wel-register" uid="${uid}" style="color:#777;text-align:center;margin:50px 0 40px 0;font-size:20px;">
+    <div class="wel-register" uid="${uid}" type1="${type}" style="color:#777;text-align:center;margin:50px 0 40px 0;font-size:20px;">
         <span>欢迎加入专业的经验分享社区</span>
     </div>
     <div class="register-content">
@@ -109,7 +109,8 @@
                 container.find(".submit_btn").unbind().click(function(){
                     var email = container.find(".email").val().trim(),
                         pw    = container.find(".password").val(),
-                        uid   = container.find(".wel-register").attr("uid");
+                        uid   = container.find(".wel-register").attr("uid"),
+                        type  = container.find(".wel-register").attr("type1");
                     if(email == null){
                         alert("请输入邮箱");
                         return;
@@ -137,7 +138,8 @@
                         data:{
                             email:email,
                             password:pw,
-                            uid:uid
+                            uid:uid,
+                            type:type
                         },
                         success:function(dataJson){
                             if(dataJson.success){

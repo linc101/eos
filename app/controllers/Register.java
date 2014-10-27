@@ -1,5 +1,6 @@
 package controllers;
 
+import models.DoubanUser;
 import models.WeiboUser;
 import org.apache.commons.lang.StringUtils;
 
@@ -26,8 +27,8 @@ public class Register extends CommonRender {
         render("Register/register.html", randomID);
     }
 
-    public static void thirdPartRegister(String uid){
-        render("Register/thirdpartregister.html", uid);
+    public static void thirdPartRegister(String uid, int type){
+        render("Register/thirdpartregister.html", uid, type);
     }
 
     public static void isEmailRegister(final String email){
@@ -64,7 +65,7 @@ public class Register extends CommonRender {
         }
     }
 
-    public static void doRegisterThirdPart(final String email, final String password, final String uid){
+    public static void doRegisterThirdPart(final String email, final String password, final String uid, int type){
         emptyEmail(email);
 
         lengthPassword(password);
@@ -79,11 +80,21 @@ public class Register extends CommonRender {
         user = new User(email, email, password);
 
         Long userId = user.firstSave();
-
+        logger.info("userID:" + userId +"   uid:" + uid);
         if(userId > 0L) {
-            boolean isSuccess = WeiboUser.setUserId(userId.toString(), uid);
+            boolean isSuccess = false;
+            logger.info("type:" + type);
+            switch(type){
+                case 1:
+                    logger.info("login 1");
+                    isSuccess = WeiboUser.setUserId(userId.toString(), uid);break;
+                case 2:
+                    logger.info("login 2");
+                    isSuccess = DoubanUser.setUserId(userId.toString(), uid); break;
+            }
+
             if(!isSuccess){
-                RenderFailed("微博用户插入对应的用户id失败");
+                RenderFailed("三方登陆用户插入对应的用户id失败");
             }
             successEnter(userId.toString(), email);
             Message sysMsg = new Message("系统消息", user.getUserName(), "恭喜，您已经成功注册！", Type.SYSTEM_MES);
