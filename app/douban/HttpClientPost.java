@@ -30,6 +30,9 @@ public class HttpClientPost {
 
     private static HttpClient httpClient = new DefaultHttpClient();
 
+    /*
+     *基础知识，Map对象有Entry类定义了map里面对应的键值对
+     */
     public HttpClientPost(String url, Map<String, String> params){
         this.httpPost = new HttpPost(url);
         Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
@@ -41,6 +44,9 @@ public class HttpClientPost {
         }
     }
 
+    /*
+     *一定要释放连接
+     */
     public String sendPost(){
         HttpResponse response = null;
         try {
