@@ -1,5 +1,6 @@
 package controllers;
 
+import models.ArticleTags;
 import models.User;
 import models.Experience;
 
@@ -56,6 +57,7 @@ public class UserCenter extends CommonRender {
         }else{
             //如果文章成功的插入数据库则tag进行保存
             List<String> tagsList = dealWithTags(tags);
+            saveTags(tagsList);
             RenderSuccess(articleId);
         }
     }
@@ -64,7 +66,7 @@ public class UserCenter extends CommonRender {
         if(tagsList == null || tagsList.size() == 0){
             return;
         }
-        
+        ArticleTags.saveTagsBatch(tagsList);
     }
 
     private static List<String> dealWithTags(String tags){

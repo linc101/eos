@@ -39,31 +39,43 @@
         display:table;
         clear:both;
     }
+
+    .home-page::after, .home-page::before{
+        content:'';
+        display:table;
+        clear:both;
+    }
 </style>
 
 
 <div class="content-width home-page" style="padding-left:80px">
-    <div class="home-page-head tab-head">
-        <span class="selected new-article-head article-head" tarDiv="new-article">最新文章</span>
-        <span class="msg-head hot-article-head article-head" tarDiv="hot-article" >热门文章</span>
-    </div>
-
-    <div class="home-body">
-        <div class="new-article hidden article-content">
-            <div class="new-article-content"></div>
-            <div class="pag" style="text-align: center;">
-
-            </div>
+    <div style="width:80%;float:left;">
+        <div class="home-page-head tab-head">
+            <span class="selected new-article-head article-head" tarDiv="new-article">最新文章</span>
+            <span class="msg-head hot-article-head article-head" tarDiv="hot-article" >热门文章</span>
         </div>
 
-        <div class="hot-article hidden article-content">
-            <div class="hot-article-content"></div>
-            <div class="pag" style="text-align: center;">
+        <div class="home-body">
+            <div class="new-article hidden article-content">
+                <div class="new-article-content"></div>
+                <div class="pag" style="text-align: center;">
 
+                </div>
+            </div>
+
+            <div class="hot-article hidden article-content">
+                <div class="hot-article-content"></div>
+                <div class="pag" style="text-align: center;">
+
+                </div>
             </div>
         </div>
     </div>
-
+    <div style="width:20%;float:left;">
+        <div class="hot-tags">
+            
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">

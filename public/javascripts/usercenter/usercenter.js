@@ -24,7 +24,8 @@ var EOS = EOS || {};
             container.find(".exp-wrap .submit_btn").unbind().click(function(){
                 console.log(container.find('exp-wrap .input-content').val());
                 var expTitle = container.find('.exp-wrap .input-title').val().trim(),
-                    expContent = container.find('.exp-wrap .jqte_editor').html();
+                    expContent = container.find('.exp-wrap .jqte_editor').html(),
+                    tags = container.find(".exp-wrap .tags-input").val().trim();
                 if(expTitle.length < 6){
                     EOS.util.UIAssert("请确保输入的标题长度大于6");
                     return;
@@ -44,7 +45,8 @@ var EOS = EOS || {};
                     url:"/UserCenter/doAddExperience",
                     data:{
                         title:expTitle,
-                        article:expContent
+                        article:expContent,
+                        tags:tags
                     },
                     success:function(dataJson){
                         if(dataJson.success){
