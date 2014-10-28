@@ -51,7 +51,7 @@ public class HttpClientPost {
                 return result;
             }
         }catch (Exception e){
-
+            log.error(e.getMessage());
         }finally{
             if(response != null){
                 try {
