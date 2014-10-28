@@ -10,8 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import play.cache.Cache;
 import util.PageOffset;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static controllers.WrapRender.*;
 
@@ -29,7 +28,7 @@ public class UserCenter extends CommonRender {
         render("/usercenter/addexperience.html");
     }
 
-    public static void doAddExperience(String title, String article){
+    public static void doAddExperience(String title, String article, String tags){
         title = trimString(title);
         article = trimString(article);
 
@@ -50,15 +49,38 @@ public class UserCenter extends CommonRender {
             RenderFailed("请输入经历内容");
         }
 
-        long articleId = new Experience(user.getUserName(), title, article).firstSave();
+        long articleId = new Experience(user.getUserName(), title, article, tags).firstSave();
         logger.info("--------------------userinfo:" + user);
         if(articleId <= 0){
             RenderFailed("数据库异常");
         }else{
+            //如果文章成功的插入数据库则tag进行保存
+            List<String> tagsList = dealWithTags(tags);
             RenderSuccess(articleId);
         }
     }
 
+    private static void saveTags(List<String> tagsList){
+        if(tagsList == null || tagsList.size() == 0){
+            return;
+        }
+        
+    }
+
+    private static List<String> dealWithTags(String tags){
+        if(StringUtils.isEmpty(tags)){
+            return null;
+        }
+
+        String[] tagss = tags.split(" ");
+
+        if(0 == tagss.length){
+            return null;
+        }
+
+        Set<String> setString = new HashSet<String>(Arrays.asList(tagss));
+        return new ArrayList<String>(setString);
+    }
 
     public static void showAllMyExps(final int pn, final int ps){
         User user = getUser();
@@ -100,5 +122,31 @@ public class UserCenter extends CommonRender {
         }
 
         return StringUtils.trim(str);
+    }
+
+    public static void main(String[] args){
+        String s1 = "";
+        String s2 = "test1";
+        String s3 = "test1 test2 test3";
+        String[] ss1 = s1.split(" ");
+//        System.out.println(s1);
+        printString(ss1);
+        String[] ss2 = s2.split(" ");
+//        System.out.println(ss2);
+        printString(ss2);
+        String[] ss3 = s3.split(" ", 2);
+//        System.out.println(ss3);
+        printString(ss3);
+    }
+
+    private static void printString(String[] ss){
+        for(String s : ss){
+            if(StringUtils.isEmpty(s)){
+                System.out.println("is empty!");
+                continue;
+            }
+            System.out.println(s);
+        }
+
     }
 }
