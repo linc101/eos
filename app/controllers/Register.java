@@ -87,10 +87,12 @@ public class Register extends CommonRender {
             switch(type){
                 case 1:
                     logger.info("login 1");
-                    isSuccess = WeiboUser.setUserId(userId.toString(), uid);break;
+                    isSuccess = WeiboUser.setUserId(userId.toString(), uid);
+                    break;
                 case 2:
                     logger.info("login 2");
-                    isSuccess = DoubanUser.setUserId(userId.toString(), uid); break;
+                    isSuccess = DoubanUser.setUserId(userId.toString(), uid);
+                    break;
             }
 
             if(!isSuccess){
