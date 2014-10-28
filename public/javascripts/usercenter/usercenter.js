@@ -29,6 +29,10 @@ var EOS = EOS || {};
                     EOS.util.UIAssert("请确保输入的标题长度大于6");
                     return;
                 }
+                if(expTitle.length > 40){
+                    EOS.util.UIAssert("请确保输入的标题长度不超过40个字");
+                    return;
+                }
                 console.log(expContent);
                 if(expContent.length == 0 || expContent == null){
                     EOS.util.UIAssert("请输入内容");

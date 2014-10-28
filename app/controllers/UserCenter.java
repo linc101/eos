@@ -42,6 +42,10 @@ public class UserCenter extends CommonRender {
             RenderFailed("请最少输入6个");
         }
 
+        if(StringUtils.length(title) > 40){
+            RenderFailed("请输入标题的字数最多不超过40个字");
+        }
+
         if(StringUtils.isEmpty(article)){
             RenderFailed("请输入经历内容");
         }
