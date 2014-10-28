@@ -7,26 +7,32 @@
                 *{<li class="l-item hover-on"><a href="javascript:void(0)">经验</a></li>}*
                 *{<li class="l-item hover-on weibo-tool"><a href="/weibo">微博小工具</a></li>}*
             </ul>
-            <ul class="user-login-head" style="display:none;">
+            <!--
+             使用看是否有cookie的值存在如果有则判断是否登录
+             -->
+            #{if request.cookies?.get("_user_id")?.value}
+            <ul class="user-login-head-tmp" style="">
                     <li class="r-item hover-on">
                         <a href="/AccountSetting/myMessage" class="my-msg-notice">
                             <span>我的消息</span>
                         </a>
-
                     </li>
                     <li class="r-item hover-on">
                         <a href="javascript:void(0)">
-                            <span id="login-username"></span>
+                            <span id="login-username">${request.cookies.get("_user_name").value}</span>
                         </a>
                     </li>
                     <li class="r-item" style="margin-right:5px;">
                         <span style="cursor: auto;color:#bbc8c3;">欢迎,</span>
                     </li>
             </ul>
-            <ul class="user-nologin-head">
+            #{/if}
+            #{else}
+            <ul class="user-nologin-head-tmp">
                     <li class="r-item hover-on"><a href="/Register/registerPage">注册</a></li>
                     <li class="r-item hover-on"><a class="user-login" href="javascript:void(0)">登陆</a></li>
             </ul>
+            #{/else}
             </div>
         <div id="user-login" style="display:none;">
             <div class="login-region" style="margin-top:20px;">
@@ -69,8 +75,10 @@
         </div>
     </div>
     </div>
+    <div style="min-height:450px;">
     #{doLayout /}
-    <footer id="footer">
+    </div>
+    <footer id="footer" style="margin-top:50px;">
         <div class="container">
             <div class="row">
                 <dl class="col-sm-2">
