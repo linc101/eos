@@ -93,7 +93,7 @@ public class WeiBo extends CommonRender{
             RenderFailed("微博三方登陆存储用户信息到本地失败！");
         }
         flash.put("thirdpart_register","true");
-        redirect("/Register/thirdPartRegister?uid="+uid);
+        redirect("/Register/thirdPartRegister?uid="+uid +"&type=1");
     }
 
     //跟新用户数据主要是accesstoken更新，微博用户名的更新以及时间的更新
