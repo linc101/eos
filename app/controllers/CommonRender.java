@@ -13,8 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import models.User;
 import play.mvc.Http;
+import play.mvc.Http.Cookie;
 
 import java.net.URLEncoder;
+import java.net.URLDecoder;
+
+import java.util.Map;
+import java.util.Set;
 
 import static controllers.WrapRender.*;
 
@@ -106,5 +111,15 @@ public class CommonRender extends Controller {
         String code = captcha.getText("#FF0C19");
         Cache.set(randomID, code, "10mn");
         RenderSuccess(randomID);
+    }
+
+    @Before
+    public static void Test(){
+        Map<String, Cookie> cookiesMap = request.cookies;
+        Set<Map.Entry<String, Cookie>> entrys = cookiesMap.entrySet();
+        for(Map.Entry<String, Cookie> entry:entrys){
+            String cookieValue = entry.getValue().value;
+            entry.getValue().value = URLDecoder.decode(entry.getValue().value);
+        }
     }
 }
