@@ -9,6 +9,7 @@
         text-align:center;
         line-height: 1.2;
         color:#666;
+        margin-bottom:5px;
     }
 
     .article-comment{
@@ -45,11 +46,33 @@
         display:table;
         clear:both;
     }
+
+    .home-page .hot-tags .hot-tag{
+        color: #017e66;
+        background-color: #e7f2ed;
+        height:24px;
+        line-height:24px;
+        text-align:center;
+        border-radius:1px;
+        padding:2px 13px;
+        margin-right:5px;
+        margin-top:10px;
+        display:inline-block;
+    }
+
+    .home-page .main-login{
+        min-height:150px;
+        border:1px solid #ddd;
+        padding:10px;
+        box-shadow:3px 3px 0 rgba(0,0,0,0.05);
+        margin-bottom:30px;
+        margin-top:15px;
+    }
 </style>
 
 
 <div class="content-width home-page" style="padding-left:80px">
-    <div style="width:80%;float:left;">
+    <div style="width:75%;float:left;">
         <div class="home-page-head tab-head">
             <span class="selected new-article-head article-head" tarDiv="new-article">最新文章</span>
             <span class="msg-head hot-article-head article-head" tarDiv="hot-article" >热门文章</span>
@@ -71,9 +94,23 @@
             </div>
         </div>
     </div>
-    <div style="width:20%;float:left;">
+    <div style="width:20%;float:left;padding:30px 0 0 20px;margin-left:15px;">
+        #{if !request.cookies?.get("_user_id")?.value}
+        <div class="main-login">
+            <span style="color:#d0021b;font-weight:bold;font-size:15px;display:block;margin-bottom:10px;">欢迎加入专业的分享社区</span>
+            <span style="display:block;margin-bottom:15px;">在这里可以分享发生在生活中的一些事情</span>
+            <div>
+                <a class="weibo_login" href="/WeiBo/userLoginByweibo">
+                    <img src="/pic/weibo_big.png" alt="/pic/weibo.png" id="btnStyleImg1">
+                </a>
+                <a class="douban_login" href="/Douban/userLoginByDouban">
+                    <img src="/pic/douban_big.png" style="width:173px;height:32px;">
+                </a>
+            </div>
+        </div>
+        #{/if}
         <div class="hot-tags">
-
+            <span style="display:block;font-size:16px;font-weight:bold;">热门标签</span>
         </div>
     </div>
 </div>

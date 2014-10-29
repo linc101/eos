@@ -6,7 +6,6 @@ var EOS = EOS || {};
 ((function($, window){
     EOS.home = EOS.home || {};
 
-
     var home = EOS.home;
 
     home.init = home.init || {};
@@ -16,6 +15,7 @@ var EOS = EOS || {};
             home.init.container = container;
             home.event.changeTab();
             container.find(".tab-head .new-article-head").click();
+            home.event.showHotTags();
         }
     })
 
@@ -28,7 +28,6 @@ var EOS = EOS || {};
             container.find(".tab-head .article-head").unbind().click(function(){
                 var thisObj = $(this);
                 var tarDiv = thisObj.attr("tarDiv");
-                console.log(tarDiv);
                 container.find(".tab-head .article-head").removeClass("selected");
                 thisObj.addClass("selected");
                 container.find(".home-body .article-content").addClass("hidden");
@@ -44,9 +43,7 @@ var EOS = EOS || {};
             })
         },
         showArticle:function(tarDiv){
-            tarDiv = tarDiv;
-            console.log("test");
-            console.log(tarDiv);
+//            tarDiv = tarDiv;
             var field = null;
             if(tarDiv == ".new-article"){
                 field = "createTs";
@@ -77,7 +74,7 @@ var EOS = EOS || {};
                             dataJson.res[index].createTs = EOS.util.dealDate(time);
                         })
 
-                        var html = "<section>" +
+                        var html = "<section style=\"border-bottom: 1px solid #eee;margin-bottom:10px;margin-left:5px;\">" +
                             "<div class=\"article-rank\">" +
                             "<div class=\"article-comment\">${reviewTimes}" +
                             "<small>回复</small>"+
@@ -95,42 +92,30 @@ var EOS = EOS || {};
                             "</div>"+
                             "</div>" +
                             "</section>";
-                        console.log($(tarDiv).find(tarDiv + "-content"))
                         $.tmpl(html, dataJson.res).appendTo($(tarDiv).find(tarDiv + "-content"));
 
-//                        myExp.show.nowPage = dataJson.pn;
-//                        container.find(".my-all-exps").empty();
-//                        $.each(dataJson.res, function(index, elem){
-//                            var time = dataJson.res[index].createTs;
-//                            dataJson.res[index].createTs = EOS.util.dealDate(time);
-//                        })
-//                        container.find(".my-all-exps").html("<h3>共分享了<span style=\"color:#009196;\">" + dataJson.count +"</span>篇文章</h3>");
-//                        var html = "<article class=\"all-exps-detail\">" +
-//                            "<div class=\"scan-times\">" +
-//                            "<span>${scanTimes}</span>浏览"+
-//                            "</div>" +
-//                            "<div class=\"exps-brief\">"+
-//                            "<h3><a href=\"/article/${id}\" style=\"text-decoration: none;color:#333\">${title}</a></h3>" +
-//
-//                            "<div> " +
-//                            "${createTs}&nbsp;•&nbsp;" +
-//                            "${reviewTimes}条评论" +
-//                            "<div class=\"operation\" style=\"float:right;color:#017e66;\">" +
-//                            "<span class=\"edit\" style=\"cursor:pointer;\">编辑</span>&nbsp;•&nbsp;" +
-//                            "<span class=\"delete\" style=\"cursor:pointer;\" id=\"${id}\">删除</span>" +
-//                            "</div>" +
-//                            "</div>"+
-//
-//                            "</div>" +
-//                            "</article>";
-//
-//                        $.tmpl(html, dataJson.res).appendTo(container.find(".my-all-exps"));
-//                        myExp.show.deleteExp();
                     }
                 }
             })
-        }
+        },
+        showHotTags:function(){
+            var container = home.init.container;
+            $.ajax({
+                type:'POST',
+                url:'/Home/showTags',
+                success:function(dataJson){
+                    if(!dataJson.success){
+                        alert("热门标签获取失败！");
+                    }
+                    var html = "<span class=\"hot-tag\">" +
+                        "${tagName}" +
+                        "</span>" + " ";
+                    $.tmpl(html, dataJson.res).appendTo(container.find(".hot-tags"));
+                }
 
+
+            })
+        }
     })
 
 })(jQuery,window));

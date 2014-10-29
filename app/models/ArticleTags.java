@@ -3,6 +3,8 @@ package models;
 import codegen.CodeGenerator.PolicySQLGenerator;
 import codegen.CodeGenerator.DBDispatcher;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import transaction.JDBCBuilder;
 import transaction.DBBuilder.DataSrc;
 
@@ -13,12 +15,17 @@ import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Column;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by uttp on 14-10-28.
  */
+@JsonAutoDetect
 @Entity(name = ArticleTags.TABLE_NAME)
+@JsonIgnoreProperties(value = {"entityId", "idColumn", "idName","persistent" ,"tableHashKey", "tableName"})
 public class ArticleTags extends Model implements PolicySQLGenerator {
     private static final Logger log = LoggerFactory.getLogger(ArticleTags.class);
 
@@ -36,6 +43,30 @@ public class ArticleTags extends Model implements PolicySQLGenerator {
     public static final ArticleTags _instance = new ArticleTags();
 
     public static final DBDispatcher dp = new DBDispatcher(DataSrc.BASIC, _instance);
+
+    public String getTagName(){
+        return this.tagName;
+    }
+
+    public void setTagName(String tagName){
+        this.tagName = tagName;
+    }
+
+    public long getCount(){
+        return this.count;
+    }
+
+    public void setCount(long count){
+        this.count = count;
+    }
+
+    public long getCreateTs(){
+        return this.createTs;
+    }
+
+    public void setCreateTs(long createTs){
+        this.createTs = createTs;
+    }
 
     public ArticleTags(){
 
@@ -58,7 +89,6 @@ public class ArticleTags extends Model implements PolicySQLGenerator {
         }
     }
 
-    public static final String ALLPROPERTY = " id, tag_name, count, create_ts ";
     public boolean insert(){
         String query = "insert into " + TABLE_NAME + " ( " + ALLPROPERTY + " ) values (?,?,?,?)";
         long res = dp.insert(query, this.id, this.tagName, this.count, this.createTs);
@@ -98,6 +128,40 @@ public class ArticleTags extends Model implements PolicySQLGenerator {
             }
 
         }
+    }
+
+    public static final String ALLPROPERTY = " id, tag_name, count, create_ts ";
+    public static ArticleTags doWithResult(ResultSet res){
+        try {
+            ArticleTags articleTags = new ArticleTags();
+            long id = res.getLong(1);
+            String tagName = res.getString(2);
+            long count = res.getLong(3);
+            long createTs = res.getLong(4);
+            articleTags.setId(id);
+            articleTags.setTagName(tagName);
+            articleTags.setCount(count);
+            articleTags.setCreateTs(createTs);
+            return articleTags;
+        }catch(SQLException e){
+            log.error("get the data failed!");
+            return null;
+        }
+    }
+
+    public static List<ArticleTags> selectHotTags(){
+        String query = "select " + ALLPROPERTY + " from " + TABLE_NAME + " order by count desc limit 1,9";
+        return new JDBCBuilder.JDBCExecutor<List<ArticleTags>>(query){
+            @Override
+            public List<ArticleTags> doWithResultSet(ResultSet rs) throws SQLException {
+                List<ArticleTags> articleTagses = new ArrayList<ArticleTags>();
+                while(rs.next()){
+                    ArticleTags articleTags = doWithResult(rs);
+                    if(articleTags != null)articleTagses.add(articleTags);
+                }
+                return articleTagses;
+            }
+        }.call();
     }
 
     @Override
