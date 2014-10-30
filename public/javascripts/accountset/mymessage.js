@@ -23,7 +23,6 @@ var EOS = EOS || {};
             var container = myMsg.init.container;
             container.find(".msg-type-head .msg-head").click(function(){
                 var thisObj = $(this);
-//                if(thisObj.hasClass("selected")) return;
                 container.find(".msg-type-head .msg-head").removeClass("selected");
                 thisObj.addClass("selected");
                 var tarDiv = thisObj.attr("tarDiv");
@@ -34,7 +33,12 @@ var EOS = EOS || {};
                     container.find(".msg-body .system-msg").removeClass("hidden");
                 }
             })
-            container.find(".msg-type-head .selected").click();
+            var msgType = container.find(".msg-type-head").attr("msgType");
+            if(msgType == "COMMENT_MES")
+                container.find(".msg-type-head .comment-msg-head").click();
+            else if(msgType == "SYSTEM_MES"){
+                container.find(".msg-type-head .system-msg-head").click();
+            }
         },
         showMsg:function(){
             myMsg.show.showCommentMsg();
@@ -55,7 +59,6 @@ var EOS = EOS || {};
                 "</div>" +
                 "</section>" +
                 "</div>";
-            console.log("test!");
             $.ajax({
                 type:'GET',
                 data:{
@@ -67,7 +70,6 @@ var EOS = EOS || {};
                         return;
                     }
                     container.find(".msg-body .comment-msg").empty();
-                    console.log(dataJson.res.length);
                     if(dataJson.res.length == 0){
                         container.find(".msg-body .comment-msg").append(noneHtml);
                         return;
@@ -114,7 +116,6 @@ var EOS = EOS || {};
             container.find(".msg-body .mark-readed").unbind().click(function(){
                 var thisObj = $(this);
                 var msgId = thisObj.attr("id");
-                console.log(msgId);
                 $.ajax({
                     type:'POST',
                     url:'/AccountSetting/markReaded',
@@ -127,7 +128,6 @@ var EOS = EOS || {};
                                 window.location.reload();
                             });
                         }
-//                        thisObj.parent().parent().hide();
                         window.location.reload();
                     }
                 })

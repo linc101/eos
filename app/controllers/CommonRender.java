@@ -36,7 +36,7 @@ public class CommonRender extends Controller {
     @Before(only = {"UserCenter.userCenter","UserCenter.addExperience", "Login.userLogout",
             "UserCenter.showAllMyExps", "UserCenter.doAddExperience", "AccountSetting.changePW",
             "AccountSetting.picUpload", "AccountSetting.showUserInfo", "AccountSetting.showMsg",
-            "Application.findCountMsg"})
+            "Application.findCountMsg", "AccountSetting.myMessage"})
     public static void checkAccess(){
         User user = (User)request.args.get(USER);
 

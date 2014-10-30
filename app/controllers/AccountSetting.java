@@ -43,7 +43,13 @@ public class AccountSetting extends CommonRender{
 
     //消息页面
     public static void myMessage(){
-        render("/accountset/mymessage.html");
+        User user = getUser();
+        String type = "COMMENT_MES";
+        boolean isCommentMsg = Message.findMsgType(user.getUserName());
+        if(isCommentMsg == false){
+            type = "SYSTEM_MES";
+        }
+        render("/accountset/mymessage.html", type);
     }
 
     public static void changePW(String oldPW, final String newPW, final String newPWConfirm){
@@ -76,17 +82,10 @@ public class AccountSetting extends CommonRender{
 
     public static void showUserInfo(){
         User user = getUser();
-
         RenderSuccess(user);
     }
 
     public static void picUpload(File pic , final String briefIntroduction, String email){
-//        if(pic == null){
-//            flash.put("error", "图片上传错误");
-////            RenderFailed("图片上传错误");
-//            completeInfo();
-//            return;
-//        }
         String picPath = null;
         User user = getUser();
         if(pic != null) {
@@ -100,7 +99,6 @@ public class AccountSetting extends CommonRender{
         if(!isEmail){
             flash.put("error","邮箱格式不对");
             log.info("-----------------modify email:" + email);
-//            RenderFailed("邮箱格式不对");
             completeInfo();
             return;
         }
@@ -108,7 +106,6 @@ public class AccountSetting extends CommonRender{
         long id = User.findEmailExisted(email);
         if(id > 0  && id != user.getId()){
             flash.put("error" ,"已经存在，请使用其它的邮箱号");
-//            RenderFailed("email 已经存在，请使用其它的邮箱号");
             completeInfo();
             return;
         }
@@ -143,7 +140,6 @@ public class AccountSetting extends CommonRender{
     }
 
     public static void showMsg(Type type){
-        log.info("------------------type:" + type.name());
         User user = getUser();
         List<Message> msgs = new ArrayList<Message>();
         msgs = Message.findAllMessageById(user.getUserName(), type);
@@ -162,7 +158,4 @@ public class AccountSetting extends CommonRender{
             RenderFailed("数据库异常！");
         }
     }
-
-
-
 }

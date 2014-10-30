@@ -234,6 +234,20 @@ public class Message  extends Model implements PolicySQLGenerator {
         }.call();
     }
 
+    public static boolean findMsgType(String toUser){
+        String queryComment = "select id from " + TABLE_NAME + " where toUser = ? and type = ? and isRead = false limit 1";
+        final String COMMENT_MSG = "COMMENT_MES";
+        final String SYSTEM_MES = "SYSTEM_MES";
+        long id = dp.singleLongQuery(queryComment, toUser, COMMENT_MSG);
+        if(id > 0){
+            return true;
+        }
+        String queryMessage = "select id from " + TABLE_NAME + " where toUser = ? and type = ? and isRead = false limit 1";
+        id = dp.singleLongQuery(queryMessage, toUser, SYSTEM_MES);
+        if(id > 0)return false;
+        else return true;
+    }
+
     public static boolean markReaded(long id){
         String query = "update " + TABLE_NAME + " set isRead = true where id = ?";
         long msgId =  dp.update(query, id);
