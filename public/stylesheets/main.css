@@ -425,3 +425,36 @@ table input{
 **tabs统一css end
 **
 */
+
+
+/*
+**边框统一css start
+*/
+
+.list-group .list-group-item{
+    background-color: #fff;
+    border:1px solid #ddd;
+    padding:8px 12px;
+    margin-bottom:-1px;
+    cursor:pointer;
+    color:#555;
+    width:130px;
+}
+
+.list-group .list-group-item:hover{
+    background-color: #F7F7F7;
+}
+
+.list-group .current:hover{
+    background-color: #008e59;
+}
+
+.list-group .current{
+    background-color: #008e59;
+    border-color:#008e59;
+    color:#fff;
+}
+
+/*
+**边框统一css end
+*/

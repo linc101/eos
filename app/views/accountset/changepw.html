@@ -2,48 +2,72 @@
 #{set title:'修改密码'/}
 
 <div class="content-width modify-pw" style="padding-left: 80px;">
-    <div style="width:450px;margin-top: 20px;">
-    <table>
-        <thead>
-
-        </thead>
-        <tbody>
-        <tr>
-            <td>
-                旧密码:
-            </td>
-            <td>
-                <input class="oldPW" type="password" placeholder="请输入你的原始密码">
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                新密码:
-            </td>
-            <td>
-                <input class="newPW" type="password" placeholder="大于或等于6个字符">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                确认新密码:
-            </td>
-            <td>
-                <input class="newPWConfirm"type="password" placeholder="再次输入新密码">
-            </td>
-        </tr>
-        <tr>
-            <td>
-
-            </td>
-            <td>
-                <span class="submit_btn">确认</span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div style="float:left;width:20%;display:inline;margin-top:30px;">
+        <div class="list-group">
+            <div class="list-group-item current">
+                密码修改
+            </div>
+            <div class="list-group-item">
+                邮箱修改
+            </div>
+            <div class="list-group-item">
+                motto修改
+            </div>
+        </div>
     </div>
+
+    <div style="width:78%;margin-top: 20px;float:left;display:inline;">
+        <div class="modify-password">
+            <div class="head">
+                <span>修改密码</span>
+            </div>
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        旧密码:
+                    </td>
+                    <td>
+                        <input class="oldPW" type="password" placeholder="请输入你的原始密码">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        新密码:
+                    </td>
+                    <td>
+                        <input class="newPW" type="password" placeholder="大于或等于6个字符">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        确认新密码:
+                    </td>
+                    <td>
+                        <input class="newPWConfirm"type="password" placeholder="再次输入新密码">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <span class="submit_btn">确认</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modify-email"></div>
+
+        <div class="modify-motto"></div>
+
+    </div>
+
+
+
 </div>
 
 <script type="text/javascript">
