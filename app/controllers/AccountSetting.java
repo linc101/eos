@@ -59,6 +59,7 @@ public class AccountSetting extends CommonRender{
         log.info(user.toString());
         log.info("------------------oldPW1:" + user.getPassword()+"---------------------oldPW2:" + oldPW);
         if(!StringUtils.equals(user.getPassword(), oldPW)){
+            log.error("old pw error!");
             RenderFailed("旧密码错误！");
         }
 
@@ -125,6 +126,27 @@ public class AccountSetting extends CommonRender{
         }
     }
 
+    public static void changeEmail(String email){
+        User user = getUser();
+        if(!StringUtils.isEmpty(email)){
+            RenderFailed("请输入邮箱！");
+        }
+        boolean isEmail = UsageFunction.isEmail(email);
+        if(!isEmail){
+            RenderFailed("请输入正确的邮箱格式！");
+        }
+        long id = User.findEmailExisted(email);
+        if(id > 0 && id != user.getId()){
+            RenderFailed("邮箱已被注册，请输入其它邮箱！");
+        }
+        boolean isSuccess = User.changeEmail(user.getId(), email);
+        if(isSuccess){
+            render("/Application/index.html");
+        }else{
+            RenderFailed("更新数据失败！");
+        }
+
+    }
     public static void changeBriefIntroduction(final String briefIntroduction){
         if(!StringUtils.isEmpty(briefIntroduction)){
             RenderFailed("自我简述不能为空！");

@@ -16,7 +16,7 @@ var EOS = EOS || {};
         },
         defaultClick:function(){
             var container = changePW.init.container;
-            container.find(".newPWConfirm").keydown(function(event){
+            container.find(".modify-password .newPWConfirm").keydown(function(event){
                 if(event.keyCode == 13){
                     container.find(".submit_btn").click();
                 }
@@ -40,7 +40,8 @@ var EOS = EOS || {};
     $.extend(changePW.submit,{
         doSubmit:function(){
             var container = changePW.init.container;
-            container.find(".submit_btn").unbind().click(function(){
+            console.log(container.find(".modify-password .submit_btn"));
+            container.find(".modify-password .submit_btn").unbind().click(function(){
                 var oldPW = container.find(".oldPW").val();
                 var newPW = container.find(".newPW").val();
                 var newPWConfirm = container.find(".newPWConfirm").val();
@@ -88,6 +89,21 @@ var EOS = EOS || {};
             container.find(".oldPW").val("");
             container.find(".newPW").val("");
             container.find(".newPWConfirm").val("");
+        },
+        modifyEmail:function(){
+            var container = changePW.init.container;
+            container.find(".modify-email .submit-btn").unbind().click(function(){
+                var email = container.find(".modify-email .email").val();
+                console.log(email);
+                if(isEmail(email)){
+                    EOS.util.UIAssert("请输入正确的邮箱格式！");
+                    return ;
+                }
+                $.ajax({
+                    type:'post',
+                    url:''
+                })
+            });
         }
     })
 })(jQuery, window));

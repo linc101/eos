@@ -333,4 +333,11 @@ public class User extends Model implements PolicySQLGenerator{
         if(res <= 0)return false;
         return true;
     }
+
+    public static boolean changeEmail(long id, String email){
+        String query = "update " + TABLE_NAME + " set email = ? where id = ?";
+        long res = dp.update(query, email, id);
+        if(res <= 0)return false;
+        else return true;
+    }
 }
