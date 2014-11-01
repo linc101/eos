@@ -1,24 +1,32 @@
 #{extends '/accountset/accountsetmain.html'/}
 #{set title:'修改密码'/}
-
-<div class="content-width modify-pw" style="padding-left: 80px;">
+<style>
+    .head1{
+        border-bottom:2px solid #ddd;
+        padding:0 0 5px 5px;
+        margin:15px 0 25px 0;
+        font-weight:bold;
+        font-size:16px;
+    }
+</style>
+<div class="content-width modify-account" style="padding-left: 80px;">
     <div style="float:left;width:20%;display:inline;margin-top:30px;">
         <div class="list-group">
-            <div class="list-group-item current">
+            <div class="list-group-item head-pw current" tarDiv="modify-password">
                 密码修改
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" tarDiv="modify-email">
                 邮箱修改
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" tarDiv="modify-motto">
                 motto修改
             </div>
         </div>
     </div>
 
     <div style="width:78%;margin-top: 20px;float:left;display:inline;">
-        <div class="modify-password">
-            <div class="head">
+        <div class="modify-password target" style="display:none;">
+            <div class="head1">
                 <span>修改密码</span>
             </div>
             <table>
@@ -33,6 +41,7 @@
                         <input class="oldPW" type="password" placeholder="请输入你的原始密码">
                     </td>
                 </tr>
+                <tr style="height:3px;"></tr>
                 <tr>
                     <td>
                         新密码:
@@ -41,6 +50,7 @@
                         <input class="newPW" type="password" placeholder="大于或等于6个字符">
                     </td>
                 </tr>
+                <tr style="height:3px;"></tr>
                 <tr>
                     <td>
                         确认新密码:
@@ -49,107 +59,74 @@
                         <input class="newPWConfirm"type="password" placeholder="再次输入新密码">
                     </td>
                 </tr>
+                <tr style="height:3px;"></tr>
                 <tr>
                     <td>
                     </td>
                     <td>
-                        <span class="submit_btn">确认</span>
+                        <span class="submit_btn">提交</span>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="modify-email"></div>
+        <div class="modify-email target" style="display:none;">
+            <div class="head1">
+                修改邮箱
+            </div>
 
-        <div class="modify-motto"></div>
+            <table>
+                <tbody>
+                <tr>
+                    <td>邮箱:</td>
+                    <td>
+                        <input class="email" placeholder="请输入邮箱">
+                    </td>
+                </tr>
+                <tr style="height:3px;"></tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <span class="submit_btn">提交</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modify-motto target" style="display:none;">
+            <div class="head1">
+                修改motto
+            </div>
+
+            <table>
+                <tbody>
+                <tr>
+                    <td style="vertical-align:top;">motto:</td>
+                    <td>
+                        <textarea class="motto" cols="60" rows="5" style="border-radius:3px;border:1px solid #ddd;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <span class="submit_btn">提交</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
 
     </div>
-
-
 
 </div>
 
 <script type="text/javascript">
-    var EOS = EOS || {};
-    ((function($, window){
-        EOS.changePW = EOS.changePW || {};
-        var changePW = EOS.changePW;
-
-        changePW.init = changePW.init || {};
-        $.extend(changePW.init,{
-            doInit:function(container){
-                changePW.init.container = container;
-                changePW.init.defaultClick();
-                changePW.submit.doSubmit();
-            },
-            defaultClick:function(){
-                var container = changePW.init.container;
-                container.find(".newPWConfirm").keydown(function(event){
-                    if(event.keyCode == 13){
-                        container.find(".submit_btn").click();
-                    }
-                });
-            }
-        })
-
-        changePW.submit = changePW.submit || {};
-        $.extend(changePW.submit,{
-            doSubmit:function(){
-                var container = changePW.init.container;
-                container.find(".submit_btn").unbind().click(function(){
-                    var oldPW = container.find(".oldPW").val();
-                    var newPW = container.find(".newPW").val();
-                    var newPWConfirm = container.find(".newPWConfirm").val();
-                    if(newPW.length < 6){
-                        EOS.util.UIAssert("请输入新密码的长度大于或等于6！", function(){
-                            changePW.submit.doClearInput();
-                        })
-                        return;
-                    }
-
-                    if(newPW != newPWConfirm){
-                        EOS.util.UIAssert("请保证两次输入的密码匹配！", function(){
-                            changePW.submit.doClearInput();
-                        });
-                        return;
-                    }
-
-                    $.ajax({
-                        type:'POST',
-                        url:'/AccountSetting/changePW',
-                        data:{
-                            oldPW:oldPW,
-                            newPW:newPW,
-                            newPWConfirm:newPWConfirm
-                        },
-                        success:function(dataJson){
-                            if(!dataJson.success){
-                                EOS.util.UIAssert(dataJson.message, function(){
-                                    changePW.submit.doClearInput();
-                                })
-                                return;
-                            }
-
-                            EOS.util.UIAssert("修改密码成功", function(){
-                                window.location.href = "/Login/login";
-                            })
-                        }
-                    })
-
-                });
-
-            },
-            doClearInput:function(){
-                var container = changePW.init.container;
-                container.find(".oldPW").val("");
-                container.find(".newPW").val("");
-                container.find(".newPWConfirm").val("");
-            }
-        })
-    })(jQuery, window));
-
-    $(document).ready(function(){
-        EOS.changePW.init.doInit($(".modify-pw"));
+    EOS.gcs("/js/accountset/modifyaccount.js", function(){
+        $(document).ready(function(){
+            EOS.changePW.init.doInit($(".modify-account"));
+        });
     });
 </script>
