@@ -128,7 +128,7 @@ public class AccountSetting extends CommonRender{
 
     public static void changeEmail(String email){
         User user = getUser();
-        if(!StringUtils.isEmpty(email)){
+        if(StringUtils.isEmpty(email)){
             RenderFailed("请输入邮箱！");
         }
         boolean isEmail = UsageFunction.isEmail(email);
@@ -141,14 +141,14 @@ public class AccountSetting extends CommonRender{
         }
         boolean isSuccess = User.changeEmail(user.getId(), email);
         if(isSuccess){
-            render("/Application/index.html");
+            RenderSuccess();
         }else{
             RenderFailed("更新数据失败！");
         }
 
     }
     public static void changeBriefIntroduction(final String briefIntroduction){
-        if(!StringUtils.isEmpty(briefIntroduction)){
+        if(StringUtils.isEmpty(briefIntroduction)){
             RenderFailed("自我简述不能为空！");
         }
 
