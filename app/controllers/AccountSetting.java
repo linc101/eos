@@ -89,10 +89,9 @@ public class AccountSetting extends CommonRender{
     public static void changePic(File pic){
         String picPath = null;
         User user = getUser();
+        Date date = new Date();
         if(pic != null) {
-            Date date = new Date();
             picPath = "/root/images/" + user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
-
             Files.copy(pic, new File(picPath));
         }
         if(picPath == null){
@@ -100,6 +99,7 @@ public class AccountSetting extends CommonRender{
             accountSetting(4);
             return;
         }
+        picPath = "/public/images/userheadimages/"+ user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
         boolean isSuccess = User.resetPicPath(picPath, user.getId());
         if(isSuccess){
             redirect("/");
