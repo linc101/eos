@@ -126,6 +126,15 @@ public class AccountSetting extends CommonRender{
         }
     }
 
+    public static void getPicPath(){
+        User user = getUser();
+        String picPath = user.getPicPath();
+        if(StringUtils.isEmpty(picPath)){
+            picPath = "/pic/userheadimages/default.png";
+        }
+        RenderSuccess(picPath);
+    }
+
     public static void changeEmail(String email){
         User user = getUser();
         if(StringUtils.isEmpty(email)){

@@ -37,7 +37,7 @@ public class CommonRender extends Controller {
             "UserCenter.showAllMyExps", "UserCenter.doAddExperience", "AccountSetting.changePW",
             "AccountSetting.picUpload", "AccountSetting.showUserInfo", "AccountSetting.showMsg",
             "Application.findCountMsg", "AccountSetting.myMessage", "AccountSetting.changeEmail",
-            "AccountSetting.changeBriefIntroduction", "AccountSetting.completeInfo"})
+            "AccountSetting.changeBriefIntroduction", "AccountSetting.completeInfo", "AccountSetting.getPicPath"})
     public static void checkAccess(){
         User user = (User)request.args.get(USER);
 

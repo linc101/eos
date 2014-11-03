@@ -13,6 +13,7 @@ var EOS = EOS || {};
             changePW.init.defaultClick();
             changePW.submit.doSubmit();
             changePW.init.headClick();
+            changePW.init.initUploadPic();
             changePW.submit.modifyEmail();
             changePW.submit.modifyMotto();
         },
@@ -35,6 +36,38 @@ var EOS = EOS || {};
                 container.find("." +tarObject).show();
             })
             container.find(".head-pw").click();
+        },
+        initUploadPic:function(){
+            var container = changePW.init.container;
+            container.find(".modify-pic ")
+            $.ajax({
+                type:'GET',
+                url:'/AccountSetting/getPicPath',
+                success:function(dataJson){
+                    container.find(".modify-pic .pic").attr("src", dataJson.res);
+                }
+            })
+
+            container.find(".modify-pic #upload").change(function(){
+                var pic = document.getElementById("upload");
+                var fileName = pic.value;
+                var imgObjPreview = document.getElementById("preview");
+                if(!fileName.match(/.jpg|.gif|.png|.bmp/i)){
+                    EOS.util.UIAssert("上传图片格式错误！请重新上传", function(){
+//                        window.location.href = "/AccountSetting/completeInfo";
+                        return;
+                    });
+                }
+                if(pic.files && pic.files[0]) {
+                    if(window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1) {
+                        imgObjPreview.src = window.webkitURL.createObjectURL(pic.files[0]);
+                    }else{
+                        imgObjPreview.src = window.URL.createObjectURL(pic.files[0]);
+                    }
+                }else{
+                    //待定
+                }
+            })
         }
     })
 
