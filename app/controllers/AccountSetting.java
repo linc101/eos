@@ -27,8 +27,8 @@ import static controllers.WrapRender.*;
 public class AccountSetting extends CommonRender{
     private static final Logger log = LoggerFactory.getLogger(AccountSetting.class);
 
-    public static void accountSetting(){
-        render("/accountset/changepw.html");
+    public static void accountSetting(int tab){
+        render("/accountset/changepw.html", tab);
     }
 
     //修改密码页面
@@ -84,6 +84,31 @@ public class AccountSetting extends CommonRender{
     public static void showUserInfo(){
         User user = getUser();
         RenderSuccess(user);
+    }
+
+    public static void changePic(File pic){
+        String picPath = null;
+        User user = getUser();
+        if(pic != null) {
+            Date date = new Date();
+            picPath = "/public/images/userheadimages/" + user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
+
+            Files.copy(pic, Play.getFile(picPath));
+        }
+        if(picPath == null){
+            flash.error("没有添加图片");
+            accountSetting(4);
+            return;
+        }
+        boolean isSuccess = User.resetPicPath(picPath, user.getId());
+        if(isSuccess){
+            redirect("/");
+        }else{
+            log.error("图片插入失败！");
+            flash.error("图片插入失败！");
+            accountSetting(4);
+        }
+
     }
 
     public static void picUpload(File pic , final String briefIntroduction, String email){

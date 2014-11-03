@@ -8,8 +8,9 @@ var EOS = EOS || {};
 
     changePW.init = changePW.init || {};
     $.extend(changePW.init,{
-        doInit:function(container){
+        doInit:function(container, tab){
             changePW.init.container = container;
+            changePW.init.tab = tab;
             changePW.init.defaultClick();
             changePW.submit.doSubmit();
             changePW.init.headClick();
@@ -35,7 +36,15 @@ var EOS = EOS || {};
                 container.find(".target").hide();
                 container.find("." +tarObject).show();
             })
-            container.find(".head-pw").click();
+            var tab = changePW.init.tab;
+            switch(tab){
+                case 1:container.find(".head-pw").click();break;
+                case 2:container.find(".head-email").click();break;
+                case 3:container.find(".head-motto").click();break;
+                case 4:container.find(".modify-pic-head").click();break;
+                default:container.find(".head-pw").click();
+            }
+//            container.find(".head-pw").click();
         },
         initUploadPic:function(){
             var container = changePW.init.container;
@@ -128,7 +137,6 @@ var EOS = EOS || {};
             var container = changePW.init.container;
             container.find(".modify-email .submit_btn").unbind().click(function(){
                 var email = container.find(".modify-email .email").val();
-                console.log(email);
                 if(!isEmail(email)){
                     EOS.util.UIAssert("请输入正确的邮箱格式！");
                     container.find(".modify-email .email").val("");
@@ -139,7 +147,6 @@ var EOS = EOS || {};
                     url:'/AccountSetting/changeEmail',
                     data:{email:email},
                     success:function(dataJson){
-                        console.log
                         if(!dataJson.success){
                             EOS.util.UIAssert(dataJson.message);
                             return;
@@ -154,7 +161,6 @@ var EOS = EOS || {};
             var container = changePW.init.container;
             container.find(".modify-motto .submit_btn").unbind().click(function(){
                 var motto = container.find(".modify-motto .motto").val();
-                console.log("motto " + motto);
                 $.ajax({
                     type:'POST',
                     url:'/AccountSetting/changeBriefIntroduction',

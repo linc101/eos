@@ -15,15 +15,16 @@
 
     ((function($, window){
         var pathname = window.location.pathname;
-        if(pathname == '/AccountSetting/accountSetting'){
+
+        if(pathname.toLowerCase() == '/AccountSetting/accountSetting'.toLowerCase()){
             $('.head-region .user-password-password').addClass('click-li');
         }
 
-        if(pathname == '/AccountSetting/completeInfo'){
+        if(pathname.toLowerCase() == '/AccountSetting/completeInfo'.toLowerCase()){
             $('.head-region .user-infor-complete').addClass('click-li');
         }
 
-        if(pathname == '/AccountSetting/myMessage'){
+        if(pathname.toLowerCase() == '/AccountSetting/myMessage'.toLowerCase()){
             $('.head-region .user-message').addClass('click-li');
         }
 

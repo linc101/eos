@@ -9,10 +9,15 @@
         font-size:16px;
     }
 
-
     .upload-pic{
         border-color:#aaa;
         margin-bottom:5px;
+    }
+
+    .modify-account .submit_info{
+        content:" ";
+        display:table;
+        clear:both;
     }
 </style>
 <div class="content-width modify-account" style="padding-left: 80px;">
@@ -21,10 +26,10 @@
             <div class="list-group-item head-pw current" tarDiv="modify-password">
                 密码修改
             </div>
-            <div class="list-group-item" tarDiv="modify-email">
+            <div class="list-group-item head-email" tarDiv="modify-email">
                 邮箱修改
             </div>
-            <div class="list-group-item" tarDiv="modify-motto">
+            <div class="list-group-item head-motto" tarDiv="modify-motto">
                 motto修改
             </div>
             <div class="list-group-item modify-pic-head" tarDiv="modify-pic">
@@ -131,16 +136,27 @@
             <div class="head1">
                 头像修改
             </div>
-
-            <div class="upload-pic" style="text-align:center;">
-                <div >
-                    <img  class="pic img-size" id="preview" alt="头像">
-                    <div style="margin-top:10px;">
-                        <input name="pic" type="file" id="upload" style="cursor:pointer;position:absolute;opacity:0;width:82px;height:35px;">
-                        <span class="upload-pic btn">修改头像</span>
+            #{if flash?.error}
+            <div style="margin-bottom:20px;">
+            <span style="margin-left: 42%;color:red;">${flash?.error}</span>
+            </div>
+            #{/if}
+            <form method="POST" enctype="multipart/form-data" action="@{AccountSetting.changePic}">
+                <div class="upload-pic" style="text-align:center;">
+                    <div >
+                        <img  class="pic img-size" id="preview" alt="头像">
+                        <div style="margin-top:10px;">
+                            <input name="pic" type="file" id="upload" style="cursor:pointer;position:absolute;opacity:0;width:82px;height:35px;">
+                            <span class="upload-pic btn">修改头像</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="submit_info" style="width:52%; text-align: right;margin-top: 10px;">
+                    <input type="submit" class="submit_btn" style="float:right;border:0px;">
+                *{<span class="submit_btn" style="float:right;">保存</span>}*
+
+                </div>
+            </form>
         </div>
 
     </div>
@@ -150,7 +166,8 @@
 <script type="text/javascript">
     EOS.gcs("/js/accountset/modifyaccount.js", function(){
         $(document).ready(function(){
-            EOS.changePW.init.doInit($(".modify-account"));
+            var tab = ${tab};
+            EOS.changePW.init.doInit($(".modify-account"), tab);
         });
     });
 </script>
