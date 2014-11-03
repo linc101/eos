@@ -155,15 +155,15 @@ var EOS = EOS || {};
         },
         userLogin:function(){
             var container = main.init.container;
-            container.find(".user-login").unbind().click(function(){
+            $(".user-login").unbind().click(function(){
                 EOS.Main.login.dialog("open");
             })
         },
         submitLogin:function(){
 
             var container = main.init.container;
-            container.find("#user-login .submit_btn").unbind().click(function(){
-                container.find("#user-login").show();
+            $("#user-login .submit_btn").unbind().click(function(){
+                $("#user-login").show();
                 var params = main.util.submitParams();
                 if(params == null) return;
                 $.ajax({
