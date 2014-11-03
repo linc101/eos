@@ -91,9 +91,9 @@ public class AccountSetting extends CommonRender{
         User user = getUser();
         if(pic != null) {
             Date date = new Date();
-            picPath = "/public/images/userheadimages/" + user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
+            picPath = "/root/images/" + user.id + "_" + date.getTime() + "_head." + UsageFunction.getExtensionName(pic.getName());
 
-            Files.copy(pic, Play.getFile(picPath));
+            Files.copy(pic, new File(picPath));
         }
         if(picPath == null){
             flash.error("没有添加图片");
