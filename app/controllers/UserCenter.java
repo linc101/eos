@@ -100,11 +100,9 @@ public class UserCenter extends CommonRender {
         if(StringUtils.isEmpty(field)){
             RenderFailed("显示的字段不正确");
         }
+        logger.error("pn:" + pn +" ps:" + ps);
         PageOffset po = new PageOffset(pn, ps);
         List<Experience> exps = Experience.findAllExpByField(field, isDesc,po);
-        for(Experience exp: exps){
-            logger.error(" " +exp.getScanTimes());
-        }
         int count = Experience.countAllExp();
         RenderSuccess(exps, count, po);
     }
