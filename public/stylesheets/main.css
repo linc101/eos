@@ -18,6 +18,8 @@ table .tip{
     color:#737373;
 }
 
+
+
 table input{
     height:22px;
     width:255px;
@@ -459,4 +461,36 @@ table input{
 
 /*
 **边框统一css end
+*/
+
+
+/*
+**分页
+*/
+
+.page-next-abled, .page-prev-abled{
+    text-decoration: none;
+    background-color: #fff;
+    color:#009a61;
+    border:1px solid #ddd;
+    display:inline-block;
+    height:20px;
+    padding:4px 0;
+    border-radius: 2px;
+    width:55px;
+    text-align:center;
+    line-height:20px;
+}
+
+.page-container .paging-size-select{
+    background-color: #009a61;
+    color:#fff;
+}
+
+.page-container .paging-size-select:hover{
+    background-color: #009a61;
+    color:#fff;
+}
+/*
+**
 */

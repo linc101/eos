@@ -243,7 +243,6 @@ public class Experience extends Model implements PolicySQLGenerator{
         Experience exp = new Experience();
         try {
             long id = res.getLong(1);
-            logger.info("---------------exp id:" + id);
             exp.setId(res.getLong(1));
             exp.setUserName(res.getString(2));
             exp.setTitle(res.getString(3));
