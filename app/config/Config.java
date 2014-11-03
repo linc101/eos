@@ -17,5 +17,7 @@ public class Config {
 
     public static final String USER_PASSWORD = "_pw";
 
+    public static final String PAGE_SIZE = "tmPagingSizeCookie";
+
 
 }

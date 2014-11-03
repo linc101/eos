@@ -83,6 +83,7 @@ public class CommonRender extends Controller {
     protected static void removeSession(){
         session.remove(USER_ID);
         response.removeCookie(USER_ID);
+        response.removeCookie(PAGE_SIZE);
     }
 
     protected static User getUser(){
