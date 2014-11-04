@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import codegen.CodeGenerator.DBDispatcher;
 import codegen.CodeGenerator.PolicySQLGenerator;
+import transaction.DBBuilder.DataSrc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,23 @@ public class Picture extends Model implements PolicySQLGenerator{
 
     @OneToMany(mappedBy = "picture", cascade=CascadeType.ALL)
     private List<FavouratePic> favouratePics;
+
+    public Picture(){
+
+    }
+
+    public Picture(long userId, String picPath, String describe){
+        this.userId = userId;
+        this.picPath = picPath;
+        this.describe = describe;
+        this.createTs = System.currentTimeMillis();
+        this.count = 0;
+        this.favouratePics = new ArrayList<FavouratePic>();
+    }
+
+    private static final Picture _instance = new Picture();
+
+    private static final DBDispatcher dp = new DBDispatcher(DataSrc.BASIC, _instance);
 
     public long getUserId(){
         return this.userId;
@@ -84,6 +102,14 @@ public class Picture extends Model implements PolicySQLGenerator{
 
     public void setCount(long count){
         this.count = count;
+    }
+
+    public List<FavouratePic> getFavouratePics(){
+        return this.favouratePics;
+    }
+
+    public void setFavouratePics(List<FavouratePic> favouratePics){
+        this.favouratePics = favouratePics;
     }
 
     @Override
