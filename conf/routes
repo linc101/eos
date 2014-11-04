@@ -11,6 +11,8 @@ GET     /weiboAuth                              WeiBo.WeiboAuthCallBack
 
 GET     /doubanAuth                             Douban.doubanAuthCallBack
 
+GET     /picture                                Pic.index
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

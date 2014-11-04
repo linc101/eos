@@ -1,58 +1,66 @@
 package models;
 
-import play.db.jpa.Model;
+//import play.db.jpa.Model;
+//import play.data.validation.Required;
+//
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.ManyToOne;
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+//import org.codehaus.jackson.annotate.JsonAutoDetect;
+import java.util.*;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonAutoDetect;
+import play.db.jpa.*;
+import play.data.validation.*;
 /**
  * Created by yehuizhang on 14/11/4.
  */
-@Entity(name = FavouratePic.TABLE_NAME)
+@Entity//(name = FavouratePic.TABLE_NAME)
 public class FavouratePic extends Model  {
-    public static final String TABLE_NAME = "favourate_pic";
+//    public static final String TABLE_NAME = "favourate_pic";
+//
+//    private static final Logger log = LoggerFactory.getLogger(FavouratePic.class)
+    @Required
+    public long userId;
 
-    private static final Logger log = LoggerFactory.getLogger(FavouratePic.class);
+    @ManyToOne
+    @Required
+    public Picture picture;
 
-    @Column(name = "userId")
-    private long userId;
+    @Required
+    public boolean isFavourate;
 
-    private long picId;
-
-    private boolean isFavourate;
-
-    public FavouratePic(long userId, long picId, boolean isFavourate){
+    public FavouratePic(Picture picture, long userId, boolean isFavourate){
+        this.picture = picture;
         this.userId = userId;
-        this.picId = picId;
         this.isFavourate = isFavourate;
     }
 
-    public long getUserId(){
-        return this.userId;
-    }
-
-    public void setUserId(long userId){
-        this.userId = userId;
-    }
-
-    public long getPicId(){
-        return this.picId;
-    }
-
-    public void setPicId(long picId){
-        this.picId = picId;
-    }
-
-    public boolean getIsFavourate(){
-        return this.isFavourate;
-    }
-
-    public void setIsFavourate(boolean isFavourate){
-        this.isFavourate = isFavourate;
-    }
-
+//    public long getUserId(){
+//        return this.userId;
+//    }
+//
+//    public void setUserId(long userId){
+//        this.userId = userId;
+//    }
+//
+//    public boolean getIsFavourate(){
+//        return this.isFavourate;
+//    }
+//
+//    public void setIsFavourate(boolean isFavourate){
+//        this.isFavourate = isFavourate;
+//    }
+//
+//    public Picture getPic(){
+//        return this.pic;
+//    }
+//
+//    public void setPic(Picture pic){
+//        this.pic = pic;
+//    }
 }
