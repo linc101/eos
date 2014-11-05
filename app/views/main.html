@@ -4,7 +4,7 @@
         <div class="toolbar">
             <ul>
                 <li class="l-item hover-on front-page"><a href="/">首页</a></li>
-                <li class="l-item hover-on"><a href="javascript:void(0)">图片专区</a></li>
+                <li class="l-item hover-on pic-section"><a href="/picture">图片专区</a></li>
                 *{<li class="l-item hover-on"><a href="javascript:void(0)">经验</a></li>}*
                 *{<li class="l-item hover-on weibo-tool"><a href="/weibo">微博小工具</a></li>}*
             </ul>
@@ -190,6 +190,8 @@
             $(".toolbar-wrap .toolbar .front-page").addClass("current");
         }else if (pathname == "/weibo"){
             $(".toolbar-wrap .toolbar .weibo-tool").addClass("current");
+        }else if (pathname == "/picture"){
+            $(".toolbar-wrap .toolbar .pic-section").addClass("current");
         }
     </script>
     <script type="text/javascript">
