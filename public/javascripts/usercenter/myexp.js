@@ -33,6 +33,11 @@ var EOS = EOS || {};
                             EOS.util.UIAssert(dataJson.message);
                             return;
                         }
+                        var container = myExp.init.container;
+                        if(dataJson.res.length == 0){
+                            container.find(".pag").hide();
+//                            return;
+                        }
                         myExp.show.nowPage = dataJson.pn;
                         container.find(".my-all-exps").empty();
                         $.each(dataJson.res, function(index, elem){

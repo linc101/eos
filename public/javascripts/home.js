@@ -67,7 +67,13 @@ var EOS = EOS || {};
                             EOS.util.UIAssert(dataJson.message);
                             return;
                         }
-
+                        console.log(dataJson.res.length);
+                        if(dataJson.res.length == 0){
+                            var container = home.init.container;
+                            console.log(container.find(".page-container"));
+                            container.find(".pag").hide();
+                            return;
+                        }
                         home.event.nowPage = dataJson.pn;
                         $(tarDiv).find(tarDiv + "-content").empty();
                         $.each(dataJson.res, function(index, elem){
