@@ -163,7 +163,7 @@ public class DBBuilder {
         String quotaUrl = prop.getProperty("quota.db.url", defaultUrl);
         String quotaUserName = prop.getProperty("quota.db.user", defaultUsername);
         String quotaPassword = prop.getProperty("quota.db.pass", defaultPassword);
-        log.error("quota url :" + quotaUrl);
+        log.info("quota url :" + quotaUrl);
         quotaDataSrc.setUrl(quotaUrl);
         quotaDataSrc.setUsername(quotaUserName);
         quotaDataSrc.setPassword(quotaPassword);
@@ -174,7 +174,7 @@ public class DBBuilder {
         String rdsUrl = prop.getProperty("rds.db.url", defaultUrl);
         String rdsUserName = prop.getProperty("rds.db.user", defaultUsername);
         String rdsPassword = prop.getProperty("rds.db.pass", defaultPassword);
-        log.error("rds url :" + rdsUrl);
+        log.info("rds url :" + rdsUrl);
         rdsDataSrc.setUrl(rdsUrl);
         rdsDataSrc.setUsername(rdsUserName);
         rdsDataSrc.setPassword(rdsPassword);
@@ -191,7 +191,7 @@ public class DBBuilder {
         jdpDataSrc.setPassword(DataSrc.JDP.getPassword());
         jdpDataSrc.setDriverClassName(defaultDriver);
         jdpDataSrc.setMaxActive(maxMainConnSize);
-        log.error(" jdp url:" + DataSrc.JDP.getUrl());
+        log.info(" jdp url:" + DataSrc.JDP.getUrl());
 
         BasicDataSource[] srcs = new BasicDataSource[] {
                 baseDataSrc, quotaDataSrc, rdsDataSrc, jdpDataSrc
