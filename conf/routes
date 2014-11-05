@@ -21,6 +21,7 @@ GET     /public/                                staticDir:public
 GET     /js/                                    staticDir:public/javascripts
 GET     /css/                                   staticDir:public/stylesheets
 GET     /pic/                                staticDir:public/images
+GET     /img/                                staticDir:public/images
 
 
 *       /article/{articleId}                    Article.article
