@@ -58,7 +58,6 @@ var EOS = EOS || {};
             })
 
             container.find(".modify-pic #upload").change(function(){
-                alert("test");
                 var pic = document.getElementById("upload");
                 var fileName = pic.value;
                 var imgObjPreview = document.getElementById("preview");
