@@ -198,6 +198,13 @@
 
         EOS.gcs("/js/main.js", function(){
             $(document).ready(function(){
+                $(document).ajaxStart(function(){
+                    alert("start!");
+                    $("#loading").show();
+                }).ajaxStop(function () {
+                    alert("stop!");
+                    $("#loading").hide();
+                })
                 EOS.Main.init.doInit($('.toolbar-wrap'));
             })
         })

@@ -54,9 +54,7 @@
             })
         }
 
-        $("#loading").ajaxStart(function(){
-            $(this).show();
-        })
+
 
         var EOS = EOS || {};
         EOS.gcs = gcs;
@@ -101,7 +99,7 @@
 </head>
 <body>
 <div id="loading">
-    <span style="color:red;">正在加载....</span>
+    <span style="color:red;">正在加载....</span><img src="/pic/douban.png">
 </div>
 #{doLayout /}
 </body>
