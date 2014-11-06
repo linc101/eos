@@ -64,7 +64,7 @@
         $(document).ajaxStart(function(){
             $("#loading").show();
             $("#masking").show();
-        }).ajaxStop(function () {
+        }).ajaxComplete(function () {
             $("#loading").hide();
             $("#masking").hide();
         })
