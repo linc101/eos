@@ -3,19 +3,29 @@
     <div class="container my-article">
 
     </div>
-    <script id="my-article" type="text/x-jquery-tmpl">
-        <div class="hero-unit">
+    *{<script id="my-article" type="text/x-jquery-tmpl">}*
+        *{<div>}*
+            *{<h1>${title}</h1>}*
+            *{<p>}*
+                *{${article}}*
+            *{</p>}*
+        *{</div>}*
+    *{</script>}*
+    <script type="text/x-jquery-tmpl" id="my-article">
+         <div>
             <h1>${title}</h1>
-            <p>
-                ${article}
-            </p>
-        </div>
+             <p>
+             ${article}
+             </p>
+         </div>
     </script>
 </div>
 <script>
-    UTTP.gcs("/js/uttp/my-article.js", function(){
-        $(document).ready(function(){
-            UTTP.myArticle.init.doInit($(".article"))
+    UTTP.gcs("/js/uttp/jquery.tmpl.js", function(){
+         UTTP.gcs("/js/uttp/my-article.js", function(){
+             $(document).ready(function(){
+                UTTP.myArticle.init.doInit($(".article"))
+             })
         })
     })
 </script>

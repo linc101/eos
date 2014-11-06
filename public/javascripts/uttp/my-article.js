@@ -12,7 +12,6 @@ var UTTP = UTTP || {};
         doInit:function(container){
             myArticle.init.container = container;
             myArticle.init.showAllMyArticle();
-
         },
         showAllMyArticle:function(){
             var container = myArticle.init.container;
@@ -24,9 +23,13 @@ var UTTP = UTTP || {};
                         alert(dataJson.message);
                         return;
                     }
-                    console.log(container.find("#my-article").tmpl(dataJson.res));
                     var data=[{title:"hehe", article:"test"}]
-                    container.find("#my-article").tmpl(data).appendTo(".my-article");
+                    console.log(dataJson.res);
+                    var html = container.find("#my-article").tmpl(dataJson.res);
+                    console.log(container.find("#my-article"));
+                    console.log(html);
+                    container.find(".my-article").append(html);
+//                    container.find("#my-article").tmpl(dataJson.res).appendTo(".my-article");
                 }
             })
         }
