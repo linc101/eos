@@ -13,7 +13,60 @@
     </style>
 </head>
 <script src="/js/bootstrap.min.js" type="text/javascript"></script>
-<body data-spy="scroll">
+<script src="/js/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/js/uttp/jquery.tmpl.js"></script>
+<script type="text/javascript">
+    if(!window.jQuery){
+        var script = document.createElement('script');
+        script.src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js";
+        document.body.appendChild(script);
+    }
+
+    var gcs = function(url, callback){
+        $.ajax({
+            type:'get',
+            url:url,
+            dataType:'script',
+            success:callback
+        })
+    }
+
+    var UTTP = UTTP || {};
+    UTTP.gcs = gcs;
+
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+
+    Date.prototype.FormatMD = function(){
+        return this.Format("MM月dd");
+    }
+
+    Date.prototype.FormatYMD = function(){
+        return this.Format("yyyy-MM-dd");
+    }
+
+    Date.prototype.FormatYMDMS = function() {
+        return this.Format("yyyy-MM-dd hh:mm:ss");
+    }
+    function isEmail(email){
+        var emailReg = new RegExp("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
+        return emailReg.test(email);
+    }
+</script>
+<body>
 <div>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
