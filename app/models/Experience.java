@@ -43,6 +43,8 @@ public class Experience extends Model implements PolicySQLGenerator{
 
     public static final String TABLE_NAME = "exp";
 
+    public static final String ADMIN = "admin";
+
     @Lob
     @Column(name="article")
     private String article;
@@ -261,8 +263,8 @@ public class Experience extends Model implements PolicySQLGenerator{
     }
 
     public static List<Experience> findAllExp(PageOffset offset){
-        String query = "select " + AllProperty + " from " + TABLE_NAME + " limit ?,?";
-        return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, offset.getOffset(),offset.getPs()){
+        String query = "select " + AllProperty + " from " + TABLE_NAME + " where userName <> ? limit ?,?";
+        return new JDBCBuilder.JDBCExecutor<List<Experience>>(query, ADMIN, offset.getOffset(),offset.getPs()){
             @Override
             public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
                 List<Experience> exps = new ArrayList<Experience>();
@@ -370,7 +372,7 @@ public class Experience extends Model implements PolicySQLGenerator{
     }
 
     public static List<Experience> findAllExpByField(String field, boolean isDesc, PageOffset offset){
-        StringBuilder query = new StringBuilder("select " + AllProperty + " from " + TABLE_NAME + " order by ");
+        StringBuilder query = new StringBuilder("select " + AllProperty + " from " + TABLE_NAME + " where userName <> ? order by ");
         query.append(field);
         if(isDesc == true){
             query.append(" desc ");
@@ -380,7 +382,7 @@ public class Experience extends Model implements PolicySQLGenerator{
         query.append(" limit ?,?");
         String q = query.toString();
 
-        return new JDBCBuilder.JDBCExecutor<List<Experience>>(q, offset.getOffset(),offset.getPs()){
+        return new JDBCBuilder.JDBCExecutor<List<Experience>>(q, ADMIN, offset.getOffset(),offset.getPs()){
             @Override
             public List<Experience> doWithResultSet(ResultSet res) throws SQLException{
                 List<Experience> exps = new ArrayList<Experience>();
