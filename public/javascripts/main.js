@@ -139,6 +139,7 @@ var EOS = EOS || {};
             if(EOS.userId != null) {
                 $.ajax({
                     type: 'get',
+                    global: false,
                     url: '/Application/findCountMsg',
                     success: function (dataJson) {
                         if (!dataJson.success) {
