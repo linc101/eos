@@ -5,6 +5,8 @@
 # Home page
 GET     /                                       Application.index
 
+GET     /uttp                                   Uttp.index
+
 GET     /weibo                                  WeiBo.index
 
 GET     /weiboAuth                              WeiBo.WeiboAuthCallBack
