@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="92b62a9a-bb97-47e9-b52f-ea819148032e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Experience.java" afterPath="$PROJECT_DIR$/app/models/Experience.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/fontpage.html" afterPath="$PROJECT_DIR$/app/views/fontpage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/uttp/main.html" afterPath="$PROJECT_DIR$/app/views/uttp/main.html" />
     </list>
     <ignored path="eos.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,9 +51,11 @@
       <file leaf-file-name="fontpage.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/fontpage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45454547" vertical-offset="544" max-vertical-offset="1955">
-              <caret line="57" column="33" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
-              <folding />
+            <state vertical-scroll-proportion="0.10909091" vertical-offset="867" max-vertical-offset="1955">
+              <caret line="57" column="18" selection-start-line="57" selection-start-column="18" selection-end-line="57" selection-end-column="18" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -879,12 +879,12 @@
       <workItem from="1411354187356" duration="17058000" />
       <workItem from="1411545215157" duration="4843000" />
       <workItem from="1411632159776" duration="20012000" />
-      <workItem from="1415242632653" duration="6804000" />
+      <workItem from="1415242632653" duration="7066000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95308000" />
+    <option name="totallyTimeSpent" value="95570000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
@@ -1320,9 +1320,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/fontpage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45454547" vertical-offset="544" max-vertical-offset="1955">
-          <caret line="57" column="33" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
-          <folding />
+        <state vertical-scroll-proportion="0.10909091" vertical-offset="867" max-vertical-offset="1955">
+          <caret line="57" column="18" selection-start-line="57" selection-start-column="18" selection-end-line="57" selection-end-column="18" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -54,8 +54,8 @@
             })
         }
 
-        $().ajaxStart(function(){
-            $("#loading").show();
+        $("#loading").ajaxStart(function(){
+            $(this).show();
         })
 
         var EOS = EOS || {};
@@ -101,7 +101,7 @@
 </head>
 <body>
 <div id="loading">
-    <span>正在加载....</span>
+    <span style="color:red;">正在加载....</span>
 </div>
 #{doLayout /}
 </body>
