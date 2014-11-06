@@ -11,7 +11,7 @@ var UTTP = UTTP || {};
     $.extend(myArticle.init, {
         doInit:function(container){
             myArticle.init.container = container;
-
+            myArticle.init.showAllMyArticle();
 
         },
         showAllMyArticle:function(){
@@ -24,7 +24,9 @@ var UTTP = UTTP || {};
                         alert(dataJson.message);
                         return;
                     }
-                    container.find("#my-article").tmpl
+                    console.log(container.find("#my-article").tmpl(dataJson.res));
+                    var data=[{title:"hehe", article:"test"}]
+                    container.find("#my-article").tmpl(data).appendTo(".my-article");
                 }
             })
         }

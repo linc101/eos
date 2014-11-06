@@ -1,8 +1,21 @@
 #{extends 'uttp/main.html' /}
+<div class="article">
+    <div class="container my-article">
 
-<div class="container my-article">
-
+    </div>
+    <script id="my-article" type="text/x-jquery-tmpl">
+        <div class="hero-unit">
+            <h1>${title}</h1>
+            <p>
+                ${article}
+            </p>
+        </div>
+    </script>
 </div>
-<script id="my-article" type="text/x-jquery-tmpl">
-
+<script>
+    UTTP.gcs("/js/uttp/my-article.js", function(){
+        $(document).ready(function(){
+            UTTP.myArticle.init.doInit($(".article"))
+        })
+    })
 </script>
