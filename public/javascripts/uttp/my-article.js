@@ -28,7 +28,7 @@ var UTTP = UTTP || {};
                     })
 
                     var content = "<div class='${i} content'>"+
-                            "<h4 class='title' style='text-align:center;'></h4>"+
+                            "<h4 class='title'></h4>"+
                             "<div class='article'></div>"+
                         "</div>";
                     $.template('article', content);
