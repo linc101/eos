@@ -128,13 +128,10 @@ public class UserCenter extends CommonRender {
         String s2 = "test1";
         String s3 = "test1 test2 test3";
         String[] ss1 = s1.split(" ");
-//        System.out.println(s1);
         printString(ss1);
         String[] ss2 = s2.split(" ");
-//        System.out.println(ss2);
         printString(ss2);
         String[] ss3 = s3.split(" ", 2);
-//        System.out.println(ss3);
         printString(ss3);
     }
 
@@ -146,6 +143,10 @@ public class UserCenter extends CommonRender {
             }
             System.out.println(s);
         }
+
+    }
+
+    public static void editExp(){
 
     }
 }
