@@ -25,4 +25,8 @@ public class Uttp extends CommonRender{
         }
 
     }
+
+    public static void profile(){
+        render("/uttp/profile.html");
+    }
 }

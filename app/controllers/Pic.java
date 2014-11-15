@@ -21,4 +21,12 @@ public class Pic extends CommonRender {
         s1 += 1;
 
     }
+
+    public int findMin(int[] num){
+        int left = 0, right = num.length - 1;
+        while(left <= right){
+
+        }
+        return 0;
+    }
 }

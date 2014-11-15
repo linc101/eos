@@ -12,7 +12,6 @@ var UTTP = UTTP || {};
         doInit:function(container){
             myArticle.init.container = container;
             myArticle.init.showAllMyArticle();
-
         },
         showAllMyArticle:function(){
             var container = myArticle.init.container;
@@ -24,9 +23,37 @@ var UTTP = UTTP || {};
                         alert(dataJson.message);
                         return;
                     }
-                    console.log(container.find("#my-article").tmpl(dataJson.res));
-                    var data=[{title:"hehe", article:"test"}]
-                    container.find("#my-article").tmpl(data).appendTo(".my-article");
+                    $.each(dataJson.res, function(index){
+                        dataJson.res[index].i = index;
+                    })
+
+                    var content = "<div class='${i} content'>"+
+                            "<h4 class='title'></h4>"+
+                            "<div class='article'></div>"+
+                        "</div>";
+                    $.template('article', content);
+                    $.tmpl("article", dataJson.res).appendTo(".my-article");
+                    $.each(dataJson.res, function(index){
+                        console.log(dataJson.res[index]);
+                        container.find("."+index + " .title").html(dataJson.res[index].title);
+                        container.find("." + index + " .article").html(dataJson.res[index].article);
+                    })
+                    console.log(dataJson.res);
+                    ////console.log(dataJson.res);
+                    ////var html = container.find("#my-article").tmpl(dataJson.res);
+                    ////console.log(container.find("#my-article"));
+                    ////console.log(html);
+                    ////container.find(".my-article").append(html);
+                    ////container.find("#my-article").tmpl(dataJson.res).appendTo(".my-article");
+                    //var markup =" <div > " +
+                    //"<span class=\"title\">${title}</span>"+
+                    //"${article}" + "</div>";
+                    ////dataJson.res[0].article = $.parseHTML(dataJson.res[0].article).toString();
+                    ////dataJson.res[0].title = $.parseHTML(dataJson.res[0].title).toString();
+                    //
+                    //$.template('article', markup);
+                    //$.tmpl("article", data).appendTo(".my-article");
+                    //console.log($(".title").html());
                 }
             })
         }
