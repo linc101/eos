@@ -76,6 +76,7 @@ public class CommonRender extends Controller {
      */
     protected static void successEnter(final String userId, final String userName){
         session.put(USER_ID, userId);
+        logger.error(" host : " +request.remoteAddress);
         response.setCookie(USER_ID, userId, "1d");
         response.setCookie(USER_NAME, URLEncoder.encode(userName), "14d");
     }
