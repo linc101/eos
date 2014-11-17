@@ -67,7 +67,6 @@ public class Experience extends Model implements PolicySQLGenerator{
 
         public static final int WORK = 1 <<2;  //工作
     }
-    
 
     @Column(name = "tags")
     String tags;
