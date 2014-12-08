@@ -19,7 +19,6 @@ public class Pic extends CommonRender {
         System.out.println(Math.round(11.5) + " " + Math.round(-11.5));
         short s1 = 1;
         s1 += 1;
-
     }
 
     public int findMin(int[] num){

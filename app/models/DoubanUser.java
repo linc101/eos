@@ -13,6 +13,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import play.db.jpa.Model;
 
+import java.util.ArrayList;
+
 import transaction.DBBuilder.DataSrc;
 import transaction.JDBCBuilder;
 
