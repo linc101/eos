@@ -146,7 +146,7 @@ public class StaffVacation extends Model implements PolicySQLGenerator{
     }
 
     public boolean insert(){
-        String query = "insert into " + TABLE_NAME + " (" + ALLPROPERTY + ") values (?,?,?,?,?,?,?,?)";
+        String query = "insert into " + TABLE_NAME + " (" + ALLPROPERTY + ") values (?,?,?,?,?,?,?)";
         long res = dp.insert(query, this.id, this.staffName, this.staffId, this.type, this.startTime, this.endTime, this.createTs);
         if(res <= 0){
             log.error("insert failed!");

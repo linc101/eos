@@ -9,10 +9,12 @@ import static controllers.WrapRender.*;
  */
 public class SV extends CommonRender {
     public static void index(){
-        render("sv.html");
+        render("index.html");
     }
 
     public static void saveStaff(String staffName, String staffId, int type, long startTime, long endTime){
+
+        System.out.println("" + staffName + " " + staffId + " " + type + " " + startTime + " " + endTime);
         if(StringUtils.isEmpty(staffName)){
             RenderFailed("请输入用户名");
         }
