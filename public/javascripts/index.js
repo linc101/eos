@@ -50,7 +50,11 @@ $(function(){
 			console.log(data);
 			console.log(status);
 			if(status == 'success'){
-				$('.subBlock').html('提交成功');
+				if(data.success == true){
+					$('.subBlock').html('提交成功');
+				}else {
+					$('.subBlock').html('提交失败');
+				}
 			}
 		});
 
