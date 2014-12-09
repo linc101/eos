@@ -68,128 +68,110 @@ public class StaffVacation extends Model implements PolicySQLGenerator{
         this.createTs = System.currentTimeMillis();
     }
 
+    public String getStaffName(){
+        return this.staffName;
+    }
+
+    public void setStaffName(String staffName){
+        this.staffName = staffName;
+    }
+
+    public long getType(){
+        return this.type;
+    }
+
+    public void setType(int type){
+        this.type = type;
+    }
+
+    public long getStartTime(){
+        return this.startTime;
+    }
+
+    public void setStartTime(long startTime){
+        this.startTime = startTime;
+    }
+
+    public long getEndTime(long endTime){
+        return this.endTime;
+    }
+
+    public void setEndTime(long endTime){
+        this.endTime = endTime;
+    }
+
+    public long getCreateTs(){
+        return this.createTs;
+    }
+
+    public void setCreateTs(long createTs){
+        this.createTs = createTs;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
+    @Override
+    public String getTableHashKey() {
+        return null;
+    }
+
+    @Override
+    public String getIdColumn() {
+        return null;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 
-//    public String getDoubanUserId(){
-//        return this.doubanUserId;
-//    }
-//
-//    public void setDoubanUserId(String doubanUserId){
-//        this.doubanUserId = doubanUserId;
-//    }
-//
-//    public String getAccessToken(){
-//        return this.accessToken;
-//    }
-//
-//    public void setAccessToken(String accessToken){
-//        this.accessToken = accessToken;
-//    }
-//
-//    public long getUserId(){
-//        return this.userId;
-//    }
-//
-//    public void setUserId(long userId){
-//        this.userId = userId;
-//    }
-//
-//    public String getUsername(){
-//        return this.username;
-//    }
-//
-//    public void setUsername(String username){
-//        this.username = username;
-//    }
-//
-//    public String getExpirsein(){
-//        return this.expiresin;
-//    }
-//
-//    public void setExpirsein(String expirsein){
-//        this.expiresin = expirsein;
-//    }
-//
-//    public String getRefreshToken(){
-//        return this.refreshToken;
-//    }
-//
-//    public void setRefreshToken(String refreshToken){
-//        this.refreshToken = refreshToken;
-//    }
-//
-//    public long getCreateTs(){
-//        return this.createTs;
-//    }
-//
-//    public void setCreateTs(long createTs){
-//        this.createTs = createTs;
-//    }
-//
-//    @Override
-//    public String getTableName() {
-//        return null;
-//    }
-//
-//    @Override
-//    public String getTableHashKey() {
-//        return null;
-//    }
-//
-//    @Override
-//    public String getIdColumn() {
-//        return null;
-//    }
-//
-//    @Override
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//
-//    public long findIfExistedByDoubanUserId(String doubanUserId){
-//        String query = "select id from " + TABLE_NAME + " where doubanuser_id = ? ";
-//        return dp.singleLongQuery(query, doubanUserId);
-//    }
-//
-//    public boolean update(){
-//        String query = "update " + TABLE_NAME + " set access_token = ?, user_id = ?, username = ?, expires_in = ?, refresh_token = ?, create_ts = ? where doubanuser_id = ? ";
-//        long res = dp.update(query, this.accessToken, this.userId, this.username, this.expiresin, this.refreshToken, this.createTs, this.doubanUserId);
-//        if(res <= 0){
-//            log.error("update error!");
-//            return false;
-//        }else{
-//            return true;
-//        }
-//    }
-//
-//    public boolean insert(){
-//        String query = "insert into " + TABLE_NAME + " (" + ALLPROPERTY + ") values (?,?,?,?,?,?,?,?)";
-//        long res = dp.insert(query, this.id, this.accessToken, this.userId, this.username, this.expiresin, this.refreshToken, this.createTs, this.doubanUserId);
-//        if(res <= 0){
-//            log.error("insert failed!");
-//            return false;
-//        }else{
-//            return true;
-//        }
-//    }
-//
-//    @Override
-//    public boolean jdbcSave() {
-//        long id = findIfExistedByDoubanUserId(this.doubanUserId);
-//        if(id <= 0){
-//            return insert();
-//        }else{
-//            return update();
-//        }
-//    }
-//
-//    @Override
-//    public String getIdName() {
-//        return null;
-//    }
-//
-//    public static final String ALLPROPERTY = " id, access_token, user_id, username, expires_in, refresh_token, create_ts, doubanuser_id ";
+    public long findIfExistedByStaffId(String staffId){
+        String query = "select id from " + TABLE_NAME + " where staff_id = ? ";
+        return dp.singleLongQuery(query, staffId);
+    }
+
+    public boolean update(){
+        String query = "update " + TABLE_NAME + " set staff_name = ?, staff_id = ?, type = ?, start_time = ?, end_time = ?, create_ts = ? where staff_id = ? ";
+        long res = dp.update(query, this.staffName, this.staffId, this.type, this.startTime, this.endTime, this.createTs, this.staffId);
+        if(res <= 0){
+            log.error("update error!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean insert(){
+        String query = "insert into " + TABLE_NAME + " (" + ALLPROPERTY + ") values (?,?,?,?,?,?,?,?)";
+        long res = dp.insert(query, this.id, this.staffName, this.staffId, this.type, this.startTime, this.endTime, this.createTs);
+        if(res <= 0){
+            log.error("insert failed!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @Override
+    public boolean jdbcSave() {
+        long id = findIfExistedByStaffId(this.staffId);
+        if(id <= 0){
+            return insert();
+        }else{
+            return update();
+        }
+    }
+
+    @Override
+    public String getIdName() {
+        return null;
+    }
+
+    public static final String ALLPROPERTY = " id, staff_name, staff_id, type, start_time, end_time, create_ts  ";
 //
 //    private static DoubanUser doWithResult(ResultSet rs){
 //        try {
